@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2015",
+    "outDir": "build",
+    // sourceMap ファイルを生成
+    "sourceMap": true,
+    "lib": [
+      "esnext"
+    ]
+  },
+  "include": [
+    "server/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

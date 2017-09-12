@@ -1,0 +1,17 @@
+service: qiita-api-client 
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+
+functions:
+  hello:
+    handler: build/hello.hello
+    events:
+      - http:
+          path: hello
+          method: get
+
