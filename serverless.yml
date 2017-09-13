@@ -9,9 +9,15 @@ provider:
 
 functions:
   hello:
-    handler: build/hello.hello
+    handler: build/handlers/hello.hello
     events:
       - http:
           path: hello
+          method: get
+  getSchema:
+    handler: build/handlers/qiita.qiita
+    events:
+      - http:
+          path: qiita/schema
           method: get
 
