@@ -1,4 +1,4 @@
-import * as lambda from "aws-lambda";
+import * as lambda from 'aws-lambda';
 
 export const hello: lambda.ProxyHandler = async (
   event: lambda.APIGatewayEvent,
@@ -7,7 +7,7 @@ export const hello: lambda.ProxyHandler = async (
 ): Promise<void> => {
   const response = {
     body: JSON.stringify({
-      message: "Hello TypeScript!!!!",
+      message: 'Hello TypeScript!!!!',
     }),
     headers: {},
     statusCode: 200,
