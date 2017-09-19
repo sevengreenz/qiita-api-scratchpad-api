@@ -8,6 +8,8 @@
 
 <script lang="ts">
 import Vue from "vue";
+import axios from 'axios';
+import QiitaRepository from '../repositories/qiita-repository';
 
 export default Vue.extend({
     props: ['name', 'initialEnthusiasm'],
@@ -18,7 +20,10 @@ export default Vue.extend({
     },
     methods: {
         increment() { this.enthusiasm++; },
-        decrement() {
+        async decrement() {
+            const repository: QiitaRepository = new QiitaRepository(axios);
+            const resourceList: any = await repository.findSchema();
+            console.log(resourceList);
             if (this.enthusiasm > 1) {
                 this.enthusiasm--;
             }

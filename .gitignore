@@ -7,3 +7,6 @@ jspm_packages
 /build
 
 .DS_Store
+npm-debug.log
+
+client/dist/build.js
