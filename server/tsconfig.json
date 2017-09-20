@@ -2,7 +2,7 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "es2015",
-    "outDir": "build",
+    "outDir": "../build",
     // sourceMap ファイルを生成
     "sourceMap": true,
     "lib": [
@@ -10,7 +10,7 @@
     ]
   },
   "include": [
-    "server/**/*.ts"
+    "./**/*.ts"
   ],
   "exclude": [
     "node_modules"

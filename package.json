@@ -6,10 +6,10 @@
   "scripts": {
     "style:check": "tslint -c tslint.json '{client,server}/**/*.ts'",
     "style:fix": "tslint -c tslint.json --fix 'client/**/*.ts'",
-    "build": "tsc",
-    "dev": "tsc && sls offline",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build:client": "webpack --config client/webpack.config.js --context client"
+    "build:server": "tsc -p server",
+    "build:client": "webpack --config client/webpack.config.js --context client",
+    "dev:server": "tsc -p server && sls offline",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
