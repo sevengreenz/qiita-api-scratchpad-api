@@ -13,6 +13,6 @@ const v = new Vue({
     name: 'World',
   },
   components: {
-    HelloComponent, 
+    HelloComponent,
   },
 });
