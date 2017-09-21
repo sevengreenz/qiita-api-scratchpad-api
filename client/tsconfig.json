@@ -4,6 +4,10 @@
     "sourceMap": true,
     "strict": true,
     "noImplicitReturns": true,
+    "allowSyntheticDefaultImports": "default を使用していない export の　inport を許可",
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": "ES7 decorator を有効",
+    "experimentalDecorators": true,
     "module": "es2015",
     "moduleResolution": "node",
     "target": "es5",
@@ -25,5 +29,5 @@
   },
   "include": [
     "./**/*"
-    ]
+  ]
 }

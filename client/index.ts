@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import HelloComponent from './components/Hello.vue';
 
-const v = new Vue({
+new Vue({
   el: '#app',
   template: `
     <div>

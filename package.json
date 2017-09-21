@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "style:check": "tslint -c tslint.json '{client,server}/**/*.ts'",
-    "style:fix": "tslint -c tslint.json --fix 'client/**/*.ts'",
+    "style:check": "tslint -c tslint.json --type-check --project client/tsconfig.json 'client/**/*.ts' && tslint -c tslint.json --type-check --project server/tsconfig.json 'server/**/*.ts'",
+    "style:fix": "tslint -c tslint.json --fix --type-check --project client/tsconfig.json 'client/**/*.ts' && tslint -c tslint.json --fix --type-check --project server/tsconfig.json 'server/**/*.ts'",
+    "vuetype": "vuetype client/components",
     "build:server": "tsc -p server",
     "build:client": "webpack --config client/webpack.config.js --context client",
     "dev:server": "tsc -p server && sls offline",
@@ -15,7 +16,9 @@
   "license": "ISC",
   "dependencies": {
     "aws-lambda": "^0.1.2",
-    "axios": "^0.16.2"
+    "axios": "^0.16.2",
+    "vue": "^2.4.4",
+    "vue-class-component": "^5.0.2"
   },
   "devDependencies": {
     "@types/aws-lambda": "0.0.16",
@@ -28,7 +31,8 @@
     "tslint-config-airbnb": "^5.3.0",
     "typescript": "^2.5.2",
     "vue-loader": "^13.0.4",
-    "vue-template-compiler": "^2.2.1",
+    "vue-template-compiler": "^2.4.4",
+    "vuetype": "^0.2.2",
     "webpack": "^3.5.6"
   }
 }

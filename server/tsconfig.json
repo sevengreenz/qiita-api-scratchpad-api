@@ -3,7 +3,7 @@
     "module": "commonjs",
     "target": "es2015",
     "outDir": "../build",
-    // sourceMap ファイルを生成
+    "sourceMap": "sourceMap ファイルを生成",
     "sourceMap": true,
     "lib": [
       "esnext"
