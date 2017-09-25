@@ -6,7 +6,16 @@
         <v-card class="grey lighten-4 evaluation-0">
             <v-card-text>
                 <v-container fluid>
-                    <v-select v-bind:items="resources" v-model="resource" item-text="text" item-value="text" return-object :hint="`${resource.description}`" persistant-hint label="resource" bottom></v-select>
+                    <v-layout row wrap>
+                        <v-select v-bind:items="resources" v-model="resource" v-on:change="changeResource($event)" item-text="title" item-value="title" return-object :hint="`${resource.description}`" persistant-hint label="Resource" bottom></v-select>
+                    </v-layout>
+                    <v-layout row wrap>
+                        <v-select v-bind:items="resource.links" v-model="api" item-text="title" return-object :hint="`${api.description}`" persistant-hint label="API" bottom></v-select>
+                    </v-layout>
+                    <v-layout row wrap>
+                        resource {{JSON.stringify(resource, undefined, "\t")}}
+                        <br><br><br> api {{ JSON.stringify(api, undefined, "\t")}}
+                    </v-layout>
                 </v-container>
             </v-card-text>
         </v-card>
@@ -19,7 +28,7 @@ import Component from 'vue-class-component';
 import axios from 'axios';
 import { Seq } from 'immutable';
 import QiitaRepository from '../repositories/qiita-repository';
-import { IResource } from '../../domain/qiita';
+import { IResource, IApi } from '../../domain/qiita';
 
 @Component({
     props: {
@@ -33,28 +42,18 @@ export default class Hello extends Vue {
 
     // initial data
     enthusiasm: number = this.initialEnthusiasm;
-    schema: Seq<string, IResource> = Seq();
-    resources: any[] = [];
-    resource: any = null;
+    schema: IResource[] = [];
+    resources: IResource[] = [];
+    resource: IResource | null = null;
+    api: IApi | null = null;
 
     async created() {
         const resources = await this.fetchQiitaSchema();
         console.log(resources);
-        this.schema = resources;
-        // this.resources = resources.keySeq().map((x) => {
-        //     return { 'text': x };
-        // }).toArray();
-        this.resources = resources.map((v, k) => {
-            let description: string = '';
-            if (v !== null && v !== undefined) {
-                description = v.description;
-            }
-            return {
-                'text': k,
-                'description': description
-            }
-        }).toArray();
-        this.resource = this.resources[0];
+        this.resources = resources;
+        this.resource = resources[0];
+        this.api = this.resource.links[0];
+
         console.log(this.resources);
     }
 
@@ -72,11 +71,23 @@ export default class Hello extends Vue {
             this.enthusiasm--;
         }
     }
-    async fetchQiitaSchema(): Promise<Seq<string, IResource>> {
+    async fetchQiitaSchema(): Promise<IResource[]> {
         const repository: QiitaRepository = new QiitaRepository(axios);
         const resources: any = await repository.findSchema();
         console.log(resources);
         return resources;
+    }
+    changeResource($event: IResource) {
+        console.log('changeResource called');
+        // 選択している API が選択されたリソースに含まれているか
+        const isSameResource = $event.links.some((x) => {
+            if (x === null) return false;
+            if (this.api === null) return false;
+            return x.title === this.api.title;
+        }, this)
+        if (!isSameResource) {
+            this.api = $event.links[0];
+        }
     }
 };
 </script>

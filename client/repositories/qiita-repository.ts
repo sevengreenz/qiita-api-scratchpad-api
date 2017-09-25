@@ -8,9 +8,11 @@ export default class QiitaRepository {
   }
 
   // public async findSchema(): Promise<Map<string, IResource>> {
-  public async findSchema(): Promise<Seq<string, IResource>> {
+  // public async findSchema(): Promise<Seq<string, IResource>> {
+  public async findSchema(): Promise<IResource[]> {
     const response: AxiosResponse = await this.httpClient.get('schema');
     // return new Map(Object.entries(response.data.properties));
-    return Seq(response.data.properties);
+    // return Seq(response.data.properties);
+    return Object.values(response.data.properties);
   }
 }
