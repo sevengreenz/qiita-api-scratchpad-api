@@ -26,7 +26,6 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import axios from 'axios';
-import { Seq } from 'immutable';
 import QiitaRepository from '../repositories/qiita-repository';
 import { IResource, IApi } from '../../domain/qiita';
 
