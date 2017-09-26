@@ -6,8 +6,8 @@ export default class QiitaRepository {
     httpClient.defaults.baseURL = 'http://localhost:3000/qiita';
   }
 
-  public async findSchema(): Promise<[Map<string, IResource>]> {
+  public async findSchema(): Promise<IResource[]> {
     const response: AxiosResponse = await this.httpClient.get('schema');
-    return response.data.properties;
+    return Object.values(response.data.properties);
   }
 }
