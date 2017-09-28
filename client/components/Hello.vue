@@ -1,8 +1,5 @@
 <template>
     <div>
-        <div class="greeting">Hello {{name}}{{exclamationMarks}}</div>
-        <button @click="decrement">-</button>
-        <button @click="increment">+</button>
         <v-card class="grey lighten-4 evaluation-0">
             <v-card-text>
                 <v-container fluid>
@@ -48,16 +45,10 @@ import { IResource, IApi, ISchema } from '../../domain/qiita';
 
 @Component({
     props: {
-        name: String,
-        initialEnthusiasm: Number
     }
 })
 export default class Hello extends Vue {
-    name: string;
-    initialEnthusiasm: number;
-
     // initial data
-    enthusiasm: number = this.initialEnthusiasm;
     schema: IResource[] = [];
     resources: IResource[] = [];
     resource: IResource = {
@@ -81,33 +72,19 @@ export default class Hello extends Vue {
 
     async created() {
         const resources = await this.fetchQiitaSchema();
-        console.log(resources);
         this.resources = resources;
         this.resource = resources[0];
         this.api = this.resource.links[0];
         if (this.api.schema !== undefined) this.resetProperty(this.api.schema);
-
-        console.log(this.resources);
-    }
-
-    // computed property
-    get exclamationMarks(): string {
-        return Array(this.enthusiasm + 1).join('!');
     }
 
     // method
-    increment() {
-        this.enthusiasm++;
-    }
-    decrement() {
-        if (this.enthusiasm > 1) {
-            this.enthusiasm--;
-        }
-    }
+    /**
+     * Qiita Schema 取得
+     */
     async fetchQiitaSchema(): Promise<IResource[]> {
         const repository: QiitaRepository = new QiitaRepository(axios);
         const resources: any = await repository.findSchema();
-        console.log(resources);
         return resources;
     }
 
@@ -122,34 +99,33 @@ export default class Hello extends Vue {
         }, new Object())
 
     }
+
+    /**
+     * リソース変更イベント
+     * 
+     * @param IResource $event
+     */
     changeResource($event: IResource) {
-        console.log('changeResource called');
         // 選択している API が選択されたリソースに含まれているか
         const isSameResource = $event.links.some((x) => {
             if (x === null) return false;
             if (this.api === null) return false;
             return x.title === this.api.title;
         }, this)
+
         if (!isSameResource) {
             this.api = $event.links[0];
             if (this.api.schema !== undefined) this.resetProperty(this.api.schema);
-            // パラメータ初期化　
-            //this.properties = Object.keys(this.api.schema.properties).reduce((carry: object, x: string): object => {
-            //    Object.defineProperty(carry, x, { value: null });
-            //    return carry;
-            //}, new Object())
-            console.log(this.properties);
         }
     }
 
+    /**
+     * API 変更イベント
+     * 
+     * @param IApi $event
+     */
     changeApi($event: IApi): void {
         if ($event.schema !== undefined) this.resetProperty($event.schema);
     }
 };
 </script>
-
-<style>
-.greeting {
-    font-size: 20px;
-}
-</style>
