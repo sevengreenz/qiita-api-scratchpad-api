@@ -11,3 +11,4 @@ jspm_packages
 npm-debug.log
 
 client/dist/build.js
+client/dist/build.js.map

@@ -7,9 +7,9 @@ export interface IQiitaSchemaResponse {
 export interface IResource {
   title: string;
   description: string;
-  links: [IApi];
+  links: IApi[];
   properties: { [key: string]: any };
-  required: [string];
+  required: string[];
 }
 
 export interface IApi {
@@ -17,8 +17,20 @@ export interface IApi {
   description: string;
   href: string;
   method: string;
-  schema: any;
-  required: [string];
+  schema?: ISchema;
+  required?: string[];
+}
+
+export interface ISchema {
+  properties: { [key: string]: IProperty };
+  required?: string[];
+}
+
+export interface IProperty {
+  description: string;
+  example: string;
+  type: string;
+  pattern?: string;
 }
 /*
 export class Resource implements IResource {
