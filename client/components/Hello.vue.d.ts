@@ -1,30 +1,32 @@
 import Vue from 'vue';
-import { IResource, IApi, ISchema } from '../../domain/qiita';
+import { Qiita } from '../../domain/qiita';
 export default class Hello extends Vue {
-    schema: IResource[];
-    resources: IResource[];
-    resource: IResource;
-    api: IApi;
+    schema: Qiita.IResource[];
+    resources: Qiita.IResource[];
+    resource: Qiita.IResource;
+    api: Qiita.IApi;
     properties: object;
     created(): Promise<void>;
     /**
      * Qiita Schema 取得
      */
-    fetchQiitaSchema(): Promise<IResource[]>;
+    fetchQiitaSchema(): Promise<Qiita.IResource[]>;
     /**
      * パラメータ初期化
      */
-    resetProperty(schema: ISchema): void;
+    resetProperty(schema: Qiita.ISchema): void;
     /**
      * リソース変更イベント
      *
      * @param IResource $event
      */
-    changeResource($event: IResource): void;
+    changeResource($event: Qiita.IResource): void;
     /**
      * API 変更イベント
      *
      * @param IApi $event
      */
-    changeApi($event: IApi): void;
+    changeApi($event: Qiita.IApi): void;
+    /** API 実行 */
+    execute(): void;
 }
