@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios';
 import { IQiitaSchemaResponse } from '../domain/qiita';
 
 export default class QiitaRepository {
@@ -14,5 +14,32 @@ export default class QiitaRepository {
       statusCode: response.status,
     };
     return result;
+  }
+
+  public async callApi(url: string, method: string, params: object): Promise<any> {
+    const axiosConfig: AxiosRequestConfig = {
+      url: 'http://qiita.com' + url as string,
+      method: method as string,
+    };
+    switch (method) {
+      case 'GET':
+        axiosConfig.params = params;
+        axiosConfig.headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
+        break;
+      case 'POST':
+      case 'PUT':
+      case 'DELETE':
+        axiosConfig.data = params;
+        axiosConfig.headers = { 'Content-Type': 'application/json' };
+        break;
+    }
+    console.log(axiosConfig);
+    const response: AxiosResponse = await axios(axiosConfig);
+    console.log(response);
+    return {
+      statusCode: response.status as number,
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify(response.data),
+    };
   }
 }

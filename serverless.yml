@@ -20,4 +20,12 @@ functions:
       - http:
           path: qiita/schema
           method: get
+  execApi:
+    handler: build/handlers/qiita.call
+    events:
+      - http:
+          path: qiita/api
+          method: post
+          cors: true
+
 

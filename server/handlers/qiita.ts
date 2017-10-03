@@ -12,3 +12,20 @@ export const qiita: lambda.ProxyHandler = async (
 
   callback(null, response);
 };
+
+export const call: lambda.ProxyHandler = async (
+  event: lambda.APIGatewayEvent,
+  context: lambda.Context,
+  callback: lambda.Callback,
+): Promise<void> => {
+  const data: {
+    method: string,
+    url: string,
+    params: object,
+  } = JSON.parse(event.body);
+
+  const repository = new qiitaRepository(axios);
+  const response = await repository.callApi(data.url, data.method, data.params);
+
+  callback(null, response);
+};
