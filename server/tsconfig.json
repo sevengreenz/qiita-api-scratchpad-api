@@ -6,7 +6,8 @@
     "sourceMap": "sourceMap ファイルを生成",
     "sourceMap": true,
     "lib": [
-      "esnext"
+      "esnext",
+      "dom"
     ]
   },
   "include": [
