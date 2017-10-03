@@ -20,7 +20,6 @@ export default class QiitaRepository {
     };
     console.log(apiParams);
     const response: AxiosResponse = await this.httpClient.post('/api', apiParams);
-    console.log(response);
     return response;
   }
 }

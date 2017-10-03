@@ -37,8 +37,9 @@ export namespace Qiita {
     pattern?: string;
   }
 
-  export function execute(api: IApi, params: object): void {
+  export async function execute(api: IApi, params: object): Promise<any> {
     const repository: QiitaRepository = new QiitaRepository(axios);
-    const result: any = repository.execute(api.method, api.href, params);
+    const result: any = await repository.execute(api.method, api.href, params);
+    return result;
   }
 }

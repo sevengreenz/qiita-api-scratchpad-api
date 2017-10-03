@@ -28,7 +28,10 @@
                     </div>
                     <v-btn light v-on:click="execute">実行</v-btn>
                     <v-layout row wrap>
-                        resource {{JSON.stringify(resource, undefined, "\t")}}
+                        {{ result }}
+                    </v-layout>
+                    <v-layout row wrap>
+                        <br><br><br> resource {{JSON.stringify(resource, undefined, "\t")}}
                         <br><br><br> api {{ JSON.stringify(api, undefined, "\t")}}
                     </v-layout>
                 </v-container>
@@ -70,6 +73,7 @@ export default class Hello extends Vue {
         required: []
     };
     properties: object;
+    result: string = '';
 
     async created() {
         const resources = await this.fetchQiitaSchema();
@@ -130,9 +134,10 @@ export default class Hello extends Vue {
     }
 
     /** API 実行 */
-    execute(): void {
-        const result = Qiita.execute(this.api, this.properties);
+    async execute(): Promise<any> {
+        const result = await Qiita.execute(this.api, this.properties);
         console.log(result);
+        this.result = result.data;
     }
 };
 </script>

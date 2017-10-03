@@ -6,6 +6,7 @@ export default class Hello extends Vue {
     resource: Qiita.IResource;
     api: Qiita.IApi;
     properties: object;
+    result: string;
     created(): Promise<void>;
     /**
      * Qiita Schema 取得
@@ -28,5 +29,5 @@ export default class Hello extends Vue {
      */
     changeApi($event: Qiita.IApi): void;
     /** API 実行 */
-    execute(): void;
+    execute(): Promise<any>;
 }
