@@ -26,13 +26,9 @@
                             </v-flex>
                         </v-layout>
                     </div>
-                    <v-btn light v-on:click="execute">実行</v-btn>
+                    <v-btn light v-on:click="execute">Exec</v-btn>
                     <v-layout row wrap>
-                        {{ result }}
-                    </v-layout>
-                    <v-layout row wrap>
-                        <br><br><br> resource {{JSON.stringify(resource, undefined, "\t")}}
-                        <br><br><br> api {{ JSON.stringify(api, undefined, "\t")}}
+                        <code>{{ result }}</code>
                     </v-layout>
                 </v-container>
             </v-card-text>
