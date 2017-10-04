@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import { Qiita } from '../../domain/qiita';
-export default class Hello extends Vue {
+export default class Index extends Vue {
     schema: Qiita.IResource[];
     resources: Qiita.IResource[];
     resource: Qiita.IResource;

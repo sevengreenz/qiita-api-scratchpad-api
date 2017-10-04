@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify';
-import HelloComponent from './components/Hello.vue';
+import HelloComponent from './pages/index.vue';
 
 Vue.use(Vuetify);
 
@@ -14,8 +14,6 @@ new Vue({
           </v-toolbar>
           <main>
             <v-container fluid>
-              <div>Hello {{name}}!</div>
-              Name: <input v-model="name" type="text">
               <hello-component :name="name" :initialEnthusiasm="5" />
             </v-container>
           </main>

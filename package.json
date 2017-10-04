@@ -6,7 +6,7 @@
   "scripts": {
     "style:check": "tslint -c tslint.json --type-check --project client/tsconfig.json 'client/**/*.ts' && tslint -c tslint.json --type-check --project server/tsconfig.json 'server/**/*.ts'",
     "style:fix": "tslint -c tslint.json --fix --type-check --project client/tsconfig.json 'client/**/*.ts' && tslint -c tslint.json --fix --type-check --project server/tsconfig.json 'server/**/*.ts'",
-    "vuetype": "vuetype client/components",
+    "vuetype": "vuetype client/components client/pages",
     "build:server": "tsc -p server",
     "build:client": "webpack --config client/webpack.config.js --context client",
     "dev:server": "tsc -p server && sls offline",

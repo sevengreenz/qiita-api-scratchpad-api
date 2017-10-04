@@ -51,7 +51,7 @@ import { Qiita } from '../../domain/qiita';
     props: {
     }
 })
-export default class Hello extends Vue {
+export default class Index extends Vue {
     // initial data
     schema: Qiita.IResource[] = [];
     resources: Qiita.IResource[] = [];
