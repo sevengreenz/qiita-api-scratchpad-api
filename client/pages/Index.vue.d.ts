@@ -1,11 +1,13 @@
 import Vue from 'vue';
-import { Qiita } from '../../domain/qiita';
+import { Qiita } from '../domain/qiita';
 export default class Index extends Vue {
     schema: Qiita.IResource[];
     resources: Qiita.IResource[];
     resource: Qiita.IResource;
     api: Qiita.IApi;
-    properties: object;
+    params: {
+        [key: string]: any;
+    };
     result: string;
     created(): Promise<void>;
     /**
@@ -15,7 +17,7 @@ export default class Index extends Vue {
     /**
      * パラメータ初期化
      */
-    resetProperty(schema: Qiita.ISchema): void;
+    resetParams(schema: Qiita.ISchema): void;
     /**
      * リソース変更イベント
      *

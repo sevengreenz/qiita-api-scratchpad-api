@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import { Qiita } from './../../domain/qiita';
+import { Qiita } from './../domain/qiita';
 
 export default class QiitaRepository {
   constructor(private httpClient: AxiosInstance) {
