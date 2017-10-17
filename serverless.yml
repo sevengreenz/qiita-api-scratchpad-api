@@ -11,26 +11,26 @@ provider:
 
 functions:
   hello:
-    handler: build/handlers/hello.hello
+    handler: build/handlers/hello-handler.hello
     events:
       - http:
           path: hello
           method: get
   getSchema:
-    handler: build/handlers/qiita.qiita
+    handler: build/handlers/qiita-handler.qiita
     events:
       - http:
           path: qiita/schema
           method: get
   execApi:
-    handler: build/handlers/qiita.call
+    handler: build/handlers/qiita-handler.call
     events:
       - http:
           path: qiita/api
           method: post
           cors: true
   authorize:
-    handler: build/handlers/qiita.authorize
+    handler: build/handlers/qiita-handler.authorize
     events:
       - http:
           path: qiita/authorize
