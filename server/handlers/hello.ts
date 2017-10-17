@@ -13,5 +13,5 @@ export const hello: lambda.ProxyHandler = async (
     statusCode: 200,
   };
 
-  callback(null, response);
+  callback(undefined, response);
 };
