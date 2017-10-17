@@ -1,4 +1,4 @@
-service: qiita-api-client 
+service: qiita-api-client
 
 plugins:
   - serverless-offline
@@ -6,6 +6,8 @@ plugins:
 provider:
   name: aws
   runtime: nodejs6.10
+  environment:
+    CLIENT_ID: ${env:QIITA_CLIENT_ID}
 
 functions:
   hello:
@@ -27,5 +29,11 @@ functions:
           path: qiita/api
           method: post
           cors: true
+  authorize:
+    handler: build/handlers/qiita.authorize
+    events:
+      - http:
+          path: qiita/authorize
+          method: get
 
 

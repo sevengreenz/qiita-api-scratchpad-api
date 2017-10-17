@@ -15,9 +15,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/node": "^8.0.41",
+    "@types/query-string": "^5.0.0",
     "aws-lambda": "^0.1.2",
     "axios": "^0.16.2",
     "core-js": "^2.5.1",
+    "query-string": "^5.0.0",
     "vue": "^2.4.4",
     "vue-class-component": "^5.0.2",
     "vuetify": "^0.15.7"
