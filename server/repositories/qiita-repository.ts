@@ -1,20 +1,11 @@
-import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios';
-import { Qiita } from '../domain/qiita';
+// import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios';
+import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 
 export default class QiitaRepository {
-  constructor(private httpClient: AxiosInstance) {
-    httpClient.defaults.baseURL = 'http://qiita.com/api/v2';
-  }
-
-  public async findSchema(): Promise<Qiita.IQiitaSchemaResponse> {
-    const response: AxiosResponse = await this.httpClient.get('schema');
-    const result: Qiita.IQiitaSchemaResponse = {
-      body: response.data,
-      headers: response.headers,
-      statusCode: response.status,
-    };
-    return result;
-  }
+  // TODO: Axios 注入
+  // constructor(private httpClient: AxiosInstance) {
+  //   httpClient.defaults.baseURL = 'http://qiita.com/api/v2';
+  // }
 
   public async callApi(url: string, method: string, params: object): Promise<any> {
     const axiosConfig: AxiosRequestConfig = {

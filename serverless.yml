@@ -16,13 +16,7 @@ functions:
       - http:
           path: hello
           method: get
-  getSchema:
-    handler: build/adapters/handlers/qiita-handler.qiita
-    events:
-      - http:
-          path: qiita/schema
-          method: get
-  execApi:
+  callApi:
     handler: build/adapters/handlers/qiita-handler.callApi
     events:
       - http:

@@ -2,12 +2,6 @@ import * as queryString from 'query-string';
 
 export namespace Qiita {
 
-  export interface IQiitaSchemaResponse {
-    statusCode: number;
-    headers: { [key: string]: string };
-    body: string;
-  }
-
   export const makeAuthorizationUrl = (): string => {
     const params: { [key: string]: string } = {
       client_id: process.env.CLIENT_ID || '',
