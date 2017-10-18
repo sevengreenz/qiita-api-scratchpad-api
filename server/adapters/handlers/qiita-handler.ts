@@ -1,7 +1,8 @@
 import * as lambda from 'aws-lambda';
 import axios from 'axios';
-import qiitaRepository from '../repositories/qiita-repository';
-import { Qiita } from '../domain/qiita';
+import qiitaRepository from '../../repositories/qiita-repository';
+import { Qiita } from '../../domain/qiita';
+import { QiitaOutput } from '../outputs/qiita-output';
 
 export const qiita: lambda.ProxyHandler = async (
   event: lambda.APIGatewayEvent,
@@ -14,7 +15,7 @@ export const qiita: lambda.ProxyHandler = async (
   callback(undefined, response);
 };
 
-export const call: lambda.ProxyHandler = async (
+export const callApi: lambda.ProxyHandler = async (
   event: lambda.APIGatewayEvent,
   context: lambda.Context,
   callback: lambda.Callback,
@@ -28,7 +29,7 @@ export const call: lambda.ProxyHandler = async (
   const repository = new qiitaRepository(axios);
   const response = await repository.callApi(data.url, data.method, data.params);
 
-  callback(undefined, response);
+  QiitaOutput.outputCall(callback, response);
 };
 
 export const authorize: lambda.ProxyHandler = (
@@ -36,13 +37,8 @@ export const authorize: lambda.ProxyHandler = (
   context: lambda.Context,
   callback: lambda.Callback,
 ): void => {
-  const locationUrl = Qiita.makeAuthorizationUrl();
-  console.log(locationUrl);
 
-  const response = {
-    statusCode: 302,
-    headers: { location: locationUrl },
-    body: '',
-  };
-  callback(undefined, response);
+  const locationUrl = Qiita.makeAuthorizationUrl();
+
+  QiitaOutput.outputAuthorize(callback, locationUrl);
 };

@@ -36,10 +36,7 @@ export default class QiitaRepository {
     console.log(axiosConfig);
     const response: AxiosResponse = await axios(axiosConfig);
     console.log(response);
-    return {
-      statusCode: response.status as number,
-      headers: { 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify(response.data),
-    };
+    return response.data;
+
   }
 }
