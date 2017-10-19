@@ -1,6 +1,6 @@
 import * as queryString from 'query-string';
 
-export namespace Qiita {
+export namespace QiitaDomain {
 
   export const makeAuthorizationUrl = (): string => {
     const params: { [key: string]: string } = {
