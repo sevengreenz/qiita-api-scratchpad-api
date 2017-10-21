@@ -10,7 +10,7 @@ new Vue({
     <div>
         <v-app>
           <v-toolbar class="light-green" dark fixed>
-            <v-toolbar-title>Qiita API Client</v-toolbar-title>
+            <v-toolbar-title>Qiita API Scratchpad</v-toolbar-title>
           </v-toolbar>
           <main>
             <v-container fluid>
