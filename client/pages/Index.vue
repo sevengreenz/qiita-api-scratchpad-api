@@ -37,42 +37,39 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import Component from 'vue-class-component';
-import axios from 'axios';
-import QiitaRepository from '../repositories/qiita-repository';
-import { Qiita } from '../domain/qiita';
+import Vue from "vue";
+import Component from "vue-class-component";
+import { Qiita } from "../domain/qiita";
 
 @Component({
-  props: {
-  }
+  props: {}
 })
 export default class Index extends Vue {
   // initial data
   schema: Qiita.IResource[] = [];
   resources: Qiita.IResource[] = [];
   resource: Qiita.IResource = {
-    title: '',
-    description: '',
+    title: "",
+    description: "",
     links: [],
     properties: {},
     required: []
   };
   api: Qiita.IApi = {
-    title: '',
-    description: '',
-    href: '',
-    method: '',
+    title: "",
+    description: "",
+    href: "",
+    method: "",
     schema: {
       properties: {}
     },
     required: []
   };
   params: { [key: string]: any };
-  result: string = '';
+  result: Qiita.IApiResponse | string = "";
 
   async created() {
-    const resources = await this.fetchQiitaSchema();
+    const resources = await Qiita.getSchema();
     this.resources = resources;
     this.resource = resources[0];
     this.api = this.resource.links[0];
@@ -80,15 +77,6 @@ export default class Index extends Vue {
   }
 
   // method
-  /**
-   * Qiita Schema 取得
-   */
-  async fetchQiitaSchema(): Promise<Qiita.IResource[]> {
-    const repository: QiitaRepository = new QiitaRepository(axios);
-    const resources: any = await repository.findSchema();
-    return resources;
-  }
-
   /**
    * パラメータ初期化
    */
@@ -103,11 +91,11 @@ export default class Index extends Vue {
    */
   changeResource($event: Qiita.IResource) {
     // 選択している API が選択されたリソースに含まれているか
-    const isSameResource = $event.links.some((x) => {
+    const isSameResource = $event.links.some(x => {
       if (x === null) return false;
       if (this.api === null) return false;
       return x.title === this.api.title;
-    }, this)
+    }, this);
 
     if (!isSameResource) {
       this.api = $event.links[0];
@@ -125,11 +113,11 @@ export default class Index extends Vue {
   }
 
   /** API 実行 */
-  async execute(): Promise<any> {
+  async execute(): Promise<void> {
     console.log(this.params);
     const result = await Qiita.execute(this.api, this.params);
     console.log(result);
     this.result = result.data;
   }
-};
+}
 </script>

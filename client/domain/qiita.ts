@@ -1,5 +1,5 @@
 import axios from 'axios';
-import QiitaRepository from '../repositories/qiita-repository';
+import QiitaData from '../data/qiita-data';
 
 export namespace Qiita {
   export interface IQiitaSchemaResponse {
@@ -37,15 +37,10 @@ export namespace Qiita {
     pattern?: string;
   }
 
-  /** API 実行用パラメータインターフェース */
-  export interface IApiParams {
-    // パラメータ名
-    key: string;
-    // インプット
-    value: any;
-    type: string | string[];
-    pattern?: string;
-    isRequired: boolean;
+  /** API 実行結果インターフェース */
+  export interface IApiResponse {
+    headers: any;
+    data: any;
   }
 
   /**
@@ -97,9 +92,24 @@ export namespace Qiita {
       {});
   };
 
+  /**
+   * Qiita Schema 取得
+   */
+  export async function getSchema(): Promise<IResource[]> {
+    const data: QiitaData = new QiitaData(axios);
+    const resources: any = await data.findSchema();
+    return resources;
+  }
+
+  /**
+   * Qiita API 実行
+   *
+   * @param IApi api
+   * @param object params
+   */
   export async function execute(api: IApi, params: object): Promise<any> {
-    const repository: QiitaRepository = new QiitaRepository(axios);
-    const result: any = await repository.execute(api.method, api.href, params);
+    const data: QiitaData = new QiitaData(axios);
+    const result: any = await data.execute(api.method, api.href, params);
     return result;
   }
 }
