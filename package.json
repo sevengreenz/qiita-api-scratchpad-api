@@ -8,7 +8,7 @@
     "style:fix": "tslint -c tslint.json --fix --type-check --project client/tsconfig.json 'client/**/*.ts' && tslint -c tslint.json --fix --type-check --project server/tsconfig.json 'server/**/*.ts'",
     "vuetype": "vuetype client/components client/pages",
     "build:server": "tsc -p server",
-    "build:client": "webpack --config client/webpack.config.js --context client",
+    "build:client": "webpack --config client/webpack.config.js --context client && cp client/index.html build/client/index.html",
     "dev:server": "tsc -p server && sls offline",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
