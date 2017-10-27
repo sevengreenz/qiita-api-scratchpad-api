@@ -10,7 +10,6 @@ export const callApi: lambda.ProxyHandler = async (
   context: lambda.Context,
   callback: lambda.Callback,
 ): Promise<void> => {
-
   const params: {
     method: string,
     url: string,

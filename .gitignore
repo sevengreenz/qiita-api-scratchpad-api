@@ -10,5 +10,6 @@ jspm_packages
 .DS_Store
 npm-debug.log
 
+client/.env
 client/dist/build.js
 client/dist/build.js.map
