@@ -2,6 +2,8 @@ var path = require('path')
 var webpack = require('webpack')
 const Dotenv = require('dotenv-webpack')
 
+const envFileName = '/.env.' + (process.env.NODE_ENV || 'dev')
+
 module.exports = {
   entry: './index.ts',
   output: {
@@ -57,7 +59,7 @@ module.exports = {
   },
   plugins: [
     new Dotenv({
-      path: './client/.env',
+      path: './client/' + envFileName,
       safe: false
     }),
   ],
