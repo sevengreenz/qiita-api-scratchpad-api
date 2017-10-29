@@ -2,7 +2,7 @@ var path = require('path')
 var webpack = require('webpack')
 const Dotenv = require('dotenv-webpack')
 
-const envFileName = '/.env.' + (process.env.NODE_ENV || 'dev')
+const DEBUG = process.env.NODE_ENV !== 'production'
 
 module.exports = {
   entry: './index.ts',
@@ -59,15 +59,15 @@ module.exports = {
   },
   plugins: [
     new Dotenv({
-      path: './client/' + envFileName,
+      path: DEBUG ? '/.env.dev' : '/.env.production',
       safe: false
     }),
   ],
   devtool: 'source-map'
 }
 
-if (process.env.NODE_ENV === 'production') {
-  module.exports.devtool = '#source-map'
+if (!DEBUG) {
+  module.exports.devtool = 'eval'
   // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({

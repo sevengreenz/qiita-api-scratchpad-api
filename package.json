@@ -11,7 +11,7 @@
     "build:client": "webpack --config client/webpack.config.js --context client && cp client/index.html build/client/index.html",
     "dev:server": "tsc -p server && sls offline",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "serverless deploy && serverless s3deploy"
+    "deploy": "NODE_ENV=producion npm run build:client && npm run build:server && serverless deploy && serverless s3deploy"
   },
   "author": "",
   "license": "ISC",
