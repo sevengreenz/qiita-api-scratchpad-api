@@ -10,7 +10,7 @@
     "build:server": "tsc -p server",
     "build:client": "webpack --config client/webpack.config.js --context client && cp client/index.html build/client/index.html",
     "dev:server": "tsc -p server && sls offline",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --compilers ts:espower-typescript/guess server/tests/**/*.ts",
     "deploy": "NODE_ENV=producion npm run build:client && npm run build:server && serverless deploy && serverless s3deploy"
   },
   "author": "",
@@ -28,9 +28,13 @@
   },
   "devDependencies": {
     "@types/aws-lambda": "0.0.16",
+    "@types/mocha": "^2.2.44",
     "aws-lambda": "^0.1.2",
     "css-loader": "^0.28.7",
     "dotenv-webpack": "^1.5.4",
+    "espower-typescript": "^8.1.1",
+    "mocha": "^4.0.1",
+    "power-assert": "^1.4.4",
     "serverless": "^1.21.1",
     "serverless-offline": "^3.15.3",
     "serverless-s3-deploy": "^0.5.0",
