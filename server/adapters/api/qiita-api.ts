@@ -1,4 +1,4 @@
-import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import IQiitaApi, { IQiitaApiResponse } from '../../usecases/contracts/qiita-api';
 
 export default class QiitaApi implements IQiitaApi {
@@ -27,15 +27,27 @@ export default class QiitaApi implements IQiitaApi {
       // TODO: throw Error
     }
 
-    console.log(requestConfig);
-    const response: AxiosResponse = await this.httpClient.request(requestConfig);
+    // const response: AxiosResponse = await this.httpClient.request(requestConfig);
+    return this.httpClient.request(requestConfig)
+      .then((response: AxiosResponse) => {
+        const result: IQiitaApiResponse = {
+          data: response.data,
+          headers: response.headers,
+        };
 
-    const result: IQiitaApiResponse = {
-      data: response.data,
-      headers: response.headers,
-    };
-    console.log(result);
+        return Promise.resolve(result);
+      })
+      .catch((error: AxiosError) => {
+        return Promise.reject(error);
+      });
+    /*
+        const result: IQiitaApiResponse = {
+          data: response.data,
+          headers: response.headers,
+        };
+        console.log(result);
 
-    return result;
+        return result;
+        */
   }
 }

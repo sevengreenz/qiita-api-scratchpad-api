@@ -10,19 +10,19 @@
     "build:server": "tsc -p server",
     "build:client": "webpack --config client/webpack.config.js --context client && cp client/index.html build/client/index.html",
     "dev:server": "tsc -p server && sls offline",
-    "test": "mocha --compilers ts:espower-typescript/guess server/tests/**/*.ts",
+    "test": "mocha --compilers ts:espower-typescript/guess 'server/tests/**/*.ts'",
     "deploy": "NODE_ENV=producion npm run build:client && npm run build:server && serverless deploy && serverless s3deploy"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^8.0.41",
-    "@types/query-string": "^5.0.0",
+    "@types/node": "^8.0.47",
+    "@types/query-string": "^5.0.1",
     "aws-lambda": "^0.1.2",
     "axios": "^0.16.2",
     "core-js": "^2.5.1",
-    "query-string": "^5.0.0",
-    "vue": "^2.4.4",
+    "query-string": "^5.0.1",
+    "vue": "^2.5.2",
     "vue-class-component": "^5.0.2",
     "vuetify": "^0.15.7"
   },
@@ -35,16 +35,16 @@
     "espower-typescript": "^8.1.1",
     "mocha": "^4.0.1",
     "power-assert": "^1.4.4",
-    "serverless": "^1.21.1",
-    "serverless-offline": "^3.15.3",
+    "serverless": "^1.23.0",
+    "serverless-offline": "^3.16.0",
     "serverless-s3-deploy": "^0.5.0",
     "ts-loader": "^2.3.7",
-    "tslint": "^5.7.0",
+    "tslint": "^5.8.0",
     "tslint-config-airbnb": "^5.3.0",
-    "typescript": "^2.5.2",
-    "vue-loader": "^13.0.4",
-    "vue-template-compiler": "^2.4.4",
+    "typescript": "^2.5.3",
+    "vue-loader": "^13.3.0",
+    "vue-template-compiler": "^2.5.2",
     "vuetype": "^0.2.2",
-    "webpack": "^3.5.6"
+    "webpack": "^3.8.1"
   }
 }
