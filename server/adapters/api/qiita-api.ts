@@ -27,10 +27,10 @@ export default class QiitaApi implements IQiitaApi {
       // TODO: throw Error
     }
 
-    // const response: AxiosResponse = await this.httpClient.request(requestConfig);
     return this.httpClient.request(requestConfig)
       .then((response: AxiosResponse) => {
         const result: IQiitaApiResponse = {
+          status: response.status,
           data: response.data,
           headers: response.headers,
         };
@@ -38,16 +38,23 @@ export default class QiitaApi implements IQiitaApi {
         return Promise.resolve(result);
       })
       .catch((error: AxiosError) => {
-        return Promise.reject(error);
-      });
-    /*
-        const result: IQiitaApiResponse = {
-          data: response.data,
-          headers: response.headers,
-        };
-        console.log(result);
+        let failure: IQiitaApiResponse;
 
-        return result;
-        */
+        if (error.response === undefined) {
+          failure = {
+            status: 500,
+            data: 'no response',
+            headers: {},
+          };
+        } else {
+          failure = {
+            status: error.response.status,
+            data: error.response.data,
+            headers: error.response.headers,
+          };
+        }
+
+        return Promise.reject(failure);
+      });
   }
 }

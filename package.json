@@ -23,7 +23,7 @@
     "core-js": "^2.5.1",
     "query-string": "^5.0.1",
     "vue": "^2.5.2",
-    "vue-class-component": "^5.0.2",
+    "vue-class-component": "^6.0.0",
     "vuetify": "^0.15.7"
   },
   "devDependencies": {

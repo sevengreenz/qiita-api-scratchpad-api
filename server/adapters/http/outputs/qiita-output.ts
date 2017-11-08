@@ -15,7 +15,7 @@ export default class QiitaOutput implements IOutputPort {
     statusCode: number,
     headers: { [key: string]: string },
     body: any,
-  ) => {
+  ): IResponse => {
     const corsHeaders = {
       'Access-Control-Allow-Origin': '*',
     };
@@ -31,6 +31,14 @@ export default class QiitaOutput implements IOutputPort {
 
   public outputSuccess = (result: any) => {
     const response = this.makeResponse(200, {}, result);
+
+    this.callback(undefined, response);
+  }
+
+  public outputFailure = (result: any) => {
+    console.log(result);
+
+    const response = this.makeResponse(result.status, result.headers, result.data);
 
     this.callback(undefined, response);
   }

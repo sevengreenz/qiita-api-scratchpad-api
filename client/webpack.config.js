@@ -59,7 +59,7 @@ module.exports = {
   },
   plugins: [
     new Dotenv({
-      path: DEBUG ? '/.env.dev' : '/.env.production',
+      path: DEBUG ? 'client/.env.dev' : 'client/.env.production',
       safe: false
     }),
   ],
