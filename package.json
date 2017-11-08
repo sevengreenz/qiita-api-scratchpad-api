@@ -10,7 +10,8 @@
     "build:server": "tsc -p server",
     "build:client": "webpack --config client/webpack.config.js --context client && cp client/index.html build/client/index.html",
     "dev:server": "tsc -p server && sls offline",
-    "test": "mocha --compilers ts:espower-typescript/guess 'server/tests/**/*.ts'",
+    "test:server": "mocha --compilers ts:espower-typescript/guess 'server/tests/**/*.ts'",
+    "test:client": "mocha --compilers ts:espower-typescript/guess 'client/tests/**/*.ts'",
     "deploy": "NODE_ENV=producion npm run build:client && npm run build:server && serverless deploy && serverless s3deploy"
   },
   "author": "",
