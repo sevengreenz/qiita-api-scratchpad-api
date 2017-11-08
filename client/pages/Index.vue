@@ -42,23 +42,23 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import { Qiita } from "../domain/qiita";
+import Qiita, { IResource, IApi, IApiResponse, ISchema } from "../domain/qiita";
 
 @Component({
   props: {}
 })
 export default class Index extends Vue {
   // initial data
-  schema: Qiita.IResource[] = [];
-  resources: Qiita.IResource[] = [];
-  resource: Qiita.IResource = {
+  schema: IResource[] = [];
+  resources: IResource[] = [];
+  resource: IResource = {
     title: "",
     description: "",
     links: [],
     properties: {},
     required: []
   };
-  api: Qiita.IApi = {
+  api: IApi = {
     title: "",
     description: "",
     href: "",
@@ -69,7 +69,7 @@ export default class Index extends Vue {
     required: []
   };
   params: { [key: string]: any };
-  result: Qiita.IApiResponse | string = "";
+  result: IApiResponse | string = "";
 
   async created() {
     const resources = await Qiita.getSchema();
@@ -83,7 +83,7 @@ export default class Index extends Vue {
   /**
    * パラメータ初期化
    */
-  resetParams(schema: Qiita.ISchema): void {
+  resetParams(schema: ISchema): void {
     this.params = Qiita.makeApiParams(schema);
   }
 
@@ -92,7 +92,7 @@ export default class Index extends Vue {
    *
    * @param IResource $event
    */
-  changeResource($event: Qiita.IResource) {
+  changeResource($event: IResource) {
     // 選択している API が選択されたリソースに含まれているか
     const isSameResource = $event.links.some(x => {
       if (x === null) return false;
@@ -111,7 +111,7 @@ export default class Index extends Vue {
    *
    * @param IApi $event
    */
-  changeApi($event: Qiita.IApi): void {
+  changeApi($event: IApi): void {
     if ($event.schema !== undefined) this.resetParams($event.schema);
   }
 
