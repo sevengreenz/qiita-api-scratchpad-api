@@ -42,7 +42,12 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import Qiita, { IResource, IApi, IApiResponse, ISchema } from "../domain/qiita";
+import Qiita, {
+  IResource,
+  IApi,
+  IApiResponse,
+  ISchema
+} from "../../domain/qiita";
 
 @Component({
   props: {}
