@@ -10,6 +10,7 @@
     "build:server": "tsc -p server",
     "build:client": "webpack --config client/webpack.config.js --context client && cp client/index.html build/client/index.html",
     "dev:server": "tsc -p server && sls offline",
+    "dev:client": "webpack-dev-server --inline --config client/webpack.config.js --context client",
     "test:server": "mocha --compilers ts:espower-typescript/guess 'server/tests/**/*.ts'",
     "test:client": "mocha --compilers ts:espower-typescript/guess 'client/tests/**/*.ts'",
     "deploy": "NODE_ENV=producion npm run build:client && npm run build:server && serverless deploy && serverless s3deploy"
@@ -25,6 +26,7 @@
     "query-string": "^5.0.1",
     "vue": "^2.5.2",
     "vue-class-component": "^6.0.0",
+    "vue-router": "^3.0.1",
     "vuetify": "^0.15.7"
   },
   "devDependencies": {
@@ -46,6 +48,7 @@
     "vue-loader": "^13.3.0",
     "vue-template-compiler": "^2.5.2",
     "vuetype": "^0.2.2",
-    "webpack": "^3.8.1"
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.4"
   }
 }
