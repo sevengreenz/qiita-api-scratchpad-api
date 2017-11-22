@@ -18,9 +18,11 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import router from "./routes";
+import store from "./store/store";
 
 @Component<App>({
-  router
+  router,
+  store
 })
 export default class App extends Vue {}
 </script>
