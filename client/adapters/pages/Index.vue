@@ -42,12 +42,9 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import Qiita, {
-  IResource,
-  IApi,
-  IApiResponse,
-  ISchema
-} from "../../domain/qiita";
+import Qiita, { IResource, IApi, ISchema } from "../../domain/qiita";
+import * as qiita from "../../infrastructures/store/qiita";
+import { IApiParams } from "../../infrastructures/store/qiita/qiita-state";
 
 @Component({
   props: {}
@@ -74,7 +71,6 @@ export default class Index extends Vue {
     required: []
   };
   params: { [key: string]: any };
-  result: IApiResponse | string = "";
 
   async created() {
     const resources = await Qiita.getSchema();
@@ -82,6 +78,10 @@ export default class Index extends Vue {
     this.resource = resources[0];
     this.api = this.resource.links[0];
     if (this.api.schema !== undefined) this.resetParams(this.api.schema);
+  }
+
+  get result() {
+    return qiita.getApiResponse(this.$store);
   }
 
   // method
@@ -123,9 +123,11 @@ export default class Index extends Vue {
   /** API 実行 */
   async execute(): Promise<void> {
     console.log(this.params);
-    const result = await Qiita.execute(this.api, this.params);
-    console.log(result);
-    this.result = result.data;
+    const apiParams: IApiParams = {
+      api: this.api,
+      properties: this.params
+    };
+    await qiita.executeApi(this.$store, apiParams);
   }
 }
 </script>

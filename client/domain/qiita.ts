@@ -1,6 +1,6 @@
 import axios from 'axios';
 import QiitaData from '../data/qiita-data';
-import util from '../util';
+// import util from '../util';
 
 export interface IQiitaSchemaResponse {
   statusCode: number;
@@ -68,21 +68,21 @@ const getSchema = async (): Promise<IResource[]> => {
 
 /**
  * Qiita API 実行
+ * TODO: repository に移動
  *
  * @param IApi api
  * @param object params
  */
-const execute = async (api: IApi, params: object): Promise<any> => {
-  // 値がアサインされていないプロパティを削除
-  const convertedParams = util.removeUndefinedProperty(params);
-
-  const data: QiitaData = new QiitaData(axios);
-  const result: any = await data.execute(api.method, api.href, convertedParams);
-  return result;
-};
+// const execute = async (api: IApi, params: object): Promise<any> => {
+//   // 値がアサインされていないプロパティを削除
+//   const convertedParams = util.removeUndefinedProperty(params);
+//
+//   const data: QiitaData = new QiitaData(axios);
+//   const result: any = await data.execute(api.method, api.href, convertedParams);
+//   return result;
+// };
 
 export default {
   makeApiParams,
   getSchema,
-  execute,
 };

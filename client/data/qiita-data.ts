@@ -1,5 +1,7 @@
-import { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios';
-import { IResource, IApiResponse } from './../domain/qiita';
+import { AxiosInstance, AxiosResponse } from 'axios';
+// import { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios';
+import { IResource } from './../domain/qiita';
+// import { IResource, IApiResponse } from './../domain/qiita';
 import IQiitaData from '../domain/contracts/qiita-data';
 
 export default class QiitaData implements IQiitaData {
@@ -12,27 +14,28 @@ export default class QiitaData implements IQiitaData {
     const response: AxiosResponse = await this.httpClient.get('/schema?local=ja');
     return Object.values(response.data.properties);
   }
+  /*
+    public async execute(method: string, url: string, params: object): Promise<IApiResponse> {
+      const apiParams: object = {
+        method: method as string,
+        url: url as string,
+        params: params as object,
+      };
 
-  public async execute(method: string, url: string, params: object): Promise<IApiResponse> {
-    const apiParams: object = {
-      method: method as string,
-      url: url as string,
-      params: params as object,
-    };
+      const config: AxiosRequestConfig = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
 
-    const config: AxiosRequestConfig = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
+      const response: AxiosResponse = await this.httpClient.post('/api', apiParams, config);
 
-    const response: AxiosResponse = await this.httpClient.post('/api', apiParams, config);
+      const result: IApiResponse = {
+        headers: response.headers,
+        data: response.data,
+      };
 
-    const result: IApiResponse = {
-      headers: response.headers,
-      data: response.data,
-    };
-
-    return result;
-  }
+      return result;
+    }
+  */
 }

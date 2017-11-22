@@ -53,7 +53,8 @@ module.exports = {
   devServer: {
     contentBase: path.resolve(__dirname, '../build/client'),
     historyApiFallback: true,
-    noInfo: true
+    noInfo: true,
+    hotOnly: true
   },
   performance: {
     hints: false

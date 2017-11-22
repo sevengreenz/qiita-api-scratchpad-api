@@ -1,6 +1,7 @@
 <template>
   <div>
     hoge
+    moga
   </div>
 </template>
 
@@ -9,9 +10,22 @@ import Vue from "vue";
 import Component from "vue-class-component";
 
 @Component({
-  props: {}
+  props: {
+    code: String
+  }
 })
-export default class Authorized extends Vue {}
+export default class Authorized extends Vue {
+  code: string;
+
+  mounted() {
+    console.log(this.$route.query);
+    console.log(this.display);
+  }
+
+  display() {
+    console.log(this.code);
+  }
+}
 </script>
 
 
