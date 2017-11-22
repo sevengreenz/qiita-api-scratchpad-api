@@ -1,7 +1,6 @@
 import { QiitaContext, commitApiResponse } from '../../infrastructures/store/qiita/qiita';
-import { IApiParams } from '../../infrastructures/store/qiita/qiita-state';
+import { IApiParams } from '../../domain/qiita';
 import axios from 'axios';
-// import QiitaData from '../../data/qiita-data';
 import util from '../../util';
 
 import ScratchpadApiGateway from '../api-gateways/scratchpad-api-gateway';
@@ -19,8 +18,6 @@ const executeApi = async (context: QiitaContext, params: IApiParams): Promise<vo
     params.api.href,
     convertedParams,
   );
-  // const data: QiitaData = new QiitaData(axios);
-  // const result: any = await data.execute(params.api.method, params.api.href, convertedParams);
 
   commitApiResponse(context, result);
 };

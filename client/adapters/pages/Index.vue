@@ -44,7 +44,7 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import Qiita, { IResource, IApi, ISchema } from "../../domain/qiita";
 import * as qiita from "../../infrastructures/store/qiita";
-import { IApiParams } from "../../infrastructures/store/qiita/qiita-state";
+import { IApiParams } from "../../domain/qiita";
 
 @Component({
   props: {}

@@ -1,6 +1,5 @@
 import axios from 'axios';
 import QiitaData from '../data/qiita-data';
-// import util from '../util';
 
 export interface IQiitaSchemaResponse {
   statusCode: number;
@@ -37,10 +36,20 @@ export interface IProperty {
   pattern?: string;
 }
 
+/** API 実行パラメータインターフェース */
+export interface IApiParams {
+  api: IApi;
+  properties: { [key: string]: any };
+}
+
 /** API 実行結果インターフェース */
 export interface IApiResponse {
   headers: any;
   data: any;
+}
+
+export interface IQiitaState {
+  apiResponse: IApiResponse;
 }
 
 /**

@@ -1,11 +1,8 @@
 import { ActionContext } from 'vuex';
 import { getStoreAccessors } from 'vuex-typescript';
 import { IState as IRootState } from '../state';
-import { IQiitaState, IApiResponse/*, IApiParams*/ } from './qiita-state';
+import { IQiitaState, IApiResponse } from '../../../domain/qiita';
 import QiitaActions from '../../../usecases/actions/qiita-actions';
-
-// import ScratchpadApi from '../../../adapters/apis/scratchpad-api';
-// import ScratchpadApiGateway from '../../../usecases/api-gateways/scratchpad-api-gateway';
 
 export type QiitaContext = ActionContext<IQiitaState, IRootState>;
 

@@ -1,2 +1,2 @@
 export * from './qiita';
-export * from './qiita-state';
+export * from '../../../domain/qiita';
