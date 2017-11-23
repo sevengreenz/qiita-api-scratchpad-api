@@ -52,32 +52,9 @@ import { IApiParams } from "../../domain/qiita";
 export default class Index extends Vue {
   // initial data
   schema: IResource[] = [];
-  // resources: IResource[] = [];
-  // resource: IResource = {
-  //   title: "",
-  //   description: "",
-  //   links: [],
-  //   properties: {},
-  //   required: []
-  // };
-  // api: IApi = {
-  //   title: "",
-  //   description: "",
-  //   href: "",
-  //   method: "",
-  //   schema: {
-  //     properties: {}
-  //   },
-  //   required: []
-  // };
-  // params: { [key: string]: any };
 
   async created() {
     qiita.fetchSchema(this.$store);
-    // const resources = await Qiita.getSchema();
-    // this.resources = resources;
-    // this.resource = resources[0];
-    // this.api = this.resource.links[0];
 
     // TODO:
     if (this.api.schema !== undefined) this.resetParams(this.api.schema);

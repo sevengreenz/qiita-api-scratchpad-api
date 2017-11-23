@@ -1,5 +1,3 @@
-import axios from 'axios';
-import QiitaData from '../data/qiita-data';
 
 export interface IQiitaSchemaResponse {
   statusCode: number;
@@ -69,32 +67,6 @@ const makeApiParams = (schema: ISchema): { [key: string]: any } => {
   );
 };
 
-/**
- * Qiita Schema 取得
- */
-const getSchema = async (): Promise<IResource[]> => {
-  const data: QiitaData = new QiitaData(axios);
-  const resources: any = await data.findSchema();
-  return resources;
-};
-
-/**
- * Qiita API 実行
- * TODO: repository に移動
- *
- * @param IApi api
- * @param object params
- */
-// const execute = async (api: IApi, params: object): Promise<any> => {
-//   // 値がアサインされていないプロパティを削除
-//   const convertedParams = util.removeUndefinedProperty(params);
-//
-//   const data: QiitaData = new QiitaData(axios);
-//   const result: any = await data.execute(api.method, api.href, convertedParams);
-//   return result;
-// };
-
 export default {
   makeApiParams,
-  getSchema,
 };
