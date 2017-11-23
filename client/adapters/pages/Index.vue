@@ -52,32 +52,52 @@ import { IApiParams } from "../../domain/qiita";
 export default class Index extends Vue {
   // initial data
   schema: IResource[] = [];
-  resources: IResource[] = [];
-  resource: IResource = {
-    title: "",
-    description: "",
-    links: [],
-    properties: {},
-    required: []
-  };
-  api: IApi = {
-    title: "",
-    description: "",
-    href: "",
-    method: "",
-    schema: {
-      properties: {}
-    },
-    required: []
-  };
-  params: { [key: string]: any };
+  // resources: IResource[] = [];
+  // resource: IResource = {
+  //   title: "",
+  //   description: "",
+  //   links: [],
+  //   properties: {},
+  //   required: []
+  // };
+  // api: IApi = {
+  //   title: "",
+  //   description: "",
+  //   href: "",
+  //   method: "",
+  //   schema: {
+  //     properties: {}
+  //   },
+  //   required: []
+  // };
+  // params: { [key: string]: any };
 
   async created() {
-    const resources = await Qiita.getSchema();
-    this.resources = resources;
-    this.resource = resources[0];
-    this.api = this.resource.links[0];
+    qiita.fetchSchema(this.$store);
+    // const resources = await Qiita.getSchema();
+    // this.resources = resources;
+    // this.resource = resources[0];
+    // this.api = this.resource.links[0];
+
+    // TODO:
     if (this.api.schema !== undefined) this.resetParams(this.api.schema);
+    // this.resetParams(this.api.schema);
+  }
+
+  get resources(): IResource[] {
+    return qiita.getResources(this.$store);
+  }
+
+  get resource(): IResource {
+    return qiita.getTargetResource(this.$store);
+  }
+
+  get api(): IApi {
+    return qiita.getTargetApi(this.$store);
+  }
+
+  get params(): object {
+    return qiita.getApiParams(this.$store);
   }
 
   get result() {
@@ -89,7 +109,13 @@ export default class Index extends Vue {
    * パラメータ初期化
    */
   resetParams(schema: ISchema): void {
-    this.params = Qiita.makeApiParams(schema);
+    if (schema.required) {
+      console.log("doudemoii");
+    }
+    // this.params = Qiita.makeApiParams(schema);
+    if (this.api.schema !== undefined) {
+      qiita.commitApiParams(this.$store, Qiita.makeApiParams(this.api.schema));
+    }
   }
 
   /**
@@ -106,7 +132,9 @@ export default class Index extends Vue {
     }, this);
 
     if (!isSameResource) {
-      this.api = $event.links[0];
+      // TODO: view ではコミットしないよう修正
+      qiita.commitTargetResource(this.$store, $event);
+      // this.api = $event.links[0];
       if (this.api.schema !== undefined) this.resetParams(this.api.schema);
     }
   }

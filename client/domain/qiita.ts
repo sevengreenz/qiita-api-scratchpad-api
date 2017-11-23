@@ -49,6 +49,9 @@ export interface IApiResponse {
 }
 
 export interface IQiitaState {
+  resources: IResource[];
+  targetResource: IResource;
+  params: { [key: string]: any };
   apiResponse: IApiResponse;
 }
 
