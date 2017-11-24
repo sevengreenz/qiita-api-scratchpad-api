@@ -40,7 +40,9 @@ export interface IApiParams {
   properties: { [key: string]: any };
 }
 
-/** API 実行結果インターフェース */
+/**
+ * API 実行結果インターフェース
+ */
 export interface IApiResponse {
   headers: any;
   data: any;
@@ -50,8 +52,23 @@ export interface IQiitaState {
   resources: IResource[];
   targetResource: IResource;
   params: { [key: string]: any };
-  apiResponse: IApiResponse;
+  apiResponse?: IApiResponse;
 }
+
+const createInitialState = (): IQiitaState => {
+  return {
+    resources: [],
+    targetResource: {
+      title: '',
+      description: '',
+      links: [],
+      properties: {},
+      required: [],
+    },
+    params: {},
+    apiResponse: undefined,
+  };
+};
 
 /**
  * 実行 API のパラメータ作成
@@ -68,5 +85,6 @@ const makeApiParams = (schema: ISchema): { [key: string]: any } => {
 };
 
 export default {
+  createInitialState,
   makeApiParams,
 };

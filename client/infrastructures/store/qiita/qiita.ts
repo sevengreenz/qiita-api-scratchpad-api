@@ -1,7 +1,7 @@
 import { ActionContext } from 'vuex';
 import { getStoreAccessors } from 'vuex-typescript';
 import { IState as IRootState } from '../state';
-import { IQiitaState, IApiResponse, IResource, IApi } from '../../../domain/qiita';
+import qiitaDomain, { IQiitaState, IApiResponse, IResource, IApi } from '../../../domain/qiita';
 import QiitaActions from '../../../usecases/actions/qiita-actions';
 
 export type QiitaContext = ActionContext<IQiitaState, IRootState>;
@@ -9,18 +9,7 @@ export type QiitaContext = ActionContext<IQiitaState, IRootState>;
 export const qiita = {
   namespaced: true,
 
-  state: {
-    resources: [],
-    targetResource: {
-      title: '',
-      description: '',
-      links: [],
-      properties: {},
-      required: [],
-    },
-    params: {},
-    apiResponse: '',
-  },
+  state: qiitaDomain.createInitialState(),
 
   getters: {
     getResources(state: IQiitaState): IResource[] {
@@ -35,8 +24,8 @@ export const qiita = {
     getApiParams(state: IQiitaState): object {
       return state.params;
     },
-    getApiResponse(state: IQiitaState): IApiResponse {
-      return state.apiResponse;
+    getApiResponse(state: IQiitaState): IApiResponse | string {
+      return state.apiResponse || '';
     },
   },
 
