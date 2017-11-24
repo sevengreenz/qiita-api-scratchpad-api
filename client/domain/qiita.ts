@@ -48,9 +48,13 @@ export interface IApiResponse {
   data: any;
 }
 
+/**
+ * Qiita State インターフェース
+ */
 export interface IQiitaState {
   resources: IResource[];
   targetResource: IResource;
+  targetApi: IApi;
   params: { [key: string]: any };
   apiResponse?: IApiResponse;
 }
@@ -63,6 +67,13 @@ const createInitialState = (): IQiitaState => {
       description: '',
       links: [],
       properties: {},
+      required: [],
+    },
+    targetApi: {
+      title: '',
+      description: '',
+      href: '',
+      method: '',
       required: [],
     },
     params: {},

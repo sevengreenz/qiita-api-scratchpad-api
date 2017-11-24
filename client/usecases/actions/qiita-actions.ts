@@ -3,8 +3,10 @@ import {
   commitApiResponse,
   commitResources,
   commitTargetResource,
+  commitTargetApi,
+  commitApiParams,
 } from '../../infrastructures/store/qiita/qiita';
-import { IApiParams } from '../../domain/qiita';
+import qiitaDomain, { IApiParams, IApi } from '../../domain/qiita';
 import axios from 'axios';
 import util from '../../util';
 
@@ -20,6 +22,18 @@ const fetchSchema = async (context: QiitaContext): Promise<void> => {
 
   commitResources(context, resources);
   commitTargetResource(context, resources[0]);
+  commitTargetApi(context, resources[0].links[0]);
+};
+
+const changeTargetApi = (context: QiitaContext, api: IApi): void => {
+  commitTargetApi(context, api);
+
+  // 変更後の API の初期パラメータ作成
+  const params = api.schema === undefined
+    ? {}
+    : qiitaDomain.makeApiParams(api.schema);
+
+  commitApiParams(context, params);
 };
 
 const executeApi = async (context: QiitaContext, params: IApiParams): Promise<void> => {
@@ -40,5 +54,6 @@ const executeApi = async (context: QiitaContext, params: IApiParams): Promise<vo
 
 export default {
   fetchSchema,
+  changeTargetApi,
   executeApi,
 };

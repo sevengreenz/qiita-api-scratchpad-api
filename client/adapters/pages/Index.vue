@@ -57,7 +57,7 @@ export default class Index extends Vue {
     qiita.fetchSchema(this.$store);
 
     // TODO:
-    if (this.api.schema !== undefined) this.resetParams(this.api.schema);
+    // if (this.api.schema !== undefined) this.resetParams(this.api.schema);
     // this.resetParams(this.api.schema);
   }
 
@@ -111,8 +111,9 @@ export default class Index extends Vue {
     if (!isSameResource) {
       // TODO: view ではコミットしないよう修正
       qiita.commitTargetResource(this.$store, $event);
+      qiita.commitTargetApi(this.$store, $event.links[0]);
       // this.api = $event.links[0];
-      if (this.api.schema !== undefined) this.resetParams(this.api.schema);
+      // if (this.api.schema !== undefined) this.resetParams(this.api.schema);
     }
   }
 
@@ -122,7 +123,7 @@ export default class Index extends Vue {
    * @param IApi $event
    */
   changeApi($event: IApi): void {
-    if ($event.schema !== undefined) this.resetParams($event.schema);
+    qiita.changeTargetApi(this.$store, $event);
   }
 
   /** API 実行 */
