@@ -38,9 +38,14 @@ export const qiita = {
     },
     setTargetApi(state: IQiitaState, api: IApi) {
       state.targetApi = api;
-    },
-    setApiParams(state: IQiitaState, params: object) {
-      state.params = params;
+
+      // 変更後の API の初期パラメータ作成
+      state.params = api.schema === undefined
+        ? {}
+        : qiitaDomain.makeApiParams(api.schema);
+
+      // API 実行結果初期化
+      state.apiResponse = undefined;
     },
     setApiResponse(state: IQiitaState, apiReponse: IApiResponse) {
       state.apiResponse = apiReponse;
@@ -61,12 +66,12 @@ export const getApiParams = read(qiita.getters.getApiParams);
 export const getApiResponse = read(qiita.getters.getApiResponse);
 
 export const fetchSchema = dispatch(qiita.actions.fetchSchema);
+export const changeTargetResource = dispatch(qiita.actions.changeTargetResource);
 export const changeTargetApi = dispatch(qiita.actions.changeTargetApi);
 export const executeApi = dispatch(qiita.actions.executeApi);
 
 export const commitResources = commit(qiita.mutations.setResources);
 export const commitTargetResource = commit(qiita.mutations.setTargetResource);
 export const commitTargetApi = commit(qiita.mutations.setTargetApi);
-export const commitApiParams = commit(qiita.mutations.setApiParams);
 export const commitApiResponse = commit(qiita.mutations.setApiResponse);
 

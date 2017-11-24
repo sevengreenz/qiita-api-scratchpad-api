@@ -42,7 +42,7 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import Qiita, { IResource, IApi, ISchema } from "../../domain/qiita";
+import { IResource, IApi } from "../../domain/qiita";
 import * as qiita from "../../infrastructures/store/qiita";
 import { IApiParams } from "../../domain/qiita";
 
@@ -55,10 +55,6 @@ export default class Index extends Vue {
 
   async created() {
     qiita.fetchSchema(this.$store);
-
-    // TODO:
-    // if (this.api.schema !== undefined) this.resetParams(this.api.schema);
-    // this.resetParams(this.api.schema);
   }
 
   get resources(): IResource[] {
@@ -81,40 +77,13 @@ export default class Index extends Vue {
     return qiita.getApiResponse(this.$store);
   }
 
-  // method
-  /**
-   * パラメータ初期化
-   */
-  resetParams(schema: ISchema): void {
-    if (schema.required) {
-      console.log("doudemoii");
-    }
-    // this.params = Qiita.makeApiParams(schema);
-    if (this.api.schema !== undefined) {
-      qiita.commitApiParams(this.$store, Qiita.makeApiParams(this.api.schema));
-    }
-  }
-
   /**
    * リソース変更イベント
    *
    * @param IResource $event
    */
   changeResource($event: IResource) {
-    // 選択している API が選択されたリソースに含まれているか
-    const isSameResource = $event.links.some(x => {
-      if (x === null) return false;
-      if (this.api === null) return false;
-      return x.title === this.api.title;
-    }, this);
-
-    if (!isSameResource) {
-      // TODO: view ではコミットしないよう修正
-      qiita.commitTargetResource(this.$store, $event);
-      qiita.commitTargetApi(this.$store, $event.links[0]);
-      // this.api = $event.links[0];
-      // if (this.api.schema !== undefined) this.resetParams(this.api.schema);
-    }
+    qiita.changeTargetResource(this.$store, $event);
   }
 
   /**
