@@ -42,31 +42,26 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import { IResource, IApi } from "../../domain/qiita";
+import qiitaDomain, { IResource, IApi, IApiParams } from "../../domain/qiita";
 import * as qiita from "../../infrastructures/store/qiita";
-import { IApiParams } from "../../domain/qiita";
 
 @Component({
   props: {}
 })
 export default class Index extends Vue {
   // initial data
-  schema: IResource[] = [];
+  resource: IResource | string = "";
+  api: IApi = qiitaDomain.createEmptyApi();
 
   async created() {
     qiita.fetchSchema(this.$store);
+
+    this.resource = qiita.getTargetResource(this.$store);
+    this.api = qiita.getTargetApi(this.$store);
   }
 
   get resources(): IResource[] {
     return qiita.getResources(this.$store);
-  }
-
-  get resource(): IResource {
-    return qiita.getTargetResource(this.$store);
-  }
-
-  get api(): IApi {
-    return qiita.getTargetApi(this.$store);
   }
 
   get params(): object {

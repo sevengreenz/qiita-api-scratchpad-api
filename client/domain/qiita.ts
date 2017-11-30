@@ -81,6 +81,15 @@ const createInitialState = (): IQiitaState => {
   };
 };
 
+const createEmptyApi = (): IApi => {
+  return {
+    title: '',
+    description: '',
+    href: '',
+    method: '',
+  };
+};
+
 /**
  * 実行 API のパラメータ作成
  *
@@ -97,5 +106,6 @@ const makeApiParams = (schema: ISchema): { [key: string]: any } => {
 
 export default {
   createInitialState,
+  createEmptyApi,
   makeApiParams,
 };
