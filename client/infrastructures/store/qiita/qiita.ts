@@ -1,9 +1,10 @@
 import { ActionContext } from 'vuex';
 import { getStoreAccessors } from 'vuex-typescript';
 import { IState as IRootState } from '../state';
-import qiitaDomain, { IQiitaState, IApiResponse, IResource, IApi } from '../../../domain/qiita';
-import QiitaActions from '../../../usecases/actions/qiita-actions';
-import QiitaGetters from '../../../usecases/getters/qiita-getters';
+import qiitaDomain, { IQiitaState } from '../../../domain/qiita';
+import qiitaActions from '../../../usecases/actions/qiita-actions';
+import qiitaGetters from '../../../usecases/getters/qiita-getters';
+import qiitaMutations from '../../../usecases/mutations/qiita-mutations';
 
 export type QiitaContext = ActionContext<IQiitaState, IRootState>;
 
@@ -12,32 +13,11 @@ export const qiita = {
 
   state: qiitaDomain.createInitialState(),
 
-  getters: QiitaGetters,
+  getters: qiitaGetters,
 
-  mutations: {
-    setResources(state: IQiitaState, resources: IResource[]) {
-      state.resources = resources;
-    },
-    setTargetResource(state: IQiitaState, resource: IResource) {
-      state.targetResource = resource;
-    },
-    setTargetApi(state: IQiitaState, api: IApi) {
-      state.targetApi = api;
+  mutations: qiitaMutations,
 
-      // 変更後の API の初期パラメータ作成
-      state.params = api.schema === undefined
-        ? {}
-        : qiitaDomain.makeApiParams(api.schema);
-
-      // API 実行結果初期化
-      state.apiResponse = undefined;
-    },
-    setApiResponse(state: IQiitaState, apiReponse: IApiResponse) {
-      state.apiResponse = apiReponse;
-    },
-  },
-
-  actions: QiitaActions,
+  actions: qiitaActions,
 };
 
 const { commit, read, dispatch } =
