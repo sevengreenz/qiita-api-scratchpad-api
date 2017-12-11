@@ -1,6 +1,7 @@
 import IInputPort from '../../contracts/input-port';
 import IOutputPort from '../../contracts/output-port';
-import IQiitaApiGateway, { IQiitaApiResponse } from '../../contracts/qiita-api-gateway';
+import IQiitaApiGateway from '../../contracts/qiita-api-gateway';
+import { IQiitaApiResponse } from '../../../domain/qiita-domain';
 
 export default class ExecuteApiInteractor implements IInputPort {
   constructor(private outputPort: IOutputPort, private qiitaApiGateawy: IQiitaApiGateway) { }

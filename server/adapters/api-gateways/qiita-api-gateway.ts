@@ -1,5 +1,6 @@
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
-import IQiitaApiGateway, { IQiitaApiResponse } from '../../usecases/contracts/qiita-api-gateway';
+import IQiitaApiGateway from '../../usecases/contracts/qiita-api-gateway';
+import { IQiitaApiResponse } from '../../domain/qiita-domain';
 
 export default class QiitaApiGateway implements IQiitaApiGateway {
 
