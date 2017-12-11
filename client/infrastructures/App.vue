@@ -6,7 +6,7 @@
             </v-toolbar>
             <main>
                 <v-container fluid>
-                <router-view></router-view>
+                    <router-view></router-view>
                 </v-container>
             </main>
             <v-footer class="light-green"></v-footer>
@@ -15,10 +15,10 @@
 </template>
 
 <script lang='ts'>
-import Vue from "vue";
-import Component from "vue-class-component";
-import router from "./routes";
-import store from "./store/store";
+import Vue from 'vue';
+import Component from 'vue-class-component';
+import router from './routes';
+import store from './store/store';
 
 @Component<App>({
   router,
