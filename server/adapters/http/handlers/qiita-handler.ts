@@ -1,8 +1,8 @@
 import * as lambda from 'aws-lambda';
 import { QiitaDomain } from '../../../domain/qiita-domain';
 import QiitaOutput from '../outputs/qiita-output';
-import QiitaApiGateway from '../../../usecases/api-gateway/qiita-api-gateway';
-import QiitaApi from '../../api/qiita-api';
+import QiitaApiGateway from '../../../adapters/api-gateways/qiita-api-gateway';
+import ExecuteApi from '../../../usecases/interactors/qiita/execute-api';
 import axios from 'axios';
 
 export const callApi: lambda.ProxyHandler = async (
@@ -17,10 +17,10 @@ export const callApi: lambda.ProxyHandler = async (
   } = JSON.parse(event.body || '');
 
   const output = new QiitaOutput(callback);
-  const qiitaApi = new QiitaApi(axios);
-  const usecase = new QiitaApiGateway(output, qiitaApi);
+  const qiitaApiGateway = new QiitaApiGateway(axios.create());
+  const interactor = new ExecuteApi(output, qiitaApiGateway);
 
-  await usecase.execute(params);
+  await interactor.execute(params);
 };
 
 export const authorize: lambda.ProxyHandler = (

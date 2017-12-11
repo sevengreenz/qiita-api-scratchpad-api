@@ -1,10 +1,9 @@
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
-import IQiitaApi, { IQiitaApiResponse } from '../../usecases/contracts/qiita-api';
+import IQiitaApiGateway, { IQiitaApiResponse } from '../../usecases/contracts/qiita-api-gateway';
 
-export default class QiitaApi implements IQiitaApi {
-  constructor(private httpClient: AxiosInstance) {
-    // TODO: できれば抽象に依存させる
-  }
+export default class QiitaApiGateway implements IQiitaApiGateway {
+
+  constructor(private httpClient: AxiosInstance) { }
 
   public async execute(method: string, url: string, params: object): Promise<IQiitaApiResponse> {
     const requestConfig: AxiosRequestConfig = {

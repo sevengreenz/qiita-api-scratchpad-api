@@ -1,6 +1,6 @@
 
 /** Qiita API 実行クラスインターフェース */
-export default interface IQiitaApi {
+export default interface IQiitaApiGateway {
   execute(method: string, url: string, params: object): Promise<IQiitaApiResponse>;
 }
 
