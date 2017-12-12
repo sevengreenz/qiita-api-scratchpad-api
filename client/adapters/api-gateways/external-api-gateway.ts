@@ -2,7 +2,7 @@ import { AxiosInstance, AxiosResponse } from 'axios';
 import { IResource } from '../../domain/qiita';
 import { IExternalApi } from '../../usecases/contracts/external-api-interface';
 
-export default class ExternalApi implements IExternalApi {
+export default class ExternalApiGateway implements IExternalApi {
   constructor(private httpClient: AxiosInstance) {
     this.httpClient.defaults.baseURL = process.env.QIITA_URL;
   }
