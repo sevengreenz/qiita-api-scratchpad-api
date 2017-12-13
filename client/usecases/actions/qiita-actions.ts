@@ -6,16 +6,20 @@ import {
   commitTargetApi,
 } from '../../infrastructures/store/qiita/qiita';
 import { IApiParams, IApi, IResource } from '../../domain/qiita';
-import axios from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import util from '../../util';
 
 import ScratchpadApiGateway from '../../adapters/api-gateways/scratchpad-api-gateway';
 import ExternalApiGateway from '../../adapters/api-gateways/external-api-gateway';
 
 const fetchSchema = async (context: QiitaContext): Promise<void> => {
-  const externalApiGateway = new ExternalApiGateway(axios);
-
-  const resources = await externalApiGateway.findQiitaApiSchema();
+  const createHttpClient = (config: AxiosRequestConfig): () => AxiosInstance => {
+    return () => axios.create(config);
+  };
+  const requestConfig: AxiosRequestConfig = {
+    baseURL: process.env.QIITA_URL,
+  };
+  const resources = await ExternalApiGateway.findQiitaApiSchema(createHttpClient(requestConfig))();
 
   commitResources(context, resources);
   commitTargetResource(context, resources[0]);
