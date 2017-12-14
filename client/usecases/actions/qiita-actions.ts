@@ -40,13 +40,9 @@ const executeApi = async (context: QiitaContext, params: IApiParams): Promise<vo
   // 値がアサインされていないプロパティを削除
   const convertedParams = util.removeUndefinedProperty(params.properties);
 
-  const createHttpClient = (baseConfig: AxiosRequestConfig) =>
-    (config?: AxiosRequestConfig) => axios.create(Object.assign(baseConfig, config));
+  const createHttpClient = () => (config: AxiosRequestConfig) => axios.create(config);
 
-  const requestConfig: AxiosRequestConfig = {
-    baseURL: process.env.BASE_API_URL,
-  };
-  const result = await ScratchpadApiGateway(createHttpClient(requestConfig))
+  const result = await ScratchpadApiGateway(createHttpClient())
     .executeQiitaApi(params.api.method, params.api.href, convertedParams);
 
   commitApiResponse(context, result);
