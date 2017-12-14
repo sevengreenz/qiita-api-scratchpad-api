@@ -13,14 +13,9 @@ import ScratchpadApiGateway from '../../adapters/api-gateways/scratchpad-api-gat
 import ExternalApiGateway from '../../adapters/api-gateways/external-api-gateway';
 
 const fetchSchema = async (context: QiitaContext): Promise<void> => {
-  const createHttpClient = (baseConfig: AxiosRequestConfig) =>
-    (config?: AxiosRequestConfig) => axios.create(Object.assign(baseConfig, config));
+  const createHttpClient = () => (config: AxiosRequestConfig) => axios.create(config);
 
-  const requestConfig: AxiosRequestConfig = {
-    baseURL: process.env.QIITA_URL,
-  };
-
-  const resources = await ExternalApiGateway(createHttpClient(requestConfig)).findQiitaApiSchema();
+  const resources = await ExternalApiGateway(createHttpClient()).findQiitaApiSchema();
 
   commitResources(context, resources);
   commitTargetResource(context, resources[0]);
