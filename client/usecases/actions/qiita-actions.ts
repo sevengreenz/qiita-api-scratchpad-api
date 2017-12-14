@@ -19,7 +19,8 @@ const fetchSchema = async (context: QiitaContext): Promise<void> => {
   const requestConfig: AxiosRequestConfig = {
     baseURL: process.env.QIITA_URL,
   };
-  const resources = await ExternalApiGateway.findQiitaApiSchema(createHttpClient(requestConfig))();
+
+  const resources = await ExternalApiGateway(createHttpClient(requestConfig)).findQiitaApiSchema();
 
   commitResources(context, resources);
   commitTargetResource(context, resources[0]);

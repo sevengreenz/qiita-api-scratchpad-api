@@ -7,10 +7,12 @@ import { AxiosInstance } from 'axios';
  * @export
  * @interface IExternalApi
  */
-export interface IExternalApi {
+export interface IExternalApiGateway {
 
   /**
    * Qiita API Schema を取得
    */
-  (createHttpClient: () => AxiosInstance): () => Promise<IResource[]>;
+  (createHttpClient: () => AxiosInstance): {
+    findQiitaApiSchema: () => Promise<IResource[]>,
+  };
 }
