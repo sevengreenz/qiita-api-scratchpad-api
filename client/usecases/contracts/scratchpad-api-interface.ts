@@ -1,14 +1,7 @@
 import { IApiResponse } from '../../domain/qiita';
+import { AxiosInstance, AxiosRequestConfig } from 'axios';
 
-export interface IScratchpadApi {
-
-  /**
-   * Qiita API を実行
-   *
-   * @param string method
-   * @param string url
-   * @param object params
-   * @return any
-   */
-  executeQiitaApi(method: string, url: string, params: object): Promise<IApiResponse>;
+export interface IExecuteApi {
+  (createHttpClient: (requestConfig: AxiosRequestConfig) => AxiosInstance):
+    (method: string, url: string, params: object) => Promise<IApiResponse>;
 }

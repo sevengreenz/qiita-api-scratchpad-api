@@ -1,13 +1,9 @@
-import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { IApiResponse } from '../../domain/qiita';
-import { IScratchpadApi } from '../../usecases/contracts/scratchpad-api-interface';
+import { IExecuteApi } from '../../usecases/contracts/scratchpad-api-interface';
 
-export default class ScratchpadApiGateway implements IScratchpadApi {
-  constructor(private client: AxiosInstance) {
-    client.defaults.baseURL = process.env.BASE_API_URL;
-  }
-
-  public async executeQiitaApi(method: string, url: string, params: object): Promise<IApiResponse> {
+const executeQiitaApi: IExecuteApi = (createHttpClient) => {
+  return async (method, url, params): Promise<IApiResponse> => {
     const apiParams = {
       method,
       url,
@@ -20,12 +16,16 @@ export default class ScratchpadApiGateway implements IScratchpadApi {
       },
     };
 
-    const response: AxiosResponse = await this.client.post('/api', apiParams, config);
+    const response: AxiosResponse = await createHttpClient(config).post('/api', apiParams);
     const result: IApiResponse = {
       headers: response.headers,
       data: response.data,
     };
 
     return result;
-  }
-}
+  };
+};
+
+export default {
+  executeQiitaApi,
+};
