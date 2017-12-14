@@ -1,31 +1,31 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { IApiResponse } from '../../domain/qiita';
-import { IExecuteApi } from '../../usecases/contracts/scratchpad-api-interface';
+import { IScratchpadApiGateway } from '../../usecases/contracts/scratchpad-api-gateway-interface';
 
-const executeQiitaApi: IExecuteApi = (createHttpClient) => {
-  return async (method, url, params): Promise<IApiResponse> => {
-    const apiParams = {
-      method,
-      url,
-      params,
-    };
+const scratchpadApiGateway: IScratchpadApiGateway = (createHttpClient) => {
+  return {
+    executeQiitaApi: async (method, url, params): Promise<IApiResponse> => {
+      const apiParams = {
+        method,
+        url,
+        params,
+      };
 
-    const config: AxiosRequestConfig = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
+      const config: AxiosRequestConfig = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
 
-    const response: AxiosResponse = await createHttpClient(config).post('/api', apiParams);
-    const result: IApiResponse = {
-      headers: response.headers,
-      data: response.data,
-    };
+      const response: AxiosResponse = await createHttpClient(config).post('/api', apiParams);
+      const result: IApiResponse = {
+        headers: response.headers,
+        data: response.data,
+      };
 
-    return result;
+      return result;
+    },
   };
 };
 
-export default {
-  executeQiitaApi,
-};
+export default scratchpadApiGateway;

@@ -5,7 +5,7 @@ import {
   commitTargetResource,
   commitTargetApi,
 } from '../../infrastructures/store/qiita/qiita';
-import { IApiParams, IApi, IResource, IApiResponse } from '../../domain/qiita';
+import { IApiParams, IApi, IResource } from '../../domain/qiita';
 import axios, { AxiosRequestConfig } from 'axios';
 import util from '../../util';
 
@@ -51,13 +51,8 @@ const executeApi = async (context: QiitaContext, params: IApiParams): Promise<vo
   const requestConfig: AxiosRequestConfig = {
     baseURL: process.env.BASE_API_URL,
   };
-  const result: IApiResponse = await ScratchpadApiGateway.executeQiitaApi(
-    createHttpClient(requestConfig),
-  )(
-    params.api.method,
-    params.api.href,
-    convertedParams,
-  );
+  const result = await ScratchpadApiGateway(createHttpClient(requestConfig))
+    .executeQiitaApi(params.api.method, params.api.href, convertedParams);
 
   commitApiResponse(context, result);
 };
