@@ -5,15 +5,13 @@ import {
   commitTargetResource,
   commitTargetApi,
 } from '../../infrastructures/store/qiita/qiita';
-import { IApiParams, IApi, IResource } from '../../domain/qiita';
-import axios, { AxiosRequestConfig } from 'axios';
-import util from '../../util';
-
+import qiitaDomain, { IApiParams, IApi, IResource } from '../../domain/qiita';
+import httpClientFactory from './http-client-factory';
 import ScratchpadApiGateway from '../../adapters/api-gateways/scratchpad-api-gateway';
 import ExternalApiGateway from '../../adapters/api-gateways/external-api-gateway';
 
 const fetchSchema = async (context: QiitaContext): Promise<void> => {
-  const createHttpClient = () => (config: AxiosRequestConfig) => axios.create(config);
+  const createHttpClient = () => httpClientFactory.createHttpClient;
 
   const resources = await ExternalApiGateway(createHttpClient()).findQiitaApiSchema();
 
@@ -38,9 +36,9 @@ const changeTargetApi = (context: QiitaContext, api: IApi): void => {
  */
 const executeApi = async (context: QiitaContext, params: IApiParams): Promise<void> => {
   // 値がアサインされていないプロパティを削除
-  const convertedParams = util.removeUndefinedProperty(params.properties);
+  const convertedParams = qiitaDomain.removeUndefinedProperty(params.properties);
 
-  const createHttpClient = () => (config: AxiosRequestConfig) => axios.create(config);
+  const createHttpClient = () => httpClientFactory.createHttpClient;
 
   const result = await ScratchpadApiGateway(createHttpClient())
     .executeQiitaApi(params.api.method, params.api.href, convertedParams);

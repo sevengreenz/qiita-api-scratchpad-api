@@ -91,6 +91,25 @@ const createEmptyApi = (): IApi => {
 };
 
 /**
+ * undefined なプロパティを削除
+ *
+ * @param obj
+ */
+const removeUndefinedProperty = (obj: { [key: string]: any }) => {
+  return Object.entries(obj).reduce(
+    (params: { [key: string]: any }, [key, value]) => {
+      if (value === undefined) {
+        return params;
+      } else {
+        Object.assign(params, { [key]: value });
+        return params;
+      }
+    },
+    {},
+  );
+};
+
+/**
  * 実行 API のパラメータ作成
  *
  * @param ISchema schema
@@ -107,5 +126,6 @@ const makeApiParams = (schema: ISchema): { [key: string]: any } => {
 export default {
   createInitialState,
   createEmptyApi,
+  removeUndefinedProperty,
   makeApiParams,
 };
