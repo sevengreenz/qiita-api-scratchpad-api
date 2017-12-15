@@ -1,19 +1,20 @@
 import IInputPort from '../../contracts/input-port';
-import IOutputPort from '../../contracts/output-port';
 import IQiitaApiGateway from '../../contracts/qiita-api-gateway-interface';
 import httpClientFactory from '../http-client-factory';
 import { IQiitaApiResponse } from '../../../domain/qiita-domain';
 
-export default class ExecuteApiInteractor implements IInputPort {
-  constructor(private outputPort: IOutputPort, private qiitaApiGateway: IQiitaApiGateway) { }
+const executeApiInteractor: IInputPort = (outputPort, qiitaApiGateway: IQiitaApiGateway) => {
+  return {
+    execute: async (params: any): Promise<void> => {
+      const createHttpClient = () => httpClientFactory.createHttpClient;
 
-  public async execute(params: any): Promise<void> {
-    const createHttpClient = () => httpClientFactory.createHttpClient;
+      const result: IQiitaApiResponse = await qiitaApiGateway(createHttpClient()).execute(
+        params.method, params.url, params.params,
+      );
 
-    const result: IQiitaApiResponse = await this.qiitaApiGateway(createHttpClient()).execute(
-      params.method, params.url, params.params,
-    );
+      outputPort.outputSuccess(result);
+    },
+  };
+};
 
-    this.outputPort.outputSuccess(result);
-  }
-}
+export default executeApiInteractor;

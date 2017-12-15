@@ -1,13 +1,14 @@
 import IInputPort from '../../contracts/input-port';
-import IOutputPort from '../../contracts/output-port';
 import qiitaDomain from '../../../domain/qiita-domain';
 
-export default class AuthorizeInteractor implements IInputPort {
-  constructor(private outputPort: IOutputPort) { }
+const authorizeInteractor: IInputPort = (outputPort) => {
+  return {
+    execute: async (params): Promise<void> => {
+      const url = qiitaDomain.makeAuthorizationUrl();
 
-  public async execute(params: any): Promise<void> {
-    const url = qiitaDomain.makeAuthorizationUrl();
+      outputPort.outputRedirection(url);
+    },
+  };
+};
 
-    this.outputPort.outputRedirection(url);
-  }
-}
+export default authorizeInteractor;
