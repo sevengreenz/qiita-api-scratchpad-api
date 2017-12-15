@@ -1,5 +1,5 @@
 import { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
-import IQiitaApiGateway from '../../usecases/contracts/qiita-api-gateway';
+import IQiitaApiGateway from '../../usecases/contracts/qiita-api-gateway-interface';
 import { IQiitaApiResponse } from '../../domain/qiita-domain';
 
 const qiitaApiGateway: IQiitaApiGateway = (createHttpClient) => {
