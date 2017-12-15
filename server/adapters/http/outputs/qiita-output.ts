@@ -1,5 +1,5 @@
 import * as lambda from 'aws-lambda';
-import IOutputPort from '../../../usecases/contracts/output-port';
+import IOutputPort from '../../../usecases/contracts/output-port-interface';
 
 export interface IResponse {
   statusCode: number;

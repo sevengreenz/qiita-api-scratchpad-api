@@ -1,4 +1,4 @@
-import IOutputPort from './output-port';
+import IOutputPort from './output-port-interface';
 
 export default interface IInputPort {
   (outputPort: IOutputPort, ...dependencies: any[]): {

@@ -1,4 +1,4 @@
-import IInputPort from '../../contracts/input-port';
+import IInputPort from '../../contracts/input-port-interface';
 import qiitaDomain from '../../../domain/qiita-domain';
 
 const authorizeInteractor: IInputPort = (outputPort) => {

@@ -1,4 +1,4 @@
-import IInputPort from '../../contracts/input-port';
+import IInputPort from '../../contracts/input-port-interface';
 import IQiitaApiGateway from '../../contracts/qiita-api-gateway-interface';
 import httpClientFactory from '../http-client-factory';
 import { IQiitaApiResponse } from '../../../domain/qiita-domain';
