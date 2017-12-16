@@ -1,11 +1,44 @@
-import { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
+import { AxiosRequestConfig, AxiosResponse, AxiosError, AxiosInstance } from 'axios';
 import IQiitaApiGateway from '../../usecases/contracts/qiita-api-gateway-interface';
 import { IQiitaApiResponse } from '../../domain/qiita-domain';
+
+// 別ファイルに分離
+const qiitqApi = (httpClient: AxiosInstance) => {
+  const convertApiResponse = (response: AxiosResponse): IQiitaApiResponse => {
+    return {
+      status: response.status,
+      data: response.data,
+      headers: response.headers,
+    };
+  };
+
+  return {
+    request: (config: AxiosRequestConfig): Promise<IQiitaApiResponse> => {
+      return httpClient.request(config)
+        .then((response: AxiosResponse) => {
+          return Promise.resolve(convertApiResponse(response));
+        })
+        .catch((error: AxiosError) => {
+          const failure = error.response === undefined
+            ? {
+              status: 500,
+              data: 'no response',
+              headers: {},
+            }
+            : convertApiResponse(error.response);
+
+          return Promise.reject(failure);
+        });
+    },
+  };
+};
 
 const qiitaApiGateway: IQiitaApiGateway = (createHttpClient) => {
   const httpClient = createHttpClient({
     baseURL: 'http://qiita.com',
   });
+
+  const qiitaApi = qiitqApi(httpClient);
 
   return {
     execute: async (method, url, params) => {
@@ -29,36 +62,9 @@ const qiitaApiGateway: IQiitaApiGateway = (createHttpClient) => {
         // TODO: throw Error
       }
 
-      return httpClient.request(requestConfig)
-        .then((response: AxiosResponse) => {
-          const result: IQiitaApiResponse = {
-            status: response.status,
-            data: response.data,
-            headers: response.headers,
-          };
-
-          return Promise.resolve(result);
-        })
-        .catch((error: AxiosError) => {
-          let failure: IQiitaApiResponse;
-
-          if (error.response === undefined) {
-            failure = {
-              status: 500,
-              data: 'no response',
-              headers: {},
-            };
-          } else {
-            failure = {
-              status: error.response.status,
-              data: error.response.data,
-              headers: error.response.headers,
-            };
-          }
-
-          return Promise.reject(failure);
-        });
+      return qiitaApi.request(requestConfig);
     },
+
   };
 };
 
