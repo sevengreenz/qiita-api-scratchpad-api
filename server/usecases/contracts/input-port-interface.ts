@@ -1,7 +1,7 @@
-import IOutputPort from './output-port-interface';
+import { IOutputFunc } from './output-port-interface';
 
 export default interface IInputPort {
-  (outputPort: IOutputPort, ...dependencies: any[]): {
+  (outputPort: IOutputFunc, ...dependencies: any[]): {
     execute(params: any): Promise<void>;
   };
 }

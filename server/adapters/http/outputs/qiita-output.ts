@@ -1,4 +1,3 @@
-import * as lambda from 'aws-lambda';
 import IOutputPort from '../../../usecases/contracts/output-port-interface';
 
 export interface IResponse {
@@ -7,49 +6,51 @@ export interface IResponse {
   body: string;
 }
 
-export default class QiitaOutput implements IOutputPort {
+const makeResponse = (
+  statusCode: number,
+  headers: { [key: string]: string },
+  body: any,
+): IResponse => {
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+  };
 
-  constructor(private callback: lambda.Callback) { }
+  const response: IResponse = {
+    statusCode,
+    headers: Object.assign(headers, corsHeaders),
+    body: JSON.stringify(body),
+  };
 
-  private makeResponse = (
-    statusCode: number,
-    headers: { [key: string]: string },
-    body: any,
-  ): IResponse => {
-    const corsHeaders = {
-      'Access-Control-Allow-Origin': '*',
-    };
+  return response;
+};
 
-    const response: IResponse = {
-      statusCode: statusCode as number,
-      headers: Object.assign(headers, corsHeaders),
-      body: JSON.stringify(body),
-    };
+const qiitaOutputPort: IOutputPort = (callback) => {
+  return {
+    outputSuccess: (result) => {
+      const response = makeResponse(200, {}, result);
 
-    return response;
-  }
+      callback(undefined, response);
+    },
 
-  public outputSuccess = (result: any) => {
-    const response = this.makeResponse(200, {}, result);
+    outputFailure: (result) => {
+      console.log(result);
 
-    this.callback(undefined, response);
-  }
+      const response = makeResponse(result.status, result.headers, result.data);
 
-  public outputFailure = (result: any) => {
-    console.log(result);
+      callback(undefined, response);
+    },
 
-    const response = this.makeResponse(result.status, result.headers, result.data);
+    outputRedirection: (locationUrl) => {
+      const locationHeader = {
+        Location: locationUrl,
+      };
 
-    this.callback(undefined, response);
-  }
+      const response = makeResponse(302, locationHeader, '');
 
-  public outputRedirection = (locationUrl: string) => {
-    const locationHeader = {
-      Location: locationUrl,
-    };
+      callback(undefined, response);
+    },
 
-    const response = this.makeResponse(302, locationHeader, '');
+  };
+};
 
-    this.callback(undefined, response);
-  }
-}
+export default qiitaOutputPort;
