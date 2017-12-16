@@ -65,6 +65,16 @@ const qiitaApiGateway: IQiitaApiGateway = (createHttpClient) => {
       return qiitaApi.request(requestConfig);
     },
 
+    issueToken: (code: string) => {
+      return qiitaApi.request({
+        method: 'POST',
+        url: '/api/v2/access_tokens',
+        params: {
+          code,
+        },
+      });
+    },
+
   };
 };
 
