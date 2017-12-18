@@ -12,7 +12,7 @@ export default interface IQiitaApiGateway {
     /**
      * アクセストークン発行
      */
-    issueToken: (code: string) => Promise<IQiitaApiResponse>,
+    issueToken: (code: string) => Promise<string>,
   };
 }
 

@@ -19,6 +19,7 @@ const qiitqApi = (httpClient: AxiosInstance) => {
           return Promise.resolve(convertApiResponse(response));
         })
         .catch((error: AxiosError) => {
+          console.log(error);
           const failure = error.response === undefined
             ? {
               status: 500,
@@ -65,14 +66,22 @@ const qiitaApiGateway: IQiitaApiGateway = (createHttpClient) => {
       return qiitaApi.request(requestConfig);
     },
 
-    issueToken: (code: string) => {
-      return qiitaApi.request({
+    issueToken: async (code: string) => {
+      const data = {
+        code,
+        client_id: process.env.CLIENT_ID || '',
+        client_secret: process.env.CLIENT_SECRET || '',
+      };
+
+      const result = await qiitaApi.request({
+        data,
         method: 'POST',
         url: '/api/v2/access_tokens',
-        params: {
-          code,
-        },
       });
+
+      const token: string = result.data.token;
+
+      return token;
     },
 
   };

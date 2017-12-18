@@ -35,7 +35,8 @@ export const issueToken: lambda.ProxyHandler = (
   const params: {
     code: string,
   } = JSON.parse(event.body || '');
+  console.log(params);
 
-  qiitaInteractor(qiitaOutput(callback))
+  qiitaInteractor(qiitaOutput(callback), qiitaApiGateway)
     .issueToken(params.code);
 };
