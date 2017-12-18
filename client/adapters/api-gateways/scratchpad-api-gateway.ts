@@ -1,4 +1,4 @@
-import { AxiosResponse } from 'axios';
+import { AxiosResponse, AxiosError } from 'axios';
 import { IApiResponse } from '../../domain/qiita';
 import { IScratchpadApiGateway } from '../../usecases/contracts/scratchpad-api-gateway-interface';
 
@@ -26,6 +26,27 @@ const scratchpadApiGateway: IScratchpadApiGateway = (createHttpClient) => {
 
       return result;
     },
+
+    issueToken: async (code): Promise<any> => {
+      const params = {
+        code,
+      };
+
+      const response = await httpClient.post('/token', params)
+        .then((response: AxiosResponse) => {
+          console.log(response.data);
+
+          return Promise.resolve(response.data);
+        })
+        .catch((error: AxiosError) => {
+          console.log(error);
+
+          return Promise.reject(error);
+        });
+
+      return response;
+    },
+
   };
 };
 

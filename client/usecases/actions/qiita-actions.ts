@@ -7,13 +7,13 @@ import {
 } from '../../infrastructures/store/qiita/qiita';
 import qiitaDomain, { IApiParams, IApi, IResource } from '../../domain/qiita';
 import httpClientFactory from './http-client-factory';
-import ScratchpadApiGateway from '../../adapters/api-gateways/scratchpad-api-gateway';
-import ExternalApiGateway from '../../adapters/api-gateways/external-api-gateway';
+import scratchpadApiGateway from '../../adapters/api-gateways/scratchpad-api-gateway';
+import externalApiGateway from '../../adapters/api-gateways/external-api-gateway';
 
 const fetchSchema = async (context: QiitaContext): Promise<void> => {
   const createHttpClient = () => httpClientFactory.createHttpClient;
 
-  const resources = await ExternalApiGateway(createHttpClient()).findQiitaApiSchema();
+  const resources = await externalApiGateway(createHttpClient()).findQiitaApiSchema();
 
   commitResources(context, resources);
   commitTargetResource(context, resources[0]);
@@ -40,22 +40,11 @@ const executeApi = async (context: QiitaContext, params: IApiParams): Promise<vo
 
   const createHttpClient = () => httpClientFactory.createHttpClient;
 
-  const result = await ScratchpadApiGateway(createHttpClient())
+  const result = await scratchpadApiGateway(createHttpClient())
     .executeQiitaApi(params.api.method, params.api.href, convertedParams);
 
   commitApiResponse(context, result);
 };
-
-/**
- * アクセストークン取得
- *
- * @param {QiitaContext} context
- * @param string code
- */
-// const fetchAccessToken = (context: QiitaContext, code: string): Promise<void> => {
-//
-// };
-
 
 export default {
   fetchSchema,
