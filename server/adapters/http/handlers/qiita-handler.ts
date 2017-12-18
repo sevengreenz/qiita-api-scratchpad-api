@@ -26,3 +26,16 @@ export const authorize: lambda.ProxyHandler = (
   qiitaInteractor(qiitaOutput(callback))
     .authorize();
 };
+
+export const issueToken: lambda.ProxyHandler = (
+  event: lambda.APIGatewayEvent,
+  context: lambda.Context,
+  callback: lambda.Callback,
+): void => {
+  const params: {
+    code: string,
+  } = JSON.parse(event.body || '');
+
+  qiitaInteractor(qiitaOutput(callback))
+    .issueToken(params.code);
+};

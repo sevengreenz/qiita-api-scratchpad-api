@@ -18,26 +18,21 @@ const qiitaInteractor: IInputPort<IQiitaInteractor>
         const createHttpClient = () => httpClientFactory.createHttpClient;
 
         const result = await qiitaApiGateway(createHttpClient()).execute(
-          // const result = await qiitaApiGateway(httpClientFactory.createHttpClient.call).execute(
           method, url, params,
         );
 
         outputPort.outputSuccess(result);
       },
+
+      issueToken: async (code) => {
+        const createHttpClient = () => httpClientFactory.createHttpClient;
+
+        const result = await qiitaApiGateway(createHttpClient()).issueToken(code);
+
+        outputPort.outputSuccess(result);
+      },
+
     };
   };
 
 export default qiitaInteractor;
-
-
-// const authorizeInteractor: IInputPort = (outputPort) => {
-//   return {
-//     execute: async (params): Promise<void> => {
-//       const url = qiitaDomain.makeAuthorizationUrl();
-//
-//       outputPort.outputRedirection(url);
-//     },
-//   };
-// };
-//
-// export default authorizeInteractor;
