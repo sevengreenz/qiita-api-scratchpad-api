@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Index from '../adapters/pages/Index.vue';
-import Authorized from '../adapters/pages/Authorized.vue';
+import Index from '../adapters/views/pages/Index.vue';
+import Authorized from '../adapters/views/pages/Authorized.vue';
 import { RouterOptions } from 'vue-router/types/router';
 
 Vue.use(VueRouter);

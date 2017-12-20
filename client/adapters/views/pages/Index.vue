@@ -40,17 +40,21 @@
 </template>
 
 <script lang='ts'>
-import Vue from 'vue';
-import Component from 'vue-class-component';
-import qiitaDomain, { IResource, IApi, IApiParams } from '../../domain/qiita';
-import * as qiita from '../../infrastructures/store/qiita';
+import Vue from "vue";
+import Component from "vue-class-component";
+import qiitaDomain, {
+  IResource,
+  IApi,
+  IApiParams
+} from "../../../domain/qiita";
+import * as qiita from "../../../infrastructures/store/qiita";
 
 @Component({
   props: {}
 })
 export default class Index extends Vue {
   // initial data
-  resource: IResource | string = '';
+  resource: IResource | string = "";
   api: IApi = qiitaDomain.createEmptyApi();
 
   async created() {
