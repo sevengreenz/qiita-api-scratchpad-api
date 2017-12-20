@@ -14,9 +14,7 @@ const qiitaInteractor: IInputPort<IQiitaInteractor>
       },
 
       executeApi: async (method, url, params) => {
-        const createHttpClient = () => httpClientFactory.createHttpClient;
-
-        await qiitaApiGateway(createHttpClient())
+        await qiitaApiGateway(httpClientFactory.createHttpClient)
           .execute(method, url, params)
           .then(outputPort.outputSuccess)
           .catch(outputPort.outputFailure);
@@ -24,9 +22,8 @@ const qiitaInteractor: IInputPort<IQiitaInteractor>
 
       issueToken: async (code) => {
         console.log('issueToken start' + code);
-        const createHttpClient = () => httpClientFactory.createHttpClient;
 
-        await qiitaApiGateway(createHttpClient())
+        await qiitaApiGateway(httpClientFactory.createHttpClient)
           .issueToken(code)
           .then(outputPort.outputSuccess)
           .then(outputPort.outputFailure);
