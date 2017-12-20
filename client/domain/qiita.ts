@@ -56,7 +56,7 @@ export interface IQiitaState {
   targetResource: IResource;
   targetApi: IApi;
   params: { [key: string]: any };
-  apiResponse?: IApiResponse;
+  apiResponse: IApiResponse;
 }
 
 const createInitialState = (): IQiitaState => {
@@ -69,15 +69,9 @@ const createInitialState = (): IQiitaState => {
       properties: {},
       required: [],
     },
-    targetApi: {
-      title: '',
-      description: '',
-      href: '',
-      method: '',
-      required: [],
-    },
+    targetApi: createEmptyApi(),
     params: {},
-    apiResponse: undefined,
+    apiResponse: createEmptyApiResponse(),
   };
 };
 
@@ -88,6 +82,17 @@ const createEmptyApi = (): IApi => {
     href: '',
     method: '',
   };
+};
+
+const createEmptyApiResponse = (): IApiResponse => {
+  return {
+    headers: '',
+    data: '',
+  };
+};
+
+const isEmptyApiResponse = (apiResponse: IApiResponse): boolean => {
+  return apiResponse.headers === '' && apiResponse.data === '';
 };
 
 /**
@@ -126,6 +131,8 @@ const makeApiParams = (schema: ISchema): { [key: string]: any } => {
 export default {
   createInitialState,
   createEmptyApi,
+  createEmptyApiResponse,
+  isEmptyApiResponse,
   removeUndefinedProperty,
   makeApiParams,
 };

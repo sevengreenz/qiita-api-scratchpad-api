@@ -16,8 +16,8 @@ const getApiParams = (state: IQiitaState): object => {
   return state.params;
 };
 
-const getApiResponse = (state: IQiitaState): IApiResponse | string => {
-  return state.apiResponse || '';
+const getApiResponse = (state: IQiitaState): IApiResponse => {
+  return state.apiResponse;
 };
 
 export default {

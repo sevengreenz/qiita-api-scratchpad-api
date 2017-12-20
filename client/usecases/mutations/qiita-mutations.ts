@@ -17,7 +17,7 @@ const setTargetApi = (state: IQiitaState, api: IApi) => {
     : qiitaDomain.makeApiParams(api.schema);
 
   // API 実行結果初期化
-  state.apiResponse = undefined;
+  state.apiResponse = qiitaDomain.createEmptyApiResponse();
 };
 
 const setApiResponse = (state: IQiitaState, apiReponse: IApiResponse) => {

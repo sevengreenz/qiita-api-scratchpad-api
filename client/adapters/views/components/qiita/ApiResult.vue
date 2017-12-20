@@ -1,11 +1,11 @@
 <template>
-    <code>{{ result }}</code>
+    <code v-show="! isShow">{{ result }}</code>
 </template>
 
 <script lang='ts'>
 import Vue from "vue";
 import Component from "vue-class-component";
-import { IApiResponse } from "../../../../domain/qiita";
+import qiitaDomain, { IApiResponse } from "../../../../domain/qiita";
 
 @Component({
   props: {
@@ -14,5 +14,9 @@ import { IApiResponse } from "../../../../domain/qiita";
 })
 export default class ApiResult extends Vue {
   result: IApiResponse;
+
+  get isShow(): boolean {
+    return qiitaDomain.isEmptyApiResponse(this.result);
+  }
 }
 </script>
