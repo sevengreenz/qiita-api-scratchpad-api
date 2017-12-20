@@ -37,6 +37,7 @@
     "css-loader": "^0.28.7",
     "dotenv-webpack": "^1.5.4",
     "espower-typescript": "^8.1.1",
+    "html-loader": "^0.5.1",
     "mocha": "^4.0.1",
     "power-assert": "^1.4.4",
     "serverless": "^1.23.0",
