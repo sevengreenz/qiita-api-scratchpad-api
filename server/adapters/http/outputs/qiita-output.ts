@@ -27,6 +27,8 @@ const makeResponse = (
 const qiitaOutputPort: IOutputPort = (callback) => {
   return {
     outputSuccess: (result) => {
+      console.log(result);
+
       const response = makeResponse(200, {}, result);
 
       callback(undefined, response);

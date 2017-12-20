@@ -4,7 +4,6 @@ import httpClientFactory from './http-client-factory';
 import IQiitaApiGateway from '../contracts/qiita-api-gateway-interface';
 import IQiitaInteractor from '../contracts/qiita-interactor-interface';
 
-
 const qiitaInteractor: IInputPort<IQiitaInteractor>
   = (outputPort, qiitaApiGateway: IQiitaApiGateway) => {
     return {
@@ -17,21 +16,20 @@ const qiitaInteractor: IInputPort<IQiitaInteractor>
       executeApi: async (method, url, params) => {
         const createHttpClient = () => httpClientFactory.createHttpClient;
 
-        const result = await qiitaApiGateway(createHttpClient()).execute(
-          method, url, params,
-        );
-
-        outputPort.outputSuccess(result);
+        await qiitaApiGateway(createHttpClient())
+          .execute(method, url, params)
+          .then(outputPort.outputSuccess)
+          .catch(outputPort.outputFailure);
       },
 
       issueToken: async (code) => {
         console.log('issueToken start' + code);
         const createHttpClient = () => httpClientFactory.createHttpClient;
 
-        const result = await qiitaApiGateway(createHttpClient()).issueToken(code);
-
-        console.log(result);
-        outputPort.outputSuccess(result);
+        await qiitaApiGateway(createHttpClient())
+          .issueToken(code)
+          .then(outputPort.outputSuccess)
+          .then(outputPort.outputFailure);
       },
 
     };
