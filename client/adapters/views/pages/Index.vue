@@ -31,7 +31,7 @@
           </div>
           <v-btn primary dark v-on:click="execute">Exec</v-btn>
           <v-layout row wrap>
-            <code>{{ result }}</code>
+            <api-result :result="result"></api-result>
           </v-layout>
         </v-container>
       </v-card-text>
@@ -42,6 +42,7 @@
 <script lang='ts'>
 import Vue from "vue";
 import Component from "vue-class-component";
+import ApiResult from "../components/qiita/ApiResult";
 import qiitaDomain, {
   IResource,
   IApi,
@@ -50,6 +51,9 @@ import qiitaDomain, {
 import * as qiita from "../../../infrastructures/store/qiita";
 
 @Component({
+  components: {
+    "api-result": ApiResult
+  },
   props: {}
 })
 export default class Index extends Vue {
