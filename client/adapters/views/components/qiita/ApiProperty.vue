@@ -1,23 +1,25 @@
 <template>
-    <div v-if="isShow">
-        <v-layout row wrap v-for="(property, key) in api.schema.properties" v-bind:key="key">
-            <v-flex d-flex xs12 md1>
-                <v-subheader>{{ key }}</v-subheader>
-            </v-flex>
-            <v-flex d-flex xs6 md1>
-                <v-subheader>{{ (api.schema.required || []).includes(key) ? 'required' : 'optional' }}</v-subheader>
-            </v-flex>
-            <v-flex d-flex xs6 md1>
-                <v-subheader> {{ property.type }} </v-subheader>
-            </v-flex>
-            <v-flex d-flex xs12 md5>
-                <v-subheader> {{ property.description }} </v-subheader>
-            </v-flex>
-            <v-flex d-flex xs12 md4>
-                <v-text-field v-model="params[key]" :required="(api.schema.required || []).includes(key)" color="blue darken-2" :hint="'e.g. ' + property.example" persistent-hint>
-                </v-text-field>
-            </v-flex>
-        </v-layout>
+    <div>
+        <div v-if="isShow">
+            <v-layout row wrap v-for="(property, key) in api.schema.properties" v-bind:key="key">
+                <v-flex d-flex xs12 md1>
+                    <v-subheader>{{ key }}</v-subheader>
+                </v-flex>
+                <v-flex d-flex xs6 md1>
+                    <v-subheader>{{ (api.schema.required || []).includes(key) ? 'required' : 'optional' }}</v-subheader>
+                </v-flex>
+                <v-flex d-flex xs6 md1>
+                    <v-subheader> {{ property.type }} </v-subheader>
+                </v-flex>
+                <v-flex d-flex xs12 md5>
+                    <v-subheader> {{ property.description }} </v-subheader>
+                </v-flex>
+                <v-flex d-flex xs12 md4>
+                    <v-text-field v-model="params[key]" :required="(api.schema.required || []).includes(key)" color="blue darken-2" :hint="'e.g. ' + property.example" persistent-hint>
+                    </v-text-field>
+                </v-flex>
+            </v-layout>
+        </div>
 
         <v-btn primary dark v-on:click="execute">Exec</v-btn>
     </div>
@@ -40,10 +42,7 @@ export default class ApiProperty extends Vue {
   params: Object;
 
   get isShow(): boolean {
-      console.log(this.api);
-      const r = this.api.hasOwnProperty('schema');
-      console.log(r);
-      return r;
+      return this.api.hasOwnProperty('schema');
   }
 
   async execute(): Promise<void> {
