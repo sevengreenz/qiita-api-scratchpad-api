@@ -1,5 +1,7 @@
 <template>
-    <code v-show="! isShow">{{ result }}</code>
+    <v-layout v-show="isShow" row wrap>
+        <code>{{ result }}</code>
+    </v-layout>
 </template>
 
 <script lang='ts'>
@@ -16,7 +18,7 @@ export default class ApiResult extends Vue {
   result: IApiResponse;
 
   get isShow(): boolean {
-    return qiitaDomain.isEmptyApiResponse(this.result);
+    return ! qiitaDomain.isEmptyApiResponse(this.result);
   }
 }
 </script>

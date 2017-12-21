@@ -9,30 +9,8 @@
           <v-layout row wrap>
             <v-select v-bind:items="resource.links" v-model="api" item-text="title" v-on:change="changeApi($event)" return-object :hint="`${api.description}`" persistent-hint label="API" bottom></v-select>
           </v-layout>
-          <div v-if="api.schema !== undefined">
-            <v-layout row wrap v-for="(property, key) in api.schema.properties" v-bind:key="key">
-              <v-flex d-flex xs12 md1>
-                <v-subheader>{{ key }}</v-subheader>
-              </v-flex>
-              <v-flex d-flex xs6 md1>
-                <v-subheader>{{ (api.schema.required || []).includes(key) ? 'required' : 'optional' }}</v-subheader>
-              </v-flex>
-              <v-flex d-flex xs6 md1>
-                <v-subheader> {{ property.type }} </v-subheader>
-              </v-flex>
-              <v-flex d-flex xs12 md5>
-                <v-subheader> {{ property.description }} </v-subheader>
-              </v-flex>
-              <v-flex d-flex xs12 md4>
-                <v-text-field v-model="params[key]" :required="(api.schema.required || []).includes(key)" color="blue darken-2" :hint="'e.g. ' + property.example" persistent-hint>
-                </v-text-field>
-              </v-flex>
-            </v-layout>
-          </div>
-          <v-btn primary dark v-on:click="execute">Exec</v-btn>
-          <v-layout row wrap>
-            <api-result :result="result"></api-result>
-          </v-layout>
+          <api-property :api="apis" :params="params"></api-property>
+          <api-result :result="result"></api-result>
         </v-container>
       </v-card-text>
     </v-card>
@@ -42,16 +20,14 @@
 <script lang='ts'>
 import Vue from "vue";
 import Component from "vue-class-component";
+import ApiProperty from "../components/qiita/ApiProperty";
 import ApiResult from "../components/qiita/ApiResult";
-import qiitaDomain, {
-  IResource,
-  IApi,
-  IApiParams
-} from "../../../domain/qiita";
+import qiitaDomain, { IResource, IApi } from "../../../domain/qiita";
 import * as qiita from "../../../infrastructures/store/qiita";
 
 @Component({
   components: {
+    "api-property": ApiProperty,
     "api-result": ApiResult
   },
   props: {}
@@ -70,6 +46,10 @@ export default class Index extends Vue {
 
   get resources(): IResource[] {
     return qiita.getResources(this.$store);
+  }
+
+  get apis(): IApi {
+    return qiita.getTargetApi(this.$store);
   }
 
   get params(): object {
@@ -96,16 +76,6 @@ export default class Index extends Vue {
    */
   changeApi($event: IApi): void {
     qiita.changeTargetApi(this.$store, $event);
-  }
-
-  /** API 実行 */
-  async execute(): Promise<void> {
-    console.log(this.params);
-    const apiParams: IApiParams = {
-      api: this.api,
-      properties: this.params
-    };
-    await qiita.executeApi(this.$store, apiParams);
   }
 }
 </script>
