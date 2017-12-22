@@ -30,6 +30,7 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { IApi, IApiParams } from "../../../../domain/qiita";
 import * as qiita from "../../../../infrastructures/store/qiita";
+import UnauthorizedError from '../../../api-gateways/errors/unauthorized-error';
 
 @Component({
   props: {
@@ -51,7 +52,14 @@ export default class ApiProperty extends Vue {
       api: this.api,
       properties: this.params
     };
-    await qiita.executeApi(this.$store, apiParams);
+
+    await qiita.executeApi(this.$store, apiParams)
+        .catch((e: Error) => {
+            console.log('asynced error');
+            if (e instanceof UnauthorizedError) {
+                console.log('unauthorizedError')
+            }
+        });
   }
 }
 </script>

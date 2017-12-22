@@ -1,6 +1,7 @@
 import { AxiosResponse, AxiosError } from 'axios';
 import { IApiResponse } from '../../domain/qiita';
 import { IScratchpadApiGateway } from '../../usecases/contracts/scratchpad-api-gateway-interface';
+import errorFactory from './error-factory';
 
 const scratchpadApiGateway: IScratchpadApiGateway = (createHttpClient) => {
   const httpClient = createHttpClient({
@@ -18,19 +19,20 @@ const scratchpadApiGateway: IScratchpadApiGateway = (createHttpClient) => {
         params,
       };
 
-      const response: AxiosResponse = await httpClient.post('/api', apiParams);
-      const result: IApiResponse = {
-        headers: response.headers,
-        data: response.data,
-      };
+      const result: IApiResponse = await httpClient.post('/api', apiParams)
+        .then((response: AxiosResponse) => {
+          return Promise.resolve({
+            headers: response.headers,
+            data: response.data,
+          });
+        })
+        .catch(errorFactory.throwError);
 
       return result;
     },
 
     issueToken: async (code): Promise<any> => {
-      const params = {
-        code,
-      };
+      const params = { code };
 
       const response = await httpClient.post('/token', params)
         .then((response: AxiosResponse) => {
