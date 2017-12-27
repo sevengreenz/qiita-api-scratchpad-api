@@ -3,7 +3,8 @@
             <v-card>
                 <v-card-title class="headline">認証エラー</v-card-title>
                     <v-card-text>
-                        Qiita::TeamのAPI、またはQiitaのGETリクエスト以外のAPIを利用するには、アクセストークンをリクエストに含める必要があります
+                        Qiita::TeamのAPI、またはQiitaのGETリクエスト以外のAPIを利用するには、アクセストークンをリクエストに含める必要があります<br>
+                        アクセストークンを取得しますか?
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
