@@ -30,8 +30,8 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import { IApi, IApiParams } from "../../../../domain/qiita";
-import * as qiita from "../../../../presentation/store/qiita";
-import UnauthorizedError from '../../../api-gateways/errors/unauthorized-error';
+import * as qiita from "../../../store/qiita";
+import UnauthorizedError from '../../../../adapters/api-gateways/errors/unauthorized-error';
 import UnauthorizedErrorComponent from "../common/UnauthorizedError";
 
 @Component({

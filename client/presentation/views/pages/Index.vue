@@ -23,7 +23,7 @@ import Component from "vue-class-component";
 import ApiProperty from "../components/qiita/ApiProperty";
 import ApiResult from "../components/qiita/ApiResult";
 import qiitaDomain, { IResource, IApi } from "../../../domain/qiita";
-import * as qiita from "../../../presentation/store/qiita";
+import * as qiita from "../../store/qiita";
 
 @Component({
   components: {

@@ -5,7 +5,7 @@ import router from "./routes";
 import store from "./store/store";
 
 @Component<App>({
-  template: require("../adapters/views/layouts/base.html"),
+  template: require("./views/layouts/base.html"),
   router,
   store
 })
