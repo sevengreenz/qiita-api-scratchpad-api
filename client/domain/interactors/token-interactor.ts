@@ -1,6 +1,6 @@
-import httpClientFactory from '../actions/http-client-factory';
-import { IScratchpadApiGateway } from '../contracts/scratchpad-api-gateway-interface';
-import { ITokenStorageGateway } from '../contracts/token-storage-gateway-interface';
+import httpClientFactory from '../../usecases/actions/http-client-factory';
+import { IScratchpadApiGateway } from '../../usecases/contracts/scratchpad-api-gateway-interface';
+import { ITokenStorageGateway } from '../../usecases/contracts/token-storage-gateway-interface';
 
 const tokenInteractor =
   (scratchpadApiGateway: IScratchpadApiGateway, tokenSessionGateway: ITokenStorageGateway) => {
