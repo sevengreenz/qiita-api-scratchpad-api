@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify';
-import App from './infrastructures/App.vue';
+import App from './presentation/App.vue';
 
 Vue.use(Vuetify);
 

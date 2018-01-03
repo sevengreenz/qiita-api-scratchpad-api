@@ -4,7 +4,7 @@ import {
   commitResources,
   commitTargetResource,
   commitTargetApi,
-} from '../../infrastructures/store/qiita/qiita';
+} from '../../presentation/store/qiita/qiita';
 import qiitaDomain, { IApiParams, IApi, IResource } from '../../domain/qiita';
 import httpClientFactory from './http-client-factory';
 import scratchpadApiGateway from '../../adapters/api-gateways/scratchpad-api-gateway';

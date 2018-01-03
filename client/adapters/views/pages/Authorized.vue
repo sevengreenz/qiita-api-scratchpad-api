@@ -10,7 +10,7 @@ import Component from "vue-class-component";
 import tokenInteractor from "../../../usecases/interactors/token-interactor";
 import scratchpadApiGateway from "../../api-gateways/scratchpad-api-gateway";
 import tokenStorageGateway from "../../storage-gateways/token-storage-gateway";
-import session from "../../../infrastructures/session";
+import session from "../../../presentation/session";
 
 @Component({
   props: {
