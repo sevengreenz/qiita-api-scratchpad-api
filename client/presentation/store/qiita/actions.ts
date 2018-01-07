@@ -4,16 +4,14 @@ import {
   commitResources,
   commitTargetResource,
   commitTargetApi,
-} from '../../presentation/store/qiita/qiita';
-import qiitaDomain, { IApiParams, IApi, IResource } from '../../domain/qiita';
-import httpClientFactory from './http-client-factory';
-import schemaRepository from '../../data/repositories/schema-repository';
-import qiitaRepository from '../../data/repositories/qiita-repository';
+} from './qiita';
+import qiitaDomain, { IApiParams, IApi, IResource } from '../../../domain/qiita';
+import httpClientFactory from '../../../domain/http-client-factory';
+import schemaRepository from '../../../data/repositories/schema-repository';
+import qiitaRepository from '../../../data/repositories/qiita-repository';
 
 const fetchSchema = async (context: QiitaContext): Promise<void> => {
-  const createHttpClient = () => httpClientFactory.createHttpClient;
-
-  const resources = await schemaRepository(createHttpClient()).find();
+  const resources = await schemaRepository(httpClientFactory.createHttpClient).find();
 
   commitResources(context, resources);
   commitTargetResource(context, resources[0]);
@@ -36,9 +34,7 @@ const executeApi = async (context: QiitaContext, params: IApiParams): Promise<vo
   // 値がアサインされていないプロパティを削除
   const convertedParams = qiitaDomain.removeUndefinedProperty(params.properties);
 
-  const createHttpClient = () => httpClientFactory.createHttpClient;
-
-  const result = await qiitaRepository(createHttpClient())
+  const result = await qiitaRepository(httpClientFactory.createHttpClient)
     .executeQiitaApi(params.api.method, params.api.href, convertedParams);
 
   commitApiResponse(context, result);

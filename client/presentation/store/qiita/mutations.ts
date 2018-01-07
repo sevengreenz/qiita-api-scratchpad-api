@@ -1,4 +1,4 @@
-import qiitaDomain, { IQiitaState, IResource, IApi, IApiResponse } from '../../domain/qiita';
+import qiitaDomain, { IQiitaState, IResource, IApi, IApiResponse } from '../../../domain/qiita';
 
 const setResources = (state: IQiitaState, resources: IResource[]) => {
   state.resources = resources;

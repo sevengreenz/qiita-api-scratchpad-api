@@ -1,4 +1,4 @@
-import httpClientFactory from '../../usecases/actions/http-client-factory';
+import httpClientFactory from '../http-client-factory';
 import { IQiitaRepository } from '../repositories/qiita-repository-interface';
 import { ITokenRepository } from '../repositories/token-repository-interface';
 

@@ -2,9 +2,9 @@ import { ActionContext } from 'vuex';
 import { getStoreAccessors } from 'vuex-typescript';
 import { IState as IRootState } from '../state';
 import qiitaDomain, { IQiitaState } from '../../../domain/qiita';
-import qiitaActions from '../../../usecases/actions/qiita-actions';
-import qiitaGetters from '../../../usecases/getters/qiita-getters';
-import qiitaMutations from '../../../usecases/mutations/qiita-mutations';
+import qiitaActions from './actions';
+import qiitaGetters from './getters';
+import qiitaMutations from './mutations';
 
 export type QiitaContext = ActionContext<IQiitaState, IRootState>;
 

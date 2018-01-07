@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import qiitaMutations from '../../../usecases/mutations/qiita-mutations';
+import qiitaMutations from '../../../presentation/store/qiita/mutations';
 import qiitaDomain, { IQiitaState, IApiResponse } from '../../../domain/qiita';
 
 describe('qiita mutations', () => {
