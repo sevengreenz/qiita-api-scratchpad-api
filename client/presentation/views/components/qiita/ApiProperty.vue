@@ -31,7 +31,7 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { IApi, IApiParams } from "../../../../domain/qiita";
 import * as qiita from "../../../store/qiita";
-import UnauthorizedError from '../../../../adapters/api-gateways/errors/unauthorized-error';
+import UnauthorizedError from '../../../../data/errors/unauthorized-error';
 import UnauthorizedErrorComponent from "../common/UnauthorizedError";
 
 @Component({

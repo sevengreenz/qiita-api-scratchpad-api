@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
-import UnAuthorizedError from './errors/unauthorized-error';
-import ServerError from './errors/server-error';
+import UnAuthorizedError from './unauthorized-error';
+import ServerError from './server-error';
 
 const throwError = (error: AxiosError) => {
   if (error.response !== undefined) {

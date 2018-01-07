@@ -8,9 +8,8 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import tokenInteractor from "../../../domain/interactors/token-interactor";
-import scratchpadApiGateway from "../../../adapters/api-gateways/scratchpad-api-gateway";
-import tokenStorageGateway from "../../../adapters/storage-gateways/token-storage-gateway";
-import session from "../../../presentation/session";
+import scratchpadApiGateway from "../../../data/repositories/qiita-repository";
+import tokenStorageGateway from "../../../data/repositories/token-repository";
 
 @Component({
   props: {
@@ -27,7 +26,7 @@ export default class Authorized extends Vue {
 
     tokenInteractor(
       scratchpadApiGateway,
-      tokenStorageGateway(session())
+      tokenStorageGateway()
     ).create(this.$route.query.code);
   }
 

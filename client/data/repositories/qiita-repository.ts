@@ -1,9 +1,9 @@
 import { AxiosResponse, AxiosError } from 'axios';
 import { IApiResponse } from '../../domain/qiita';
-import { IScratchpadApiGateway } from '../../usecases/contracts/scratchpad-api-gateway-interface';
-import errorFactory from './error-factory';
+import errorFactory from '../errors/error-factory';
+import { IQiitaRepository } from '../../domain/repositories/qiita-repository-interface';
 
-const scratchpadApiGateway: IScratchpadApiGateway = (createHttpClient) => {
+const qiitaRepository: IQiitaRepository = (createHttpClient) => {
   const httpClient = createHttpClient({
     baseURL: process.env.BASE_API_URL,
     headers: {
@@ -63,4 +63,4 @@ const scratchpadApiGateway: IScratchpadApiGateway = (createHttpClient) => {
   };
 };
 
-export default scratchpadApiGateway;
+export default qiitaRepository;

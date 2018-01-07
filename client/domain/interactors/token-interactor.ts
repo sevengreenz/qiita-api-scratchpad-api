@@ -1,9 +1,9 @@
 import httpClientFactory from '../../usecases/actions/http-client-factory';
-import { IScratchpadApiGateway } from '../../usecases/contracts/scratchpad-api-gateway-interface';
-import { ITokenStorageGateway } from '../../usecases/contracts/token-storage-gateway-interface';
+import { IQiitaRepository } from '../repositories/qiita-repository-interface';
+import { ITokenRepository } from '../repositories/token-repository-interface';
 
 const tokenInteractor =
-  (scratchpadApiGateway: IScratchpadApiGateway, tokenSessionGateway: ITokenStorageGateway) => {
+  (qiitaRepository: IQiitaRepository, tokenRepository: ITokenRepository) => {
     return {
       /**
        * アクセストークン 作成
@@ -11,9 +11,9 @@ const tokenInteractor =
       create: async (code: string): Promise<string> => {
         const createHttpClient = () => httpClientFactory.createHttpClient;
 
-        const token = await scratchpadApiGateway(createHttpClient()).issueToken(code);
+        const token = await qiitaRepository(createHttpClient()).issueToken(code);
 
-        tokenSessionGateway.set(token);
+        tokenRepository.set(token);
 
         return token;
       },
