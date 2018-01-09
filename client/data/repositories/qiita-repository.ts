@@ -41,25 +41,6 @@ const qiitaRepository: IQiitaRepository = (createHttpClient) => {
 
       return result;
     },
-
-    issueToken: async (code): Promise<any> => {
-      const params = { code };
-
-      const response = await httpClient.post('/token', params)
-        .then((response: AxiosResponse) => {
-          console.log(response.data);
-
-          return Promise.resolve(response.data);
-        })
-        .catch((error: AxiosError) => {
-          console.log(error);
-
-          return Promise.reject(error);
-        });
-
-      return response;
-    },
-
   };
 };
 

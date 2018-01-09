@@ -1,19 +1,19 @@
 import httpClientFactory from '../http-client-factory';
-import { IQiitaRepository } from '../repositories/qiita-repository-interface';
 import { ITokenRepository } from '../repositories/token-repository-interface';
 
 const tokenInteractor =
-  (qiitaRepository: IQiitaRepository, tokenRepository: ITokenRepository) => {
+  (tokenRepository: ITokenRepository) => {
+
     return {
       /**
        * アクセストークン 作成
        */
       create: async (code: string): Promise<string> => {
-        const createHttpClient = () => httpClientFactory.createHttpClient;
+        const repository = tokenRepository(httpClientFactory.createHttpClient);
 
-        const token = await qiitaRepository(createHttpClient()).issueToken(code);
+        const token = await repository.issue(code);
 
-        tokenRepository.set(token);
+        repository.set(token);
 
         return token;
       },
