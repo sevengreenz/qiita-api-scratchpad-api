@@ -1,4 +1,3 @@
-import httpClientFactory from '../http-client-factory';
 import { ITokenRepository } from '../repositories/token-repository-interface';
 
 const tokenInteractor =
@@ -9,11 +8,9 @@ const tokenInteractor =
        * アクセストークン 作成
        */
       create: async (code: string): Promise<string> => {
-        const repository = tokenRepository(httpClientFactory.createHttpClient);
+        const token = await tokenRepository.issue(code);
 
-        const token = await repository.issue(code);
-
-        repository.set(token);
+        tokenRepository.update(token);
 
         return token;
       },

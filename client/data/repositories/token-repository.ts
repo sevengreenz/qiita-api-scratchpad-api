@@ -1,45 +1,30 @@
 import { ITokenRepository } from '../../domain/repositories/token-repository-interface';
-import { AxiosResponse, AxiosError } from 'axios';
+import { ITokenDataStore } from './data-stores/token/token-data-store-interface';
+import { IDataStoreFactory } from './data-stores/data-store-factory-interface';
 
-const tokenStorageGateway: ITokenRepository = (createHttpClient) => {
+const tokenRepository
+  = (tokenDataStoreFactory: IDataStoreFactory<ITokenDataStore>): ITokenRepository => {
+    return {
+      issue: async (code: string): Promise<string> => {
+        return await tokenDataStoreFactory
+          .createCloudDataStore()
+          .issue(code);
+        // const dataStore = tokenDataStoreFactory.createCloudDataStore();
+        // return await dataStore.issue(code);
+      },
 
-  const httpClient = createHttpClient({
-    baseURL: process.env.BASE_API_URL,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+      find: (): string | null => {
+        return tokenDataStoreFactory
+          .createLocalDataStore()
+          .find();
+      },
 
-
-  const key = 'access_token';
-
-  return {
-    issue: async (code): Promise<string> => {
-      const params = { code };
-
-      const response = await httpClient.post('/token', params)
-        .then((response: AxiosResponse) => {
-          console.log(response.data);
-
-          return Promise.resolve(response.data);
-        })
-        .catch((error: AxiosError) => {
-          console.log(error);
-
-          return Promise.reject(error);
-        });
-
-      return response;
-    },
-
-    get: () => {
-      return sessionStorage.getItem(key);
-    },
-
-    set: (token) => {
-      sessionStorage.setItem(key, token);
-    },
+      update: (token: string) => {
+        return tokenDataStoreFactory
+          .createLocalDataStore()
+          .update(token);
+      },
+    };
   };
-};
 
-export default tokenStorageGateway;
+export default tokenRepository;
