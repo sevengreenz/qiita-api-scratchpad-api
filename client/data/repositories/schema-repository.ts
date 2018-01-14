@@ -1,17 +1,16 @@
 import { ISchemaRepository } from '../../domain/repositories/schema-repository-interface';
+import { IDataStoreFactory } from './data-stores/data-store-factory-interface';
+import { ISchemaDataStore } from './data-stores/schema/schema-data-store-interface';
 
-const schemaRepository: ISchemaRepository = (createHttpClient) => {
-  const httpClient = createHttpClient({
-    baseURL: process.env.QIITA_URL,
-  });
-
-  return {
-    find: async () => {
-      const response = await httpClient.get('/schema?local=ja');
-
-      return Object.values(response.data.properties);
-    },
+const schemaRepository
+  = (schemaDataStoreFactory: IDataStoreFactory<ISchemaDataStore>): ISchemaRepository => {
+    return {
+      fetch: async () => {
+        return await schemaDataStoreFactory
+          .createCloudDataStore()
+          .fetch();
+      },
+    };
   };
-};
 
 export default schemaRepository;

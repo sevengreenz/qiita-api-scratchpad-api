@@ -6,16 +6,18 @@ import {
   commitTargetApi,
 } from './qiita';
 import qiitaDomain, { IApiParams, IApi, IResource, IApiResponse } from '../../../domain/qiita';
-import httpClientFactory from '../../../domain/http-client-factory';
 import schemaRepository from '../../../data/repositories/schema-repository';
 import qiitaRepository from '../../../data/repositories/qiita-repository';
 import qiitaDataStoreFactory from '../../../data/repositories/data-stores/qiita/qiita-data-store-factory';
+import schemaDataStoreFactory from '../../../data/repositories/data-stores/schema/schema-data-store-factory';
 
 const fetchSchema = async (context: QiitaContext): Promise<void> => {
-  const resources = await schemaRepository(httpClientFactory.createHttpClient).find();
-
-  commitResources(context, resources);
-  commitTargetResource(context, resources[0]);
+  await schemaRepository(schemaDataStoreFactory)
+    .fetch()
+    .then((resources: IResource[]) => {
+      commitResources(context, resources);
+      commitTargetResource(context, resources[0]);
+    });
 };
 
 const changeTargetResource = (context: QiitaContext, resource: IResource): void => {
