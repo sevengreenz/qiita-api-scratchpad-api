@@ -9,8 +9,6 @@ const tokenRepository
         return await tokenDataStoreFactory
           .createCloudDataStore()
           .issue(code);
-        // const dataStore = tokenDataStoreFactory.createCloudDataStore();
-        // return await dataStore.issue(code);
       },
 
       find: (): string | null => {

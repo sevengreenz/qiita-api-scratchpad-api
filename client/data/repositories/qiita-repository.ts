@@ -1,45 +1,14 @@
-import { AxiosResponse, AxiosError } from 'axios';
 import { IApiResponse } from '../../domain/qiita';
-import errorFactory from '../errors/error-factory';
 import { IQiitaRepository } from '../../domain/repositories/qiita-repository-interface';
+import { IDataStoreFactory } from './data-stores/data-store-factory-interface';
+import { IQiitaDataStore } from './data-stores/qiita/qiita-data-store-interface';
 
-const qiitaRepository: IQiitaRepository = (createHttpClient) => {
-  const httpClient = createHttpClient({
-    baseURL: process.env.BASE_API_URL,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-
+const qiitaRepository = (qiitaDataStoreFactory: IDataStoreFactory<IQiitaDataStore>): IQiitaRepository => {
   return {
-    executeQiitaApi: async (method, url, params): Promise<IApiResponse> => {
-      const apiParams = {
-        method,
-        url,
-        params,
-      };
-
-      const result: IApiResponse = await httpClient.post('/api', apiParams)
-        .then((response: AxiosResponse) => {
-          return Promise.resolve({
-            headers: response.headers,
-            data: response.data,
-          });
-        })
-        .catch((error: AxiosError) => {
-          if (error.response === undefined) return Promise.reject(error);
-
-          if (error.response.status === 401) return Promise.reject(error);
-
-          // 401 以外は正常として扱う
-          return Promise.resolve({
-            headers: error.response.headers,
-            data: error.response.data,
-          });
-        })
-        .catch(errorFactory.throwError);
-
-      return result;
+    execute: async (method, url, params): Promise<IApiResponse> => {
+      return await qiitaDataStoreFactory
+        .createCloudDataStore()
+        .execute(method, url, params);
     },
   };
 };
