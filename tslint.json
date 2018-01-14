@@ -6,7 +6,12 @@
   "jsRules": {},
   "rules": {
     // インポートしたモジュール名がインポートされるものの名前の不一致を許可
-    "import-name": false
+    "import-name": false,
+    // 1 行あたりの最大文字数
+    "max-line-length": [
+      true,
+      150
+    ]
   },
   "rulesDirectory": []
 }
