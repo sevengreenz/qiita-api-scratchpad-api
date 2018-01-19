@@ -42,7 +42,7 @@ const qiitaApiGateway: IQiitaApiGateway = (createHttpClient) => {
   const qiitaApi = qiitqApi(httpClient);
 
   return {
-    execute: async (method, url, params) => {
+    execute: async (method, url, params, token) => {
       const requestConfig: AxiosRequestConfig = {
         method,
         url,
@@ -62,6 +62,8 @@ const qiitaApiGateway: IQiitaApiGateway = (createHttpClient) => {
         default:
         // TODO: throw Error
       }
+
+      if (token !== '') requestConfig.headers = Object.assign(requestConfig.headers, { Authorization: `Bearer ${token}` });
 
       return qiitaApi.request(requestConfig);
     },

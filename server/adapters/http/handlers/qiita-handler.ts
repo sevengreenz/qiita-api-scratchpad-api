@@ -14,8 +14,15 @@ export const callApi: lambda.ProxyHandler = async (
     params: object,
   } = JSON.parse(event.body || '');
 
+  const token = () => {
+    const matched = (event.headers.Authorization || '').match(/^Bearer[ ]+(.+)/i);
+    return matched === null
+      ? ''
+      : matched[1];
+  };
+
   await qiitaInteractor(qiitaOutput(callback), qiitaApiGateway)
-    .executeApi(params.method, params.url, params.params);
+    .executeApi(params.method, params.url, params.params, token());
 };
 
 export const authorize: lambda.ProxyHandler = (

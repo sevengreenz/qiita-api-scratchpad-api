@@ -13,9 +13,9 @@ const qiitaInteractor: IInputPort<IQiitaInteractor>
         outputPort.outputRedirection(url);
       },
 
-      executeApi: async (method, url, params) => {
+      executeApi: async (method, url, params, token) => {
         await qiitaApiGateway(httpClientFactory.createHttpClient)
-          .execute(method, url, params)
+          .execute(method, url, params, token)
           .then(outputPort.outputSuccess)
           .catch(outputPort.outputFailure);
       },

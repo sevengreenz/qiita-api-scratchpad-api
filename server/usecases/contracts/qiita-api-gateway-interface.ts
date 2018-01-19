@@ -7,7 +7,7 @@ export default interface IQiitaApiGateway {
     /**
      * 汎用的な API 実行
      */
-    execute: (method: string, url: string, params: object) => Promise<IQiitaApiResponse>,
+    execute: (method: string, url: string, params: object, token: string) => Promise<IQiitaApiResponse>,
 
     /**
      * アクセストークン発行
