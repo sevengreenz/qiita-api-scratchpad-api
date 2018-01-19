@@ -10,7 +10,7 @@ export interface IQiitaApiResponse {
 const makeAuthorizationUrl = (): string => {
   const params: { [key: string]: string } = {
     client_id: process.env.CLIENT_ID || '',
-    scope: 'read_qiita+write_qiita',
+    scope: 'read_qiita write_qiita',
     state: 'scratchpad',
   };
 

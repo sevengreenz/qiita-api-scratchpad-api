@@ -21,7 +21,7 @@ const qiitaInteractor: IInputPort<IQiitaInteractor>
       },
 
       issueToken: async (code) => {
-        console.log('issueToken start' + code);
+        console.log('issueToken start, code: ' + code);
 
         await qiitaApiGateway(httpClientFactory.createHttpClient)
           .issueToken(code)

@@ -16,6 +16,9 @@ const qiitqApi = (httpClient: AxiosInstance) => {
     request: (config: AxiosRequestConfig): Promise<IQiitaApiResponse> => {
       return httpClient.request(config)
         .then((response: AxiosResponse) => {
+          console.log('Request Success, response: ');
+          console.dir(response);
+
           return Promise.resolve(convertApiResponse(response));
         })
         .catch((error: AxiosError) => {
