@@ -1,6 +1,5 @@
 <template>
   <div>
-    hoge moga
   </div>
 </template>
 
@@ -11,26 +10,12 @@ import tokenInteractor from "../../../domain/interactors/token-interactor";
 import tokenRepository from "../../../data/repositories/token-repository";
 import tokenDataStoreFactory from "../../../data/repositories/data-stores/token/token-data-store-factory";
 
-@Component({
-  props: {
-    code: String
-  }
-})
+@Component
 export default class Authorized extends Vue {
-  code: string;
-
-  mounted() {
-    console.log(this.$route.query);
-    console.log(this.display);
-    console.log(this.code);
-
-    tokenInteractor(
-      tokenRepository(tokenDataStoreFactory)
-    ).create(this.$route.query.code);
-  }
-
-  display() {
-    console.log(this.code);
+  beforeCreate() {
+    tokenInteractor(tokenRepository(tokenDataStoreFactory))
+      .create(this.$route.query.code)
+      .then(() => this.$router.push('/'));
   }
 }
 </script>
