@@ -2,13 +2,13 @@
     <div>
         <div v-if="isShow">
             <v-layout row wrap v-for="(property, key) in api.schema.properties" v-bind:key="key">
-                <v-flex d-flex xs12 md1>
-                    <v-subheader>{{ key }}</v-subheader>
+                <v-flex d-flex xs4 md1>
+                    <v-subheader><h2>{{ key }}</h2></v-subheader>
                 </v-flex>
-                <v-flex d-flex xs6 md1>
+                <v-flex d-flex xs4 md1>
                     <v-subheader>{{ (api.schema.required || []).includes(key) ? 'required' : 'optional' }}</v-subheader>
                 </v-flex>
-                <v-flex d-flex xs6 md1>
+                <v-flex d-flex xs4 md1>
                     <v-subheader> {{ property.type }} </v-subheader>
                 </v-flex>
                 <v-flex d-flex xs12 md5>
@@ -21,7 +21,7 @@
             </v-layout>
         </div>
 
-        <v-btn primary dark v-on:click="execute">Exec</v-btn>
+        <v-btn color="primary" dark v-on:click="execute">Exec</v-btn>
         <unauthorized-error :isShow="hasError" :onDisagree="hideError"></unauthorized-error>
     </div>
 </template>
