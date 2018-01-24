@@ -10,9 +10,11 @@ import schemaRepository from '../../../data/repositories/schema-repository';
 import qiitaRepository from '../../../data/repositories/qiita-repository';
 import qiitaDataStoreFactory from '../../../data/repositories/data-stores/qiita/qiita-data-store-factory';
 import schemaDataStoreFactory from '../../../data/repositories/data-stores/schema/schema-data-store-factory';
+import schemaInteractor from '../../../domain/interactors/schema-interactor';
+import qiitaInteractor from '../../../domain/interactors/qiita-interactor';
 
 const fetchSchema = async (context: QiitaContext): Promise<void> => {
-  await schemaRepository(schemaDataStoreFactory)
+  await schemaInteractor(schemaRepository(schemaDataStoreFactory))
     .fetch()
     .then((resources: IResource[]) => {
       commitResources(context, resources);
@@ -34,8 +36,8 @@ const changeTargetApi = (context: QiitaContext, api: IApi): void => {
  * @param {QiitaContext} context
  */
 const executeApi = async (context: QiitaContext, params: IApiParams): Promise<void> => {
-  await qiitaRepository(qiitaDataStoreFactory)
-    .execute(params.api.method, params.api.href, qiitaDomain.removeUndefinedProperty(params.properties))
+  await qiitaInteractor(qiitaRepository(qiitaDataStoreFactory))
+    .executeApi(params.api.method, params.api.href, qiitaDomain.removeUndefinedProperty(params.properties))
     .then((response: IApiResponse) => commitApiResponse(context, response));
 };
 
