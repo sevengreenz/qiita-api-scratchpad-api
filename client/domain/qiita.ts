@@ -48,6 +48,12 @@ export interface IApiResponse {
   data: any;
 }
 
+export interface IExecuteApi {
+  resource: IResource;
+  api: IApi;
+  params: IApiParams;
+}
+
 /**
  * Qiita State インターフェース
  */

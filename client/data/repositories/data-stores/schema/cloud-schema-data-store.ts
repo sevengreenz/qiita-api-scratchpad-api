@@ -17,7 +17,6 @@ const cloudSchemaDataStore =
           .get('/schema?local=ja')
           .then((response: AxiosResponse) => Object.values(response.data.properties));
       },
-
     };
   };
 
