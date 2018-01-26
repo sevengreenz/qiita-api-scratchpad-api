@@ -1,5 +1,4 @@
-import * as assert from 'assert';
-import qiitaDomain from '../../domain/qiita';
+import qiitaFunc from '../../domain/qiita';
 
 describe('removeUndefinedProperty', () => {
   it('success', () => {
@@ -16,6 +15,8 @@ describe('removeUndefinedProperty', () => {
       cookie: { coke: 'cheese' },
     };
 
-    assert.deepEqual(qiitaDomain.removeUndefinedProperty(obj), expectedResult);
+    expect(
+      qiitaFunc.removeUndefinedProperty(obj),
+    ).toEqual(expectedResult);
   });
 });

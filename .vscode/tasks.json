@@ -17,6 +17,16 @@
             "type": "npm",
             "script": "build:server",
             "problemMatcher": []
+        },
+        {
+            "type": "npm",
+            "script": "test:client",
+            "problemMatcher": []
+        },
+        {
+            "type": "npm",
+            "script": "test:server",
+            "problemMatcher": []
         }
     ]
 }

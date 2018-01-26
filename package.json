@@ -11,8 +11,8 @@
     "build:client": "webpack --config client/webpack.config.js --context client && cp client/index.html build/client/index.html",
     "dev:server": "tsc -p server && sls offline",
     "dev:client": "webpack-dev-server --inline --config client/webpack.config.js --context client",
-    "test:server": "mocha --compilers ts:espower-typescript/guess 'server/tests/**/*.ts'",
-    "test:client": "mocha --compilers ts:espower-typescript/guess 'client/tests/**/*.ts'",
+    "test:server": "jest server",
+    "test:client": "jest client",
     "deploy": "NODE_ENV=producion npm run build:client && npm run build:server && serverless deploy && serverless s3deploy"
   },
   "author": "",
@@ -32,17 +32,20 @@
   },
   "devDependencies": {
     "@types/aws-lambda": "0.0.16",
+    "@types/jest": "^22.1.0",
     "@types/mocha": "^2.2.44",
     "aws-lambda": "^0.1.2",
     "css-loader": "^0.28.7",
     "dotenv-webpack": "^1.5.4",
     "espower-typescript": "^8.1.1",
     "html-loader": "^0.5.1",
+    "jest": "^22.1.4",
     "mocha": "^4.0.1",
     "power-assert": "^1.4.4",
     "serverless": "^1.23.0",
     "serverless-offline": "^3.16.0",
     "serverless-s3-deploy": "^0.5.0",
+    "ts-jest": "^22.0.1",
     "ts-loader": "^2.3.7",
     "tslint": "^5.8.0",
     "tslint-config-airbnb": "^5.3.0",
@@ -53,5 +56,19 @@
     "vuex-typescript": "^3.0.2",
     "webpack": "^3.8.1",
     "webpack-dev-server": "^2.9.4"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
   }
 }
