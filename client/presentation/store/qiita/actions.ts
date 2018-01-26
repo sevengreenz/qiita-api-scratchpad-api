@@ -4,14 +4,18 @@ import {
   commitResources,
   commitTargetResource,
   commitTargetApi,
+  getTargetResource,
+  getTargetApi,
 } from './qiita';
-import qiitaDomain, { IApiParams, IApi, IResource, IApiResponse } from '../../../domain/qiita';
+import { IApiParams, IApi, IResource, IApiResponse } from '../../../domain/qiita';
 import schemaRepository from '../../../data/repositories/schema-repository';
 import qiitaRepository from '../../../data/repositories/qiita-repository';
 import qiitaDataStoreFactory from '../../../data/repositories/data-stores/qiita/qiita-data-store-factory';
 import schemaDataStoreFactory from '../../../data/repositories/data-stores/schema/schema-data-store-factory';
+import executedDataStoreFactory from '../../../data/repositories/data-stores/executed/executed-data-store-factory';
 import schemaInteractor from '../../../domain/interactors/schema-interactor';
 import qiitaInteractor from '../../../domain/interactors/qiita-interactor';
+import executedRepository from '../../../data/repositories/executed-repository';
 
 const fetchSchema = async (context: QiitaContext): Promise<void> => {
   await schemaInteractor(schemaRepository(schemaDataStoreFactory))
@@ -36,9 +40,16 @@ const changeTargetApi = (context: QiitaContext, api: IApi): void => {
  * @param {QiitaContext} context
  */
 const executeApi = async (context: QiitaContext, params: IApiParams): Promise<void> => {
-  await qiitaInteractor(qiitaRepository(qiitaDataStoreFactory))
-    .executeApi(params.api.method, params.api.href, qiitaDomain.removeUndefinedProperty(params.properties))
-    .then((response: IApiResponse) => commitApiResponse(context, response));
+  await qiitaInteractor(
+    qiitaRepository(qiitaDataStoreFactory),
+    executedRepository(executedDataStoreFactory),
+  ).executeApi({
+    params,
+    resource: getTargetResource(context),
+    api: getTargetApi(context),
+  }).then((response: IApiResponse) => {
+    commitApiResponse(context, response);
+  });
 };
 
 export default {
