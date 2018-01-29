@@ -7,8 +7,8 @@ const DEBUG = process.env.NODE_ENV !== 'production'
 module.exports = {
   entry: './index.ts',
   output: {
-    path: path.resolve(__dirname, '../build/client'),
-    publicPath: '../build/client/',
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: 'dist',
     filename: 'build.js'
   },
   module: {
@@ -52,7 +52,7 @@ module.exports = {
     }
   },
   devServer: {
-    contentBase: path.resolve(__dirname, '../build/client'),
+    contentBase: path.resolve(__dirname, 'dist'),
     historyApiFallback: true,
     noInfo: true,
     hotOnly: true
@@ -62,7 +62,8 @@ module.exports = {
   },
   plugins: [
     new Dotenv({
-      path: DEBUG ? 'client/.env.dev' : 'client/.env.production',
+      // path: DEBUG ? './.env.dev' : './.env.production',
+      path: './.env.dev',
       safe: false
     }),
   ],

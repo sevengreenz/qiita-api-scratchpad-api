@@ -1,0 +1,53 @@
+{
+  "name": "qiita-api-scratchpad-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "style:check": "tslint -e './node_modules/**/*.ts' --project tsconfig.json './**/*.ts'",
+    "style:fix": "tslint -e './node_modules/**/*.ts' --fix --project tsconfig.json './**/*.ts'",
+    "build": "tsc",
+    "dev": "tsc && sls offline",
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^8.0.47",
+    "@types/query-string": "^5.0.1",
+    "aws-lambda": "^0.1.2",
+    "axios": "^0.16.2",
+    "core-js": "^2.5.1",
+    "query-string": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "0.0.16",
+    "@types/jest": "^22.1.0",
+    "aws-lambda": "^0.1.2",
+    "dotenv-webpack": "^1.5.4",
+    "espower-typescript": "^8.1.1",
+    "jest": "^22.1.4",
+    "serverless": "^1.23.0",
+    "serverless-offline": "^3.16.0",
+    "serverless-s3-deploy": "^0.5.0",
+    "ts-jest": "^22.0.1",
+    "ts-loader": "^2.3.7",
+    "tslint": "^5.8.0",
+    "tslint-config-airbnb": "^5.3.0",
+    "typescript": "^2.5.3"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  }
+}

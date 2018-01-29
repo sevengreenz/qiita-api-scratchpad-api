@@ -41,6 +41,11 @@
     ]
   },
   "include": [
-    "./**/*"
+    "./data/**/*",
+    "./domain/**/*",
+    "./presentation/**/*"
+  ],
+  "exclude": [
+    "./node_modules/**/*"
   ]
 }

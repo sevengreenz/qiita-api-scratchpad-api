@@ -1,0 +1,60 @@
+service: qiita-api-scratchpad-server
+
+plugins:
+  - serverless-offline
+  - serverless-s3-deploy
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  region: ap-northeast-1
+  environment:
+    CLIENT_ID: ${env:QIITA_CLIENT_ID}
+    CLIENT_SECRET: ${env:QIITA_CLIENT_SECRET}
+
+custom:
+  bucket: qiita-api-scratchpad-client
+  assets:
+    targets:
+      - bucket: ${self:custom.bucket}
+        files:
+        - source: ./build/client/
+          globs:
+            - '**/*.js'
+            - '**/*.map'
+            - '**/*.html'
+
+functions:
+  hello:
+    handler: dist/adapters/http/handlers/hello-handler.hello
+    events:
+      - http:
+          path: hello
+          method: get
+  callApi:
+    handler: dist/adapters/http/handlers/qiita-handler.callApi
+    events:
+      - http:
+          path: qiita/api
+          method: post
+          cors: true
+  authorize:
+    handler: dist/adapters/http/handlers/qiita-handler.authorize
+    events:
+      - http:
+          path: qiita/authorize
+          method: get
+  issueToken:
+    handler: dist/adapters/http/handlers/qiita-handler.issueToken
+    events:
+      - http:
+          path: qiita/token
+          method: post
+          cors: true
+
+resources:
+  Resources:
+    QiitaApiScratchPadClient:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.bucket}
