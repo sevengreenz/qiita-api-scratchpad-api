@@ -33,6 +33,7 @@
     "./**/*.ts"
   ],
   "exclude": [
+    "tests",
     "node_modules"
   ]
 }

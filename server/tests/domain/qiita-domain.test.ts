@@ -1,4 +1,4 @@
-import qiitaFunc from '../../domain/qiita-domain';
+import qiitaFunc from '../../src/domain/qiita-domain';
 
 describe('makeAuthorizationUrl', () => {
   it('success', () => {
