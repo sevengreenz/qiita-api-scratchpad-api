@@ -1,23 +1,19 @@
-import { IDataStoreFactory } from './data-stores/data-store-factory-interface';
-import { IExecutedDataStore } from './data-stores/executed/executed-data-store-interface';
+import executedDataStoreFactory from './data-stores/executed/executed-data-store-factory';
 import { IExecutedRepository } from '../../domain/repositories/executed-repository-interface';
 
-const executedRepository
-  = (executedDataStoreFactory: IDataStoreFactory<IExecutedDataStore>): IExecutedRepository => {
-    return {
-      getExecuted: () => {
-        return executedDataStoreFactory
-          .createLocalDataStore()
-          .getExecuted();
-      },
+const executedRepository: IExecutedRepository = {
+  getExecuted: () => {
+    return executedDataStoreFactory
+      .createLocalDataStore()
+      .getExecuted();
+  },
 
-      setExecuted: (executed) => {
-        executedDataStoreFactory
-          .createLocalDataStore()
-          .setExecuted(executed);
-      },
+  setExecuted: (executed) => {
+    executedDataStoreFactory
+      .createLocalDataStore()
+      .setExecuted(executed);
+  },
 
-    };
-  };
+};
 
 export default executedRepository;

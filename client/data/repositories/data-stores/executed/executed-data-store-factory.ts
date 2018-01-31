@@ -1,8 +1,7 @@
 import localExecutedDataStore from './local-executed-data-store';
 import { IExecutedDataStore } from './executed-data-store-interface';
-import { IDataStoreFactory } from '../data-store-factory-interface';
 
-const executedDataStoreFactory: IDataStoreFactory<IExecutedDataStore> = {
+const executedDataStoreFactory = {
   createLocalDataStore: (): IExecutedDataStore => {
     return localExecutedDataStore();
   },

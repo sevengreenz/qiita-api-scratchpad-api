@@ -1,46 +1,43 @@
 import { ITokenDataStore } from './token-data-store-interface';
-import { AxiosResponse, AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
+import { AxiosResponse, AxiosError } from 'axios';
+import httpClientFactory from '../../../api/http-client-factory';
 
-type createHttpClient = (config: AxiosRequestConfig) => AxiosInstance;
+const cloudTokenDataStore = (): ITokenDataStore => {
+  const httpClient = httpClientFactory.createHttpClient({
+    baseURL: process.env.BASE_API_URL,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 
-const cloudTokenDataStore =
-  (createHttpClient: createHttpClient): ITokenDataStore => {
+  return {
+    issue: async (code): Promise<string> => {
+      const params = { code };
 
-    const httpClient = createHttpClient({
-      baseURL: process.env.BASE_API_URL,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+      const response = await httpClient.post('/token', params)
+        .then((response: AxiosResponse) => {
+          console.log(response.data);
 
-    return {
-      issue: async (code): Promise<string> => {
-        const params = { code };
+          return Promise.resolve(response.data);
+        })
+        .catch((error: AxiosError) => {
+          console.log(error);
 
-        const response = await httpClient.post('/token', params)
-          .then((response: AxiosResponse) => {
-            console.log(response.data);
+          return Promise.reject(error);
+        });
 
-            return Promise.resolve(response.data);
-          })
-          .catch((error: AxiosError) => {
-            console.log(error);
+      return response;
+    },
 
-            return Promise.reject(error);
-          });
+    find: () => {
+      throw Error('Not Implemented');
+    },
 
-        return response;
-      },
+    update: () => {
+      throw Error('Not Implemented');
+    },
 
-      find: () => {
-        throw Error('Not Implemented');
-      },
-
-      update: () => {
-        throw Error('Not Implemented');
-      },
-
-    };
   };
+};
 
 export default cloudTokenDataStore;

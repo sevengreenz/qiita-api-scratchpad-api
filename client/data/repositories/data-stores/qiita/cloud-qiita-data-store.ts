@@ -1,14 +1,13 @@
 import { IQiitaDataStore } from './qiita-data-store-interface';
-import { AxiosResponse, AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
+import { AxiosResponse, AxiosError } from 'axios';
 import { IApiResponse } from '../../../../domain/qiita';
 import errorFactory from '../../../errors/error-factory';
-import { ITokenRepository } from '../../../../domain/repositories/token-repository-interface';
-
-type createHttpClient = (config: AxiosRequestConfig) => AxiosInstance;
+import tokenRepository from '../../token-repository';
+import httpClientFactory from '../../../api/http-client-factory';
 
 const cloudQiitaDataStore =
-  (createHttpClient: createHttpClient, tokenRepository: ITokenRepository): IQiitaDataStore => {
-    const httpClient = createHttpClient({
+  (): IQiitaDataStore => {
+    const httpClient = httpClientFactory.createHttpClient({
       baseURL: process.env.BASE_API_URL,
       headers: {
         'Content-Type': 'application/json',

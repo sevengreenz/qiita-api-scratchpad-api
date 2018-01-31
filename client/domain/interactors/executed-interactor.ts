@@ -1,15 +1,11 @@
 import { IExecuteApi } from '../qiita';
-import { IExecutedRepository } from '../repositories/executed-repository-interface';
+import executedRepository from '../../data/repositories/executed-repository';
 
-const executedInteractor =
-  (executedRepository: IExecutedRepository) => {
-
-    return {
-      getLastExecuteApi: (): IExecuteApi | null => {
-        return executedRepository.getExecuted();
-      },
-    };
-  };
+const executedInteractor = {
+  getLastExecuteApi: (): IExecuteApi | null => {
+    return executedRepository.getExecuted();
+  },
+};
 
 export default executedInteractor;
 
