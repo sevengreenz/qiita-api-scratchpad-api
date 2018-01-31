@@ -1,11 +1,10 @@
 import IInputPort from '../contracts/input-port-interface';
 import qiitaDomain from '../../domain/qiita-domain';
-import httpClientFactory from './http-client-factory';
-import IQiitaApiGateway from '../contracts/qiita-api-gateway-interface';
 import IQiitaInteractor from '../contracts/qiita-interactor-interface';
+import qiitaApiGateway from '../../adapters/api-gateways/qiita-api-gateway';
 
 const qiitaInteractor: IInputPort<IQiitaInteractor>
-  = (outputPort, qiitaApiGateway: IQiitaApiGateway) => {
+  = (outputPort) => {
     return {
       authorize: async () => {
         const url = qiitaDomain.makeAuthorizationUrl();
@@ -14,7 +13,7 @@ const qiitaInteractor: IInputPort<IQiitaInteractor>
       },
 
       executeApi: async (method, url, params, token) => {
-        await qiitaApiGateway(httpClientFactory.createHttpClient)
+        await qiitaApiGateway()
           .execute(method, url, params, token)
           .then(outputPort.outputSuccess)
           .catch(outputPort.outputFailure);
@@ -23,7 +22,7 @@ const qiitaInteractor: IInputPort<IQiitaInteractor>
       issueToken: async (code) => {
         console.log('issueToken start, code: ' + code);
 
-        await qiitaApiGateway(httpClientFactory.createHttpClient)
+        await qiitaApiGateway()
           .issueToken(code)
           .then(outputPort.outputSuccess)
           .then(outputPort.outputFailure);

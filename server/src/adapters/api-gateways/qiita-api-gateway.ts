@@ -1,6 +1,7 @@
 import { AxiosRequestConfig, AxiosResponse, AxiosError, AxiosInstance } from 'axios';
 import IQiitaApiGateway from '../../usecases/contracts/qiita-api-gateway-interface';
 import { IQiitaApiResponse } from '../../domain/qiita-domain';
+import httpClientFactory from './http-client-factory';
 
 // 別ファイルに分離
 const qiitqApi = (httpClient: AxiosInstance) => {
@@ -37,8 +38,8 @@ const qiitqApi = (httpClient: AxiosInstance) => {
   };
 };
 
-const qiitaApiGateway: IQiitaApiGateway = (createHttpClient) => {
-  const httpClient = createHttpClient({
+const qiitaApiGateway = (): IQiitaApiGateway => {
+  const httpClient = httpClientFactory.createHttpClient({
     baseURL: 'http://qiita.com',
   });
 
