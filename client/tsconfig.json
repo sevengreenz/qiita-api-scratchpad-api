@@ -43,7 +43,8 @@
   "include": [
     "./data/**/*",
     "./domain/**/*",
-    "./presentation/**/*"
+    "./presentation/**/*",
+    "./tests/**/*"
   ],
   "exclude": [
     "./node_modules/**/*"
