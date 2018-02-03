@@ -10,13 +10,23 @@ import {
 import { IApiParams, IApi, IResource, IApiResponse } from '../../../domain/qiita';
 import schemaInteractor from '../../../domain/interactors/schema-interactor';
 import qiitaInteractor from '../../../domain/interactors/qiita-interactor';
+import executedInteractor from '../../../domain/interactors/executed-interactor';
 
 const fetchSchema = async (context: QiitaContext): Promise<void> => {
   await schemaInteractor
     .fetch()
     .then((resources: IResource[]) => {
       commitResources(context, resources);
-      commitTargetResource(context, resources[0]);
+
+      // session に保存されていた場合、targetResource にセットする
+      const executed = executedInteractor.getLastExecuteApi();
+      if (executed !== null) {
+        commitTargetResource(context, executed.resource);
+        commitTargetApi(context, executed.api);
+      } else {
+        commitTargetResource(context, resources[0]);
+        commitTargetApi(context, resources[0].links[0]);
+      }
     });
 };
 

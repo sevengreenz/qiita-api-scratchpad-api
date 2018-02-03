@@ -9,10 +9,11 @@ const qiitaInteractor = {
   executeApi: async (api: IExecuteApi): Promise<IApiResponse> => {
     return await qiitaRepository
       .execute(api.api.method, api.api.href, qiita.removeUndefinedProperty(api.params.properties))
-      .then((response) => {
+      .catch((error) => {
+        // TODO: 成功時にセッションから削除
         executedRepository.setExecuted(api);
 
-        return Promise.resolve(response);
+        return Promise.reject(error);
       });
   },
 };

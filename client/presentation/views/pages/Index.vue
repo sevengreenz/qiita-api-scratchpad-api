@@ -4,12 +4,13 @@
       <v-card-text>
         <v-container fluid>
           <v-layout row wrap>
-            <v-select v-bind:items="resources" v-model="resource" v-on:change="changeResource($event)" item-text="title" item-value="title" return-object :hint="`${resource.description}`" persistent-hint label="Resource" bottom></v-select>
+            <v-select v-bind:items="resources" v-model="targetResource" v-on:change="changeResource($event)" item-text="title" item-value="title" return-object :hint="`${targetResource.description}`" persistent-hint label="Resource" bottom>
+            </v-select>
           </v-layout>
           <v-layout row wrap>
-            <v-select v-bind:items="resource.links" v-model="api" item-text="title" v-on:change="changeApi($event)" return-object :hint="`${api.description}`" persistent-hint label="API" bottom></v-select>
+            <v-select v-bind:items="targetResource.links" v-model="targetApi" item-text="title" item-value="title" v-on:change="changeApi($event)" return-object :hint="`${targetApi.description}`" persistent-hint label="API" bottom></v-select>
           </v-layout>
-          <api-property :api="apis" :params="params"></api-property>
+          <api-property :api="targetApi" :params="params"></api-property>
           <api-result :result="result"></api-result>
         </v-container>
       </v-card-text>
@@ -20,10 +21,10 @@
 <script lang='ts'>
 import Vue from "vue";
 import Component from "vue-class-component";
-import ApiProperty from "../components/qiita/ApiProperty";
-import ApiResult from "../components/qiita/ApiResult";
-import qiitaDomain, { IResource, IApi } from "../../../domain/qiita";
-import * as qiita from "../../store/qiita";
+import ApiProperty from "../components/qiita/ApiProperty.vue";
+import ApiResult from "../components/qiita/ApiResult.vue";
+import { IResource, IApi } from "../../../domain/qiita";
+import * as qiitaStore from "../../store/qiita";
 
 @Component({
   components: {
@@ -33,31 +34,28 @@ import * as qiita from "../../store/qiita";
   props: {}
 })
 export default class Index extends Vue {
-  // initial data
-  resource: IResource | string = "";
-  api: IApi = qiitaDomain.createEmptyApi();
-
   async created() {
-    qiita.fetchSchema(this.$store);
-
-    this.resource = qiita.getTargetResource(this.$store);
-    this.api = qiita.getTargetApi(this.$store);
+    qiitaStore.fetchSchema(this.$store);
   }
 
   get resources(): IResource[] {
-    return qiita.getResources(this.$store);
+    return qiitaStore.getResources(this.$store);
   }
 
-  get apis(): IApi {
-    return qiita.getTargetApi(this.$store);
+  get targetResource(): IResource {
+    return qiitaStore.getTargetResource(this.$store);
+  }
+
+  get targetApi(): IApi {
+    return qiitaStore.getTargetApi(this.$store);
   }
 
   get params(): object {
-    return qiita.getApiParams(this.$store);
+    return qiitaStore.getApiParams(this.$store);
   }
 
   get result() {
-    return qiita.getApiResponse(this.$store);
+    return qiitaStore.getApiResponse(this.$store);
   }
 
   /**
@@ -66,7 +64,7 @@ export default class Index extends Vue {
    * @param IResource $event
    */
   changeResource($event: IResource) {
-    qiita.changeTargetResource(this.$store, $event);
+    qiitaStore.changeTargetResource(this.$store, $event);
   }
 
   /**
@@ -75,7 +73,7 @@ export default class Index extends Vue {
    * @param IApi $event
    */
   changeApi($event: IApi): void {
-    qiita.changeTargetApi(this.$store, $event);
+    qiitaStore.changeTargetApi(this.$store, $event);
   }
 }
 </script>
