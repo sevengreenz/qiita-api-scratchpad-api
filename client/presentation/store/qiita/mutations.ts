@@ -1,4 +1,5 @@
-import qiitaDomain, { IQiitaState, IResource, IApi, IApiResponse } from '../../../domain/qiita';
+import qiitaDomain, { IResource, IApi, IApiResponse } from '../../../domain/qiita';
+import qiitaState, { IQiitaState } from './state';
 
 const setResources = (state: IQiitaState, resources: IResource[]) => {
   state.resources = resources;
@@ -17,7 +18,7 @@ const setTargetApi = (state: IQiitaState, api: IApi) => {
     : qiitaDomain.makeApiParams(api.schema);
 
   // API 実行結果初期化
-  state.apiResponse = qiitaDomain.createEmptyApiResponse();
+  state.apiResponse = qiitaState.createEmptyApiResponse();
 };
 
 const setApiResponse = (state: IQiitaState, apiReponse: IApiResponse) => {

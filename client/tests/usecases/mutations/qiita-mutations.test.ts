@@ -1,11 +1,12 @@
 import qiitaMutations from '../../../presentation/store/qiita/mutations';
-import qiitaFunc, { IQiitaState, IApiResponse } from '../../../domain/qiita';
+import qiitaStore, { IQiitaState } from '../../../presentation/store/qiita/state';
+import { IApiResponse } from '../../../domain/qiita';
 
 describe('qiita mutations', () => {
   let state: IQiitaState;
 
   beforeEach(() => {
-    state = qiitaFunc.createInitialState();
+    state = qiitaStore.createInitialState();
   });
 
   it('setApiResponse', () => {

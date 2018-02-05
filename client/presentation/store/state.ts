@@ -1,4 +1,4 @@
-import { IQiitaState } from '../../domain/qiita';
+import { IQiitaState } from './qiita/state';
 
 export interface IState {
   qiita: IQiitaState;

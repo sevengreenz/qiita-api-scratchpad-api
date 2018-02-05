@@ -1,7 +1,7 @@
 import { ActionContext } from 'vuex';
 import { getStoreAccessors } from 'vuex-typescript';
 import { IState as IRootState } from '../state';
-import qiitaDomain, { IQiitaState } from '../../../domain/qiita';
+import qiitaState, { IQiitaState } from './state';
 import qiitaActions from './actions';
 import qiitaGetters from './getters';
 import qiitaMutations from './mutations';
@@ -11,7 +11,7 @@ export type QiitaContext = ActionContext<IQiitaState, IRootState>;
 export const qiita = {
   namespaced: true,
 
-  state: qiitaDomain.createInitialState(),
+  state: qiitaState.createInitialState(),
 
   getters: qiitaGetters,
 
