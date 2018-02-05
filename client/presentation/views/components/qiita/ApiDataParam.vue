@@ -23,55 +23,26 @@
       </v-layout>
     </div>
 
-    <v-btn color="primary" dark v-on:click="execute">Exec</v-btn>
-    <unauthorized-error :isShow="hasError" :onDisagree="hideError"></unauthorized-error>
   </div>
 </template>
 
 <script lang='ts'>
 import Vue from "vue";
 import Component from "vue-class-component";
-import { IApi, IApiParams } from "../../../../domain/qiita";
-import * as qiita from "../../../store/qiita";
-import UnauthorizedError from "../../../../data/errors/unauthorized-error";
-import UnauthorizedErrorComponent from "../common/UnauthorizedError.vue";
+import { IApi } from "../../../../domain/qiita";
 
 @Component({
-  components: {
-    "unauthorized-error": UnauthorizedErrorComponent
-  },
   props: {
     api: Object,
     params: Object
   }
 })
-export default class ApiProperty extends Vue {
+export default class ApiDataParam extends Vue {
   api: IApi;
   params: Object;
-  hasError: boolean = false;
 
   get isShow(): boolean {
     return this.api.hasOwnProperty("schema");
-  }
-
-  async execute(): Promise<void> {
-    console.log(this.params);
-    const apiParams: IApiParams = {
-      api: this.api,
-      properties: this.params
-    };
-
-    await qiita.executeApi(this.$store, apiParams).catch((e: Error) => {
-      if (e instanceof UnauthorizedError) {
-        this.hasError = true;
-      }
-      // TODO: modal で表示
-      console.log(e);
-    });
-  }
-
-  hideError(): void {
-    this.hasError = false;
   }
 }
 </script>

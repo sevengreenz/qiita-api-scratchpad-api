@@ -10,7 +10,10 @@
           <v-layout row wrap>
             <v-select v-bind:items="targetResource.links" v-model="targetApi" item-text="title" item-value="title" v-on:change="changeApi($event)" return-object :hint="`${targetApi.description}`" persistent-hint label="API" bottom></v-select>
           </v-layout>
-          <api-property :api="targetApi" :params="params"></api-property>
+          <api-data-param :api="targetApi" :params="params"></api-data-param>
+
+          <v-btn color="primary" dark v-on:click="execute">Exec</v-btn>
+          <unauthorized-error :isShow="hasError" :onDisagree="hideError"></unauthorized-error>
           <api-result :result="result"></api-result>
         </v-container>
       </v-card-text>
@@ -21,19 +24,24 @@
 <script lang='ts'>
 import Vue from "vue";
 import Component from "vue-class-component";
-import ApiProperty from "../components/qiita/ApiProperty.vue";
+import ApiDataParam from "../components/qiita/ApiDataParam.vue";
 import ApiResult from "../components/qiita/ApiResult.vue";
-import { IResource, IApi } from "../../../domain/qiita";
+import { IResource, IApi, IApiParams } from "../../../domain/qiita";
 import * as qiitaStore from "../../store/qiita";
+import UnauthorizedError from "../../../data/errors/unauthorized-error";
+import UnauthorizedErrorComponent from "../components/common/UnauthorizedError.vue";
 
 @Component({
   components: {
-    "api-property": ApiProperty,
+    "api-data-param": ApiDataParam,
+    "unauthorized-error": UnauthorizedErrorComponent,
     "api-result": ApiResult
   },
   props: {}
 })
 export default class Index extends Vue {
+  hasError: boolean = false;
+
   async created() {
     qiitaStore.fetchSchema(this.$store);
   }
@@ -74,6 +82,26 @@ export default class Index extends Vue {
    */
   changeApi($event: IApi): void {
     qiitaStore.changeTargetApi(this.$store, $event);
+  }
+
+  async execute(): Promise<void> {
+    console.log(this.params);
+    const apiParams: IApiParams = {
+      api: this.targetApi,
+      properties: this.params
+    };
+
+    await qiitaStore.executeApi(this.$store, apiParams).catch((e: Error) => {
+      if (e instanceof UnauthorizedError) {
+        this.hasError = true;
+      }
+      // TODO: modal で表示
+      console.log(e);
+    });
+  }
+
+  hideError(): void {
+    this.hasError = false;
   }
 }
 </script>
