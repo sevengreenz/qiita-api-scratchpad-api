@@ -34,10 +34,10 @@ export interface IProperty {
   pattern?: string;
 }
 
-/** API 実行パラメータインターフェース */
+/** API 実行データパラメータ */
 export interface IApiParams {
   api: IApi;
-  properties: { [key: string]: any };
+  dataParams: { [key: string]: any };
 }
 
 /**
@@ -61,7 +61,7 @@ export interface IQiitaState {
   resources: IResource[];
   targetResource: IResource;
   targetApi: IApi;
-  params: { [key: string]: any };
+  dataParams: { [key: string]: any };
   apiResponse: IApiResponse;
 }
 
@@ -76,7 +76,7 @@ const createInitialState = (): IQiitaState => {
       required: [],
     },
     targetApi: createEmptyApi(),
-    params: {},
+    dataParams: {},
     apiResponse: createEmptyApiResponse(),
   };
 };
@@ -111,10 +111,10 @@ const removeUndefinedProperty = (obj: { [key: string]: any }) => {
     (params: { [key: string]: any }, [key, value]) => {
       if (value === undefined) {
         return params;
-      } else {
-        Object.assign(params, { [key]: value });
-        return params;
       }
+
+      Object.assign(params, { [key]: value });
+      return params;
     },
     {},
   );

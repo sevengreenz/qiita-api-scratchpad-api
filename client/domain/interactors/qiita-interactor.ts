@@ -8,7 +8,7 @@ const qiitaInteractor = {
    */
   executeApi: async (api: IExecuteApi): Promise<IApiResponse> => {
     return await qiitaRepository
-      .execute(api.api.method, api.api.href, qiita.removeUndefinedProperty(api.params.properties))
+      .execute(api.api.method, api.api.href, qiita.removeUndefinedProperty(api.params.dataParams))
       .catch((error) => {
         // TODO: 成功時にセッションから削除
         executedRepository.setExecuted(api);

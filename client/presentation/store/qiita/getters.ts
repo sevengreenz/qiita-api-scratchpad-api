@@ -12,8 +12,8 @@ const getTargetApi = (state: IQiitaState): IApi => {
   return state.targetApi;
 };
 
-const getApiParams = (state: IQiitaState): object => {
-  return state.params;
+const getApiDataParams = (state: IQiitaState): object => {
+  return state.dataParams;
 };
 
 const getApiResponse = (state: IQiitaState): IApiResponse => {
@@ -24,6 +24,6 @@ export default {
   getResources,
   getTargetResource,
   getTargetApi,
-  getApiParams,
+  getApiDataParams,
   getApiResponse,
 };

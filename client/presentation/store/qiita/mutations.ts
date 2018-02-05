@@ -12,7 +12,7 @@ const setTargetApi = (state: IQiitaState, api: IApi) => {
   state.targetApi = api;
 
   // 変更後の API の初期パラメータ作成
-  state.params = api.schema === undefined
+  state.dataParams = api.schema === undefined
     ? {}
     : qiitaDomain.makeApiParams(api.schema);
 

@@ -10,7 +10,7 @@
           <v-layout row wrap>
             <v-select v-bind:items="targetResource.links" v-model="targetApi" item-text="title" item-value="title" v-on:change="changeApi($event)" return-object :hint="`${targetApi.description}`" persistent-hint label="API" bottom></v-select>
           </v-layout>
-          <api-data-param :api="targetApi" :params="params"></api-data-param>
+          <api-data-param :api="targetApi" :params="dataParams"></api-data-param>
 
           <v-btn color="primary" dark v-on:click="execute">Exec</v-btn>
           <unauthorized-error :isShow="hasError" :onDisagree="hideError"></unauthorized-error>
@@ -58,7 +58,7 @@ export default class Index extends Vue {
     return qiitaStore.getTargetApi(this.$store);
   }
 
-  get params(): object {
+  get dataParams(): object {
     return qiitaStore.getApiParams(this.$store);
   }
 
@@ -85,10 +85,10 @@ export default class Index extends Vue {
   }
 
   async execute(): Promise<void> {
-    console.log(this.params);
+    console.log(this.dataParams);
     const apiParams: IApiParams = {
       api: this.targetApi,
-      properties: this.params
+      dataParams: this.dataParams
     };
 
     await qiitaStore.executeApi(this.$store, apiParams).catch((e: Error) => {
