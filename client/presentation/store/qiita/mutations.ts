@@ -1,4 +1,4 @@
-import qiitaDomain, { IResource, IApi, IApiResponse } from '../../../domain/qiita';
+import qiitaFunc, { IResource, IApi, IApiResponse } from '../../../domain/qiita';
 import qiitaState, { IQiitaState } from './state';
 
 const setResources = (state: IQiitaState, resources: IResource[]) => {
@@ -12,10 +12,14 @@ const setTargetResource = (state: IQiitaState, resource: IResource) => {
 const setTargetApi = (state: IQiitaState, api: IApi) => {
   state.targetApi = api;
 
-  // 変更後の API の初期パラメータ作成
+  debugger;
+  // 変更後の API の初期 URL パラメータ作成
+  state.urlParams = qiitaFunc.extractUrlParams(api.href);
+
+  // 変更後の API の初期データパラメータ作成
   state.dataParams = api.schema === undefined
     ? {}
-    : qiitaDomain.makeApiParams(api.schema);
+    : qiitaFunc.makeApiParams(api.schema);
 
   // API 実行結果初期化
   state.apiResponse = qiitaState.createEmptyApiResponse();

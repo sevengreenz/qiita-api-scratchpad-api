@@ -34,6 +34,11 @@ export interface IProperty {
   pattern?: string;
 }
 
+/** API 実行 URL パラメータ */
+export interface IUrlParams {
+  [key: string]: number | undefined;
+}
+
 /** API 実行データパラメータ */
 export interface IApiParams {
   api: IApi;
@@ -77,6 +82,18 @@ const removeUndefinedProperty = (obj: { [key: string]: any }) => {
   );
 };
 
+const extractUrlParams = (href: string): { [key: string]: undefined } => {
+  const req = /:(\w+)(?:\/|$)/g;
+  let params: { [key: string]: undefined } = {};
+  let key: RegExpExecArray | null;
+
+  while ((key = req.exec(href)) !== null) {
+    params = Object.assign(params, { [key[1]]: undefined });
+  }
+
+  return params;
+};
+
 /**
  * 実行 API のパラメータ作成
  *
@@ -94,5 +111,6 @@ const makeApiParams = (schema: ISchema): { [key: string]: any } => {
 export default {
   isEmptyApiResponse,
   removeUndefinedProperty,
+  extractUrlParams,
   makeApiParams,
 };

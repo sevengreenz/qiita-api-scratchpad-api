@@ -27,7 +27,8 @@ const { commit, read, dispatch } =
 export const getResources = read(qiita.getters.getResources);
 export const getTargetResource = read(qiita.getters.getTargetResource);
 export const getTargetApi = read(qiita.getters.getTargetApi);
-export const getApiParams = read(qiita.getters.getApiDataParams);
+export const getUrlParams = read(qiita.getters.getApiUrlParams);
+export const getDataParams = read(qiita.getters.getApiDataParams);
 export const getApiResponse = read(qiita.getters.getApiResponse);
 
 export const fetchSchema = dispatch(qiita.actions.fetchSchema);

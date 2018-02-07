@@ -10,6 +10,9 @@
           <v-layout row wrap>
             <v-select v-bind:items="targetResource.links" v-model="targetApi" item-text="title" item-value="title" v-on:change="changeApi($event)" return-object :hint="`${targetApi.description}`" persistent-hint label="API" bottom></v-select>
           </v-layout>
+
+          <api-url-param :params="urlParams"></api-url-param>
+
           <api-data-param :api="targetApi" :params="dataParams"></api-data-param>
 
           <v-btn color="primary" dark v-on:click="execute">Exec</v-btn>
@@ -24,6 +27,7 @@
 <script lang='ts'>
 import Vue from "vue";
 import Component from "vue-class-component";
+import ApiUrlParam from "../components/qiita/ApiUrlParam.vue";
 import ApiDataParam from "../components/qiita/ApiDataParam.vue";
 import ApiResult from "../components/qiita/ApiResult.vue";
 import { IResource, IApi, IApiParams } from "../../../domain/qiita";
@@ -33,6 +37,7 @@ import UnauthorizedErrorComponent from "../components/common/UnauthorizedError.v
 
 @Component({
   components: {
+    "api-url-param": ApiUrlParam,
     "api-data-param": ApiDataParam,
     "unauthorized-error": UnauthorizedErrorComponent,
     "api-result": ApiResult
@@ -58,8 +63,12 @@ export default class Index extends Vue {
     return qiitaStore.getTargetApi(this.$store);
   }
 
+  get urlParams(): object {
+    return qiitaStore.getUrlParams(this.$store);
+  }
+
   get dataParams(): object {
-    return qiitaStore.getApiParams(this.$store);
+    return qiitaStore.getDataParams(this.$store);
   }
 
   get result() {

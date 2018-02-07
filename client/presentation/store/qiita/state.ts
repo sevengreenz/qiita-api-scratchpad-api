@@ -1,4 +1,4 @@
-import { IApiResponse, IResource, IApi } from '../../../domain/qiita';
+import { IApiResponse, IResource, IApi, IUrlParams } from '../../../domain/qiita';
 
 /**
  * Qiita State インターフェース
@@ -7,6 +7,7 @@ export interface IQiitaState {
   resources: IResource[];
   targetResource: IResource;
   targetApi: IApi;
+  urlParams: IUrlParams;
   dataParams: { [key: string]: any };
   apiResponse: IApiResponse;
 }
@@ -38,6 +39,7 @@ const createInitialState = (): IQiitaState => {
       required: [],
     },
     targetApi: createEmptyApi(),
+    urlParams: {},
     dataParams: {},
     apiResponse: createEmptyApiResponse(),
   };
