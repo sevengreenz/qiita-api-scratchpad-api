@@ -12,7 +12,6 @@ const setTargetResource = (state: IQiitaState, resource: IResource) => {
 const setTargetApi = (state: IQiitaState, api: IApi) => {
   state.targetApi = api;
 
-  debugger;
   // 変更後の API の初期 URL パラメータ作成
   state.urlParams = qiitaFunc.extractUrlParams(api.href);
 

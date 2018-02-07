@@ -10,7 +10,7 @@
         <v-subheader>required</v-subheader>
       </v-flex>
       <v-flex d-flex xs4 md1>
-        <v-subheader> integer </v-subheader>
+        <v-subheader> integer | string </v-subheader>
       </v-flex>
       <v-flex d-flex xs12 md5></v-flex>
       <v-flex d-flex xs12 md4>

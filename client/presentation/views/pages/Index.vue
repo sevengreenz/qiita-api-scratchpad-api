@@ -30,7 +30,7 @@ import Component from "vue-class-component";
 import ApiUrlParam from "../components/qiita/ApiUrlParam.vue";
 import ApiDataParam from "../components/qiita/ApiDataParam.vue";
 import ApiResult from "../components/qiita/ApiResult.vue";
-import { IResource, IApi, IApiParams } from "../../../domain/qiita";
+import { IResource, IApi, IApiParams, IUrlParams } from "../../../domain/qiita";
 import * as qiitaStore from "../../store/qiita";
 import UnauthorizedError from "../../../data/errors/unauthorized-error";
 import UnauthorizedErrorComponent from "../components/common/UnauthorizedError.vue";
@@ -63,7 +63,7 @@ export default class Index extends Vue {
     return qiitaStore.getTargetApi(this.$store);
   }
 
-  get urlParams(): object {
+  get urlParams(): IUrlParams {
     return qiitaStore.getUrlParams(this.$store);
   }
 
@@ -97,6 +97,7 @@ export default class Index extends Vue {
     console.log(this.dataParams);
     const apiParams: IApiParams = {
       api: this.targetApi,
+      urlParams: this.urlParams,
       dataParams: this.dataParams
     };
 

@@ -42,6 +42,7 @@ export interface IUrlParams {
 /** API 実行データパラメータ */
 export interface IApiParams {
   api: IApi;
+  urlParams: IUrlParams;
   dataParams: { [key: string]: any };
 }
 
@@ -56,7 +57,8 @@ export interface IApiResponse {
 export interface IExecuteApi {
   resource: IResource;
   api: IApi;
-  params: IApiParams;
+  urlParams: IUrlParams;
+  dataParams: { [key: string]: any };
 }
 
 const isEmptyApiResponse = (apiResponse: IApiResponse): boolean => {
@@ -82,9 +84,14 @@ const removeUndefinedProperty = (obj: { [key: string]: any }) => {
   );
 };
 
-const extractUrlParams = (href: string): { [key: string]: undefined } => {
+/**
+ * スキーマの href からパラメータを抽出する
+ *
+ * @param href
+ */
+const extractUrlParams = (href: string): IUrlParams => {
   const req = /:(\w+)(?:\/|$)/g;
-  let params: { [key: string]: undefined } = {};
+  let params: IUrlParams = {};
   let key: RegExpExecArray | null;
 
   while ((key = req.exec(href)) !== null) {
@@ -92,6 +99,21 @@ const extractUrlParams = (href: string): { [key: string]: undefined } => {
   }
 
   return params;
+};
+
+/**
+ * URL パラメータを URL に埋め込む
+ *
+ * @param href
+ * @param urlParams
+ */
+const embedUrlParams = (href: string, urlParams: IUrlParams): string => {
+  return Object.entries(urlParams).reduce(
+    (embededHref: string, [key, value]) => {
+      return embededHref.replace(`:${key}`, (value || '').toString());
+    },
+    href,
+  );
 };
 
 /**
@@ -112,5 +134,6 @@ export default {
   isEmptyApiResponse,
   removeUndefinedProperty,
   extractUrlParams,
+  embedUrlParams,
   makeApiParams,
 };

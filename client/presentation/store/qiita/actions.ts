@@ -46,9 +46,10 @@ const changeTargetApi = (context: QiitaContext, api: IApi): void => {
 const executeApi = async (context: QiitaContext, params: IApiParams): Promise<void> => {
   await qiitaInteractor
     .executeApi({
-      params,
       resource: getTargetResource(context),
       api: getTargetApi(context),
+      urlParams: params.urlParams,
+      dataParams: params.dataParams,
     }).then((response: IApiResponse) => {
       commitApiResponse(context, response);
     });

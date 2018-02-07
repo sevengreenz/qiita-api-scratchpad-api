@@ -33,4 +33,12 @@ describe('qiita', () => {
       expect(received).toHaveProperty('user_id');
     });
   });
+
+  describe('embedUrlParams', () => {
+    it('shuld return embeded', () => {
+      expect(
+        qiitaFunc.embedUrlParams('/hoge/:comment_id/huga/:user_id', { comment_id: 1, user_id: 20 }),
+      ).toBe('/hoge/1/huga/20');
+    });
+  });
 });
