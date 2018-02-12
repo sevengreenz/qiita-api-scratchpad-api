@@ -36,7 +36,7 @@ export interface IProperty {
 
 /** API 実行 URL パラメータ */
 export interface IUrlParams {
-  [key: string]: number | undefined;
+  [key: string]: string | undefined;
 }
 
 /** API 実行データパラメータ */

@@ -9,10 +9,10 @@
       <v-flex d-flex xs4 md1>
         <v-subheader>required</v-subheader>
       </v-flex>
-      <v-flex d-flex xs4 md1>
+      <v-flex d-flex xs4 md3>
         <v-subheader> integer | string </v-subheader>
       </v-flex>
-      <v-flex d-flex xs12 md5></v-flex>
+      <v-flex d-flex xs12 md2></v-flex>
       <v-flex d-flex xs12 md4>
         <v-text-field v-model="params[key]" required color="blue darken-2">
         </v-text-field>
