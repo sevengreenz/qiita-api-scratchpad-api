@@ -1,4 +1,4 @@
-import qiitaFunc from '../../domain/qiita';
+import qiitaFunc from '../../src/domain/qiita';
 
 describe('qiita', () => {
   describe('removeUndefinedProperty', () => {

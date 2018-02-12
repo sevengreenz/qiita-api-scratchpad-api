@@ -1,6 +1,6 @@
 jest.mock('../../../data/repositories/data-stores/token/token-data-store-factory');
-import tokenRepository from '../../../data/repositories/token-repository';
-import dataStoreFactory from '../../../data/repositories/data-stores/token/token-data-store-factory';
+import tokenRepository from '../../../src/data/repositories/token-repository';
+import dataStoreFactory from '../../../src/data/repositories/data-stores/token/token-data-store-factory';
 describe('tokenRepository', function () {
     var update = jest.fn(function () { });
     var mockTokenDataStore = {

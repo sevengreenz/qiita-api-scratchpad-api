@@ -41,9 +41,7 @@
     ]
   },
   "include": [
-    "./data/**/*",
-    "./domain/**/*",
-    "./presentation/**/*",
+    "./src/**/*",
     "./tests/**/*"
   ],
   "exclude": [

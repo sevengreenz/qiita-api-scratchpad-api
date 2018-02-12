@@ -1,6 +1,6 @@
-import qiitaMutations from '../../../presentation/store/qiita/mutations';
-import qiitaStore, { IQiitaState } from '../../../presentation/store/qiita/state';
-import { IApiResponse } from '../../../domain/qiita';
+import qiitaMutations from '../../../src/presentation/store/qiita/mutations';
+import qiitaStore, { IQiitaState } from '../../../src/presentation/store/qiita/state';
+import { IApiResponse } from '../../../src/domain/qiita';
 
 describe('qiita mutations', () => {
   let state: IQiitaState;

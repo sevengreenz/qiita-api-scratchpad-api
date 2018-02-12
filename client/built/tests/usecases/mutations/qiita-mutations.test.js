@@ -1,9 +1,9 @@
-import qiitaMutations from '../../../presentation/store/qiita/mutations';
-import qiitaFunc from '../../../domain/qiita';
+import qiitaMutations from '../../../src/presentation/store/qiita/mutations';
+import qiitaStore from '../../../src/presentation/store/qiita/state';
 describe('qiita mutations', function () {
     var state;
     beforeEach(function () {
-        state = qiitaFunc.createInitialState();
+        state = qiitaStore.createInitialState();
     });
     it('setApiResponse', function () {
         var apiResponse = {
