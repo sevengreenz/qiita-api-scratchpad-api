@@ -1,4 +1,4 @@
-import { IQiitaApiResponse } from '../../domain/qiita-domain';
+import { IQiitaApiResponse, IIssueTokenResponse } from '../../domain/qiita-domain';
 
 /** Qiita API Gateway インターフェース */
 export default interface IQiitaApiGateway {
@@ -10,6 +10,6 @@ export default interface IQiitaApiGateway {
   /**
    * アクセストークン発行
    */
-  issueToken: (code: string) => Promise<string>;
+  issueToken: (code: string) => Promise<IIssueTokenResponse>;
 }
 

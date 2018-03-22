@@ -26,10 +26,12 @@ const makeResponse = (
 
 const qiitaOutputPort: IOutputPort = (callback) => {
   return {
-    outputSuccess: (result) => {
-      console.log(result);
+    outputSuccess: (locationUrl: string) => {
+      const locationHeader = {
+        Location: locationUrl,
+      };
 
-      const response = makeResponse(200, {}, result);
+      const response = makeResponse(302, locationHeader, '');
 
       callback(undefined, response);
     },
@@ -38,16 +40,6 @@ const qiitaOutputPort: IOutputPort = (callback) => {
       console.log(result);
 
       const response = makeResponse(result.status, result.headers, result.data);
-
-      callback(undefined, response);
-    },
-
-    outputRedirection: (locationUrl) => {
-      const locationHeader = {
-        Location: locationUrl,
-      };
-
-      const response = makeResponse(302, locationHeader, '');
 
       callback(undefined, response);
     },

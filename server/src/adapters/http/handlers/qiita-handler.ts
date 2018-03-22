@@ -2,6 +2,7 @@ import * as lambda from 'aws-lambda';
 import qiitaOutput from '../outputs/qiita-output';
 import qiitaInteractor from '../../../usecases/interactors/qiita-interactor';
 
+/*
 export const callApi: lambda.ProxyHandler = async (
   event: lambda.APIGatewayEvent,
   context: lambda.Context,
@@ -23,7 +24,7 @@ export const callApi: lambda.ProxyHandler = async (
   await qiitaInteractor(qiitaOutput(callback))
     .executeApi(params.method, params.url, params.params, token());
 };
-
+*/
 export const authorize: lambda.ProxyHandler = (
   event: lambda.APIGatewayEvent,
   context: lambda.Context,
@@ -32,7 +33,7 @@ export const authorize: lambda.ProxyHandler = (
   qiitaInteractor(qiitaOutput(callback))
     .authorize();
 };
-
+/*
 export const issueToken: lambda.ProxyHandler = (
   event: lambda.APIGatewayEvent,
   context: lambda.Context,
@@ -46,3 +47,4 @@ export const issueToken: lambda.ProxyHandler = (
   qiitaInteractor(qiitaOutput(callback))
     .issueToken(params.code);
 };
+*/

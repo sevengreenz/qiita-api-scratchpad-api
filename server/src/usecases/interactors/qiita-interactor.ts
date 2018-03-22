@@ -9,17 +9,21 @@ const qiitaInteractor: IInputPort<IQiitaInteractor>
       authorize: async () => {
         const url = qiitaDomain.makeAuthorizationUrl();
 
-        outputPort.outputRedirection(url);
+        outputPort.outputSuccess(url);
       },
 
-      executeApi: async (method, url, params, token) => {
+      executeApi: async ({ method, url, params, token }) => {
+        console.log(method);
+        console.log(url);
+        console.log(params);
+        console.log(token);
         await qiitaApiGateway()
           .execute(method, url, params, token)
           .then(outputPort.outputSuccess)
           .catch(outputPort.outputFailure);
       },
 
-      issueToken: async (code) => {
+      issueToken: async ({ code }) => {
         console.log('issueToken start, code: ' + code);
 
         await qiitaApiGateway()

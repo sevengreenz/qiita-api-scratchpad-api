@@ -7,6 +7,10 @@ export interface IQiitaApiResponse {
   headers: any;
 }
 
+export interface IIssueTokenResponse {
+  token: string;
+}
+
 const makeAuthorizationUrl = (): string => {
   const params: { [key: string]: string } = {
     client_id: process.env.CLIENT_ID || '',

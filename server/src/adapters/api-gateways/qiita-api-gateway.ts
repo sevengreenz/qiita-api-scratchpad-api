@@ -2,6 +2,7 @@ import { AxiosRequestConfig, AxiosResponse, AxiosError, AxiosInstance } from 'ax
 import IQiitaApiGateway from '../../usecases/contracts/qiita-api-gateway-interface';
 import { IQiitaApiResponse } from '../../domain/qiita-domain';
 import httpClientFactory from './http-client-factory';
+import { JsonRpcError } from '../json-rpc-error';
 
 // 別ファイルに分離
 const qiitqApi = (httpClient: AxiosInstance) => {
@@ -25,12 +26,8 @@ const qiitqApi = (httpClient: AxiosInstance) => {
         .catch((error: AxiosError) => {
           console.log(error);
           const failure = error.response === undefined
-            ? {
-              status: 500,
-              data: 'no response',
-              headers: {},
-            }
-            : convertApiResponse(error.response);
+            ? JsonRpcError.InternalError
+            : JsonRpcError.Unauthorized;
 
           return Promise.reject(failure);
         });
@@ -67,7 +64,7 @@ const qiitaApiGateway = (): IQiitaApiGateway => {
         // TODO: throw Error
       }
 
-      if (token !== '') requestConfig.headers = Object.assign(requestConfig.headers, { Authorization: `Bearer ${token}` });
+      if (token !== undefined) requestConfig.headers = Object.assign(requestConfig.headers, { Authorization: `Bearer ${token}` });
 
       return qiitaApi.request(requestConfig);
     },
@@ -85,9 +82,9 @@ const qiitaApiGateway = (): IQiitaApiGateway => {
         url: '/api/v2/access_tokens',
       });
 
-      const token: string = result.data.token;
-
-      return token;
+      return {
+        token: result.data.token,
+      };
     },
 
   };

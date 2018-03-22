@@ -25,12 +25,19 @@ custom:
             - '**/*.html'
 
 functions:
+  rpc:
+    handler: dist/adapters/lambda/handlers/rpc-handler.rpc
+    events:
+      - http:
+          path: rpc
+          method: post
   hello:
     handler: dist/adapters/http/handlers/hello-handler.hello
     events:
       - http:
           path: hello
           method: get
+          cors: true
   callApi:
     handler: dist/adapters/http/handlers/qiita-handler.callApi
     events:
@@ -42,7 +49,7 @@ functions:
     handler: dist/adapters/http/handlers/qiita-handler.authorize
     events:
       - http:
-          path: qiita/authorize
+          path: authorize
           method: get
   issueToken:
     handler: dist/adapters/http/handlers/qiita-handler.issueToken
