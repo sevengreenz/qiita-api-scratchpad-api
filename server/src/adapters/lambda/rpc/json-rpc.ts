@@ -1,5 +1,5 @@
-import IInputPort from '../usecases/contracts/input-port-interface';
-import IOutputPort from '../usecases/contracts/output-port-interface';
+import IInputPort from '../../../usecases/contracts/input-port-interface';
+import IOutputPort from '../../../usecases/contracts/output-port-interface';
 import { JsonRpcError } from './json-rpc-error';
 import * as lambda from 'aws-lambda';
 

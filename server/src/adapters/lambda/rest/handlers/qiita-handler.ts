@@ -1,6 +1,6 @@
 import * as lambda from 'aws-lambda';
 import qiitaOutput from '../outputs/qiita-output';
-import qiitaInteractor from '../../../usecases/interactors/qiita-interactor';
+import qiitaInteractor from '../../../../usecases/interactors/qiita-interactor';
 
 /*
 export const callApi: lambda.ProxyHandler = async (

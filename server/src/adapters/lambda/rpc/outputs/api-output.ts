@@ -1,23 +1,20 @@
-import IOutputPort from '../../../usecases/contracts/output-port-interface';
-import { JsonRpcError } from '../../json-rpc-error';
+import IOutputPort from '../../../../usecases/contracts/output-port-interface';
+import { JsonRpcError } from '../json-rpc-error';
 import responseFunc from './response';
 
-const redirectionOutput: IOutputPort = (callback, id) => {
+const apiOutput: IOutputPort = (callback, id) => {
   return {
     outputSuccess: (result) => {
-      const locationHeader = {
-        Location: result,
-      };
+      console.log(result);
 
       const response = responseFunc.makeSuccessResponse({
         id: id || '',
-        statusCode: 302,
-        headers: locationHeader,
-        body: '',
+        statusCode: 200,
+        headers: {},
+        body: result,
       });
 
       callback(undefined, response);
-
     },
 
     outputFailure: (result: JsonRpcError) => {
@@ -36,4 +33,4 @@ const redirectionOutput: IOutputPort = (callback, id) => {
   };
 };
 
-export default redirectionOutput;
+export default apiOutput;

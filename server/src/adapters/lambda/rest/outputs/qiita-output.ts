@@ -1,4 +1,4 @@
-import IOutputPort from '../../../usecases/contracts/output-port-interface';
+import IOutputPort from '../../../../usecases/contracts/output-port-interface';
 
 export interface IResponse {
   statusCode: number;

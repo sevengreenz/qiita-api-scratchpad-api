@@ -1,6 +1,6 @@
 import * as lambda from 'aws-lambda';
-import jsonRpc, { IRpcRequest } from '../../json-rpc';
-import responseFactory from '../../lambda/outputs/response';
+import jsonRpc, { IRpcRequest } from '../json-rpc';
+import responseFactory from '../outputs/response';
 
 export const rpc: lambda.ProxyHandler = async (
   event: lambda.APIGatewayEvent,

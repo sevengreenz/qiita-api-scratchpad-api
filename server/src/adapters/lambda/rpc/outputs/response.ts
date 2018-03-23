@@ -1,4 +1,4 @@
-import jsonRpcErrorFunc, { JsonRpcError } from '../../json-rpc-error';
+import jsonRpcErrorFunc, { JsonRpcError } from '../json-rpc-error';
 
 interface IRpcResponseBody {
   jsonrpc: string;
