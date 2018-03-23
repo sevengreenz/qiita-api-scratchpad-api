@@ -13,10 +13,6 @@ const qiitaInteractor: IInputPort<IQiitaInteractor>
       },
 
       executeApi: async ({ method, url, params, token }) => {
-        console.log(method);
-        console.log(url);
-        console.log(params);
-        console.log(token);
         await qiitaApiGateway()
           .execute(method, url, params, token)
           .then(outputPort.outputSuccess)
@@ -24,8 +20,6 @@ const qiitaInteractor: IInputPort<IQiitaInteractor>
       },
 
       issueToken: async ({ code }) => {
-        console.log('issueToken start, code: ' + code);
-
         await qiitaApiGateway()
           .issueToken(code)
           .then(outputPort.outputSuccess)

@@ -31,19 +31,6 @@ functions:
       - http:
           path: rpc
           method: post
-  hello:
-    handler: dist/adapters/http/handlers/hello-handler.hello
-    events:
-      - http:
-          path: hello
-          method: get
-          cors: true
-  callApi:
-    handler: dist/adapters/http/handlers/qiita-handler.callApi
-    events:
-      - http:
-          path: qiita/api
-          method: post
           cors: true
   authorize:
     handler: dist/adapters/http/handlers/qiita-handler.authorize
@@ -51,13 +38,6 @@ functions:
       - http:
           path: authorize
           method: get
-  issueToken:
-    handler: dist/adapters/http/handlers/qiita-handler.issueToken
-    events:
-      - http:
-          path: qiita/token
-          method: post
-          cors: true
 
 resources:
   Resources:
