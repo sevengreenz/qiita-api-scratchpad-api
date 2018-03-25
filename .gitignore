@@ -9,7 +9,3 @@ dist
 *.swp
 .DS_Store
 npm-debug.log
-
-client/.env.production
-client/dist/build.js
-client/dist/build.js.map

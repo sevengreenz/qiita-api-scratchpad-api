@@ -1,4 +1,4 @@
-service: qiita-api-scratchpad
+service: qiita-api-scratchpad-server
 
 plugins:
   - serverless-offline
@@ -25,32 +25,19 @@ custom:
             - '**/*.html'
 
 functions:
-  hello:
-    handler: build/server/adapters/http/handlers/hello-handler.hello
+  rpc:
+    handler: dist/adapters/lambda/handlers/rpc-handler.rpc
     events:
       - http:
-          path: hello
-          method: get
-  callApi:
-    handler: build/server/adapters/http/handlers/qiita-handler.callApi
-    events:
-      - http:
-          path: qiita/api
+          path: rpc
           method: post
           cors: true
   authorize:
-    handler: build/server/adapters/http/handlers/qiita-handler.authorize
+    handler: dist/adapters/http/handlers/qiita-handler.authorize
     events:
       - http:
-          path: qiita/authorize
+          path: authorize
           method: get
-  issueToken:
-    handler: build/server/adapters/http/handlers/qiita-handler.issueToken
-    events:
-      - http:
-          path: qiita/token
-          method: post
-          cors: true
 
 resources:
   Resources:
