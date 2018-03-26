@@ -1,14 +1,13 @@
 import 'jest';
-import jsonRpc, { IRpcSetting, IRpcRequest } from '../../src/adapters/json-rpc';
+import jsonRpc, { IRpcSetting, IRpcRequest } from '../../src/adapters/lambda/rpc/json-rpc';
 import IOutputPort from '../../src/usecases/contracts/output-port-interface';
 import util from '../../lib/util';
-import { executeApi } from '../../../client/src/presentation/store/qiita/qiita';
 
 describe('json-rpc', () => {
   const rpcSetting: IRpcSetting = {
     interactor: 'qiita-interactor',
     interactorMethod: 'executeApi',
-    output: 'qiita-output',
+    output: 'api-output',
   };
 
   const callback = (error?: Error | undefined, result?: any): void => console.log('ok');
@@ -49,7 +48,6 @@ describe('json-rpc', () => {
           const output = outputFunc(callback, '');
           expect(output).toHaveProperty('outputSuccess');
           expect(output).toHaveProperty('outputFailure');
-          expect(output).toHaveProperty('outputRedirection');
         });
     });
 

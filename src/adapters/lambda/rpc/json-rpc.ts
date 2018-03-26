@@ -35,13 +35,11 @@ const rpcSettings: { [method: string]: IRpcSetting } = {
 
 const getInteractor = async (setting: IRpcSetting): Promise<IInputPort<any>> => {
 
-  return await import(`../usecases/interactors/${setting.interactor}`)
+  return await import(`../../../usecases/interactors/${setting.interactor}`)
     .then((interactor) => {
-      console.log(interactor);
-      console.log(interactor.default);
       return Promise.resolve(interactor.default);
     })
-    .catch(() => {
+    .catch((error) => {
       return Promise.reject(JsonRpcError.InvalidRequest);
     });
 };
@@ -49,31 +47,25 @@ const getInteractor = async (setting: IRpcSetting): Promise<IInputPort<any>> => 
 // type TOutput = (callback: any) => IOutputPort;
 
 const getOutputPort = async (setting: IRpcSetting): Promise<IOutputPort> => {
-  return await import(`./lambda/outputs/${setting.output}`)
+  return await import(`./outputs/${setting.output}`)
     .then((outputPort) => {
       return Promise.resolve(outputPort.default);
-    }).catch(() => {
+    }).catch((error) => {
       return Promise.reject(JsonRpcError.InvalidRequest);
     });
 };
 
 const make = (rpcRequest: IRpcRequest): IProcedure => {
   const procedure = rpcSettings[rpcRequest.method];
-  console.log(procedure);
   if (procedure === undefined) throw new Error(JsonRpcError.methodNotFound);
 
   const rpc = (rpcSetting: IRpcSetting, id: string) => {
     return {
       call: async (token: string, callback: lambda.Callback) => {
-        console.log('token');
-        console.dir(token);
         const interactor = await getInteractor(rpcSetting);
-        console.log(interactor);
         const outputPort = await getOutputPort(rpcSetting);
-        console.log(outputPort);
 
         const usecase = interactor(outputPort(callback, id));
-        console.log(usecase);
         usecase[rpcSetting.interactorMethod](Object.assign(rpcRequest.params, { token }));
       },
     };
