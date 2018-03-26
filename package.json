@@ -23,7 +23,6 @@
   "devDependencies": {
     "@types/aws-lambda": "0.0.16",
     "@types/jest": "^22.1.0",
-    "aws-lambda": "^0.1.2",
     "dotenv-webpack": "^1.5.4",
     "espower-typescript": "^8.1.1",
     "jest": "^22.1.4",
