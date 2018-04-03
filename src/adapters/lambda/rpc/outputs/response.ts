@@ -13,7 +13,7 @@ interface IRpcResponseBody {
 export interface IResponse {
   statusCode: number;
   headers: { [key: string]: string };
-  body: IRpcResponseBody;
+  body: string;
 }
 
 type TMakeResposneParams = {
@@ -39,7 +39,7 @@ const makeResponse = (
   const response: IResponse = {
     statusCode,
     headers: Object.assign(headers, corsHeaders),
-    body: makeBodyFunc(id, body),
+    body: JSON.stringify(makeBodyFunc(id, body)),
   };
 
   return response;
