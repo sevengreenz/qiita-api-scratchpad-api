@@ -64,7 +64,7 @@ const qiitaApiGateway = (): IQiitaApiGateway => {
         // TODO: throw Error
       }
 
-      if (token !== undefined) requestConfig.headers = Object.assign(requestConfig.headers, { Authorization: `Bearer ${token}` });
+      if (token !== '') requestConfig.headers = Object.assign(requestConfig.headers, { Authorization: `Bearer ${token}` });
 
       return qiitaApi.request(requestConfig);
     },
