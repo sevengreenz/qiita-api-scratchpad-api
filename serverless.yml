@@ -26,14 +26,14 @@ custom:
 
 functions:
   rpc:
-    handler: dist/adapters/lambda/handlers/rpc-handler.rpc
+    handler: dist/adapters/lambda/rpc/handlers/rpc-handler.rpc
     events:
       - http:
           path: rpc
           method: post
           cors: true
   authorize:
-    handler: dist/adapters/http/handlers/qiita-handler.authorize
+    handler: dist/adapters/lambda/http/handlers/qiita-handler.authorize
     events:
       - http:
           path: authorize
