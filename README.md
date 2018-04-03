@@ -7,6 +7,10 @@ $ node_modules/.bin/serverless config credentials --provider aws --key [aws_acce
 
 # 環境変数設定
 $ echo export QIITA_CLIENT_ID=[Qiita で発行した CLIENT_ID] >> ~/.bash_profile
+$ echo export DOMAIN=[カスタムドメイン] >> ~/.bash_profile
+
+# カスタムドメイン作成
+# node_modules/.bin/serverless create_domain
 ```
 
 
