@@ -6,9 +6,9 @@ plugins:
 
 custom:
   customDomain:
-    domainName: ${env:DOMAIN} 
+    domainName: ${env:DOMAIN}
     basePath: ''
-    stage: production 
+    stage: production
     createRoute53Record: true
 
 provider:
@@ -29,7 +29,7 @@ functions:
           method: post
           cors: true
   authorize:
-    handler: dist/adapters/lambda/http/handlers/qiita-handler.authorize
+    handler: dist/adapters/lambda/rest/handlers/qiita-handler.authorize
     events:
       - http:
           path: authorize
