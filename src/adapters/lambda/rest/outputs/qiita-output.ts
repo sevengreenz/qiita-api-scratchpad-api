@@ -1,28 +1,5 @@
 import IOutputPort from '../../../../usecases/contracts/output-port-interface';
-
-export interface IResponse {
-  statusCode: number;
-  headers: { [key: string]: string };
-  body: string;
-}
-
-const makeResponse = (
-  statusCode: number,
-  headers: { [key: string]: string },
-  body: any,
-): IResponse => {
-  const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
-  };
-
-  const response: IResponse = {
-    statusCode,
-    headers: Object.assign(headers, corsHeaders),
-    body: JSON.stringify(body),
-  };
-
-  return response;
-};
+import response from '../../response';
 
 const qiitaOutputPort: IOutputPort = (callback) => {
   return {
@@ -31,17 +8,16 @@ const qiitaOutputPort: IOutputPort = (callback) => {
         Location: locationUrl,
       };
 
-      const response = makeResponse(302, locationHeader, '');
-
-      callback(undefined, response);
+      callback(undefined, response.create(302, locationHeader, ''));
     },
 
     outputFailure: (result) => {
       console.log(result);
 
-      const response = makeResponse(result.status, result.headers, result.data);
+      const status = result.status || 500;
+      const headers = result.headers || {};
 
-      callback(undefined, response);
+      callback(undefined, response.create(status, headers, result.data));
     },
 
   };
