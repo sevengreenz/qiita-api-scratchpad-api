@@ -6,6 +6,10 @@ jspm_packages
 .serverless
 dist
 
+# Secret files
+conf.dev.yml
+conf.prod.yml
+
 *.swp
 .DS_Store
 npm-debug.log

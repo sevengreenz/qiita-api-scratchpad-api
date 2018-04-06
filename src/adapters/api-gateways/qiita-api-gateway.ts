@@ -18,12 +18,10 @@ const qiitqApi = (httpClient: AxiosInstance) => {
     request: (config: AxiosRequestConfig): Promise<IQiitaApiResponse> => {
       return httpClient.request(config)
         .then((response: AxiosResponse) => {
-          console.log('Request Success, response: ');
-          console.dir(response);
-
           return Promise.resolve(convertApiResponse(response));
         })
         .catch((error: AxiosError) => {
+          console.log('API Error');
           console.log(error);
           const failure = error.response === undefined
             ? JsonRpcError.InternalError
@@ -44,6 +42,7 @@ const qiitaApiGateway = (): IQiitaApiGateway => {
 
   return {
     execute: async (method, url, params, token) => {
+      console.log(`token: ${token}`);
       const requestConfig: AxiosRequestConfig = {
         method,
         url,
