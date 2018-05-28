@@ -5,20 +5,24 @@ plugins:
   - serverless-offline
 
 custom:
+  defaultStage: dev
   customDomain:
-    domainName: ${env:DOMAIN} 
+    domainName: ${self:custom.env.${self:provider.stage}.DOMAIN}
     basePath: ''
-    stage: production 
+    stage: prod
     createRoute53Record: true
+  env:
+    dev: ${file(./conf.dev.yml)}
+    prod: ${file(./conf.prod.yml)}
 
 provider:
   name: aws
   runtime: nodejs6.10
   region: ap-northeast-1
-  stage: production
+  stage: ${opt:stage, self:custom.defaultStage}
   environment:
-    CLIENT_ID: ${env:QIITA_CLIENT_ID}
-    CLIENT_SECRET: ${env:QIITA_CLIENT_SECRET}
+    CLIENT_ID: ${self:custom.env.${self:provider.stage}.QIITA_CLIENT_ID}
+    CLIENT_SECRET: ${self:custom.env.${self:provider.stage}.QIITA_CLIENT_SECRET}
 
 functions:
   rpc:
@@ -29,7 +33,7 @@ functions:
           method: post
           cors: true
   authorize:
-    handler: dist/adapters/lambda/http/handlers/qiita-handler.authorize
+    handler: dist/adapters/lambda/rest/handlers/qiita-handler.authorize
     events:
       - http:
           path: authorize

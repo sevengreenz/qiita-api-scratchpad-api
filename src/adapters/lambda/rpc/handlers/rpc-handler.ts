@@ -1,6 +1,7 @@
 import * as lambda from 'aws-lambda';
 import jsonRpc, { IRpcRequest } from '../json-rpc';
-import responseFactory from '../outputs/response';
+import jsonRpcErrorFunc, { JsonRpcError } from '../json-rpc-error';
+import responseFactory from '../../response';
 
 export const rpc: lambda.ProxyHandler = async (
   event: lambda.APIGatewayEvent,
@@ -10,12 +11,10 @@ export const rpc: lambda.ProxyHandler = async (
   let rpcRequest: IRpcRequest | undefined;
 
   try {
-    console.log(event.body);
     rpcRequest = JSON.parse(event.body || '') as IRpcRequest;
     console.log(rpcRequest);
 
     const token = () => {
-      console.log(event.headers.Authorization);
       const matched = (event.headers.Authorization || '').match(/^Bearer[ ]+(.+)/i);
       return matched === null
         ? ''
@@ -26,11 +25,17 @@ export const rpc: lambda.ProxyHandler = async (
       .call(token(), callback);
   } catch (e) {
     console.log(e);
-    callback(undefined, responseFactory.makeFailureResponse({
-      id: rpcRequest === undefined ? '' : rpcRequest.id,
-      statusCode: 200,
-      headers: {},
-      body: e,
-    }));
+
+    callback(undefined, responseFactory.create(
+      200,
+      {},
+      {
+        id: rpcRequest === undefined ? '' : rpcRequest.id,
+        errors: {
+          code: jsonRpcErrorFunc.errorCodeMapper[JsonRpcError.InternalError],
+          message: JsonRpcError.InternalError,
+        },
+      },
+    ));
   }
 };

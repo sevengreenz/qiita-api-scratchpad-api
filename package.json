@@ -9,7 +9,7 @@
     "build": "tsc",
     "dev": "tsc && sls offline",
     "test": "jest",
-    "deploy": "npm run build & serverless deploy -v"
+    "deploy": "npm run build & serverless deploy --stage prod -v"
   },
   "author": "",
   "license": "ISC",
