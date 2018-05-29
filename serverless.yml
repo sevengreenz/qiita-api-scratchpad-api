@@ -3,9 +3,13 @@ service: qiita-api-scratchpad-api
 plugins:
   - serverless-domain-manager
   - serverless-offline
+  - serverless-prune-plugin
 
 custom:
   defaultStage: dev
+  plune:
+    automatic: true
+    number: 3
   customDomain:
     domainName: ${self:custom.env.${self:provider.stage}.DOMAIN}
     basePath: ''
@@ -24,6 +28,18 @@ provider:
   environment:
     CLIENT_ID: ${self:custom.env.${self:provider.stage}.QIITA_CLIENT_ID}
     CLIENT_SECRET: ${self:custom.env.${self:provider.stage}.QIITA_CLIENT_SECRET}
+
+package:
+  exclude:
+    - src/**
+    - tests/**
+    - .gitignore
+    - package.json
+    - package-lock.json
+    - README.md
+    - tslint.json
+    - .vscode
+    - npm-debug.log
 
 functions:
   rpc:
