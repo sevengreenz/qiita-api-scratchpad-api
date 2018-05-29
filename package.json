@@ -9,7 +9,7 @@
     "build": "tsc",
     "dev": "tsc && sls offline",
     "test": "jest",
-    "deploy": "npm run build & serverless deploy --stage prod -v"
+    "deploy": "npm run build && SLS_DEBUG=* serverless deploy --stage prod -v"
   },
   "author": "",
   "license": "ISC",
@@ -27,7 +27,7 @@
     "dotenv-webpack": "^1.5.4",
     "espower-typescript": "^8.1.1",
     "jest": "^22.1.4",
-    "serverless": "^1.23.0",
+    "serverless": "^1.27.3",
     "serverless-domain-manager": "^2.3.6",
     "serverless-offline": "^3.16.0",
     "serverless-s3-deploy": "^0.5.0",
@@ -35,6 +35,7 @@
     "ts-loader": "^2.3.7",
     "tslint": "^5.8.0",
     "tslint-config-airbnb": "^5.3.0",
+    "tslint-config-prettier": "^1.13.0",
     "typescript": "^2.7.2"
   },
   "jest": {
