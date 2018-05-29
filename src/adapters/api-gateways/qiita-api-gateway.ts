@@ -1,4 +1,9 @@
-import { AxiosRequestConfig, AxiosResponse, AxiosError, AxiosInstance } from 'axios';
+import {
+  AxiosRequestConfig,
+  AxiosResponse,
+  AxiosError,
+  AxiosInstance,
+} from 'axios';
 import IQiitaApiGateway from '../../usecases/contracts/qiita-api-gateway-interface';
 import { IQiitaApiResponse } from '../../domain/qiita-domain';
 import httpClientFactory from './http-client-factory';
@@ -16,16 +21,19 @@ const qiitqApi = (httpClient: AxiosInstance) => {
 
   return {
     request: (config: AxiosRequestConfig): Promise<IQiitaApiResponse> => {
-      return httpClient.request(config)
+      return httpClient
+        .request(config)
         .then((response: AxiosResponse) => {
+          console.log(response);
           return Promise.resolve(convertApiResponse(response));
         })
         .catch((error: AxiosError) => {
           console.log('API Error');
           console.log(error);
-          const failure = error.response === undefined
-            ? JsonRpcError.InternalError
-            : JsonRpcError.Unauthorized;
+          const failure =
+            error.response === undefined
+              ? JsonRpcError.InternalError
+              : JsonRpcError.Unauthorized;
 
           return Promise.reject(failure);
         });
@@ -51,7 +59,9 @@ const qiitaApiGateway = (): IQiitaApiGateway => {
       switch (method) {
         case 'GET':
           requestConfig.params = params;
-          requestConfig.headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
+          requestConfig.headers = {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          };
           break;
         case 'POST':
         case 'PUT':
@@ -63,7 +73,10 @@ const qiitaApiGateway = (): IQiitaApiGateway => {
         // TODO: throw Error
       }
 
-      if (token !== '') requestConfig.headers = Object.assign(requestConfig.headers, { Authorization: `Bearer ${token}` });
+      if (token !== '')
+        requestConfig.headers = Object.assign(requestConfig.headers, {
+          Authorization: `Bearer ${token}`,
+        });
 
       return qiitaApi.request(requestConfig);
     },
@@ -85,7 +98,6 @@ const qiitaApiGateway = (): IQiitaApiGateway => {
         token: result.data.token,
       };
     },
-
   };
 };
 
