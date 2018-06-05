@@ -33,13 +33,14 @@ const rpcSettings: { [method: string]: IRpcSetting } = {
   },
 };
 
-const getInteractor = async (setting: IRpcSetting): Promise<IInputPort<any>> => {
-
+const getInteractor = async (
+  setting: IRpcSetting
+): Promise<IInputPort<any>> => {
   return await import(`../../../usecases/interactors/${setting.interactor}`)
-    .then((interactor) => {
+    .then(interactor => {
       return Promise.resolve(interactor.default);
     })
-    .catch((error) => {
+    .catch(error => {
       return Promise.reject(JsonRpcError.InvalidRequest);
     });
 };
@@ -48,9 +49,10 @@ const getInteractor = async (setting: IRpcSetting): Promise<IInputPort<any>> => 
 
 const getOutputPort = async (setting: IRpcSetting): Promise<IOutputPort> => {
   return await import(`./outputs/${setting.output}`)
-    .then((outputPort) => {
+    .then(outputPort => {
       return Promise.resolve(outputPort.default);
-    }).catch((error) => {
+    })
+    .catch(error => {
       return Promise.reject(JsonRpcError.InvalidRequest);
     });
 };
@@ -66,7 +68,10 @@ const make = (rpcRequest: IRpcRequest): IProcedure => {
         const outputPort = await getOutputPort(rpcSetting);
 
         const usecase = interactor(outputPort(callback, id));
-        usecase[rpcSetting.interactorMethod](Object.assign(rpcRequest.params, { token }));
+
+        await usecase[rpcSetting.interactorMethod](
+          Object.assign(rpcRequest.params, { token })
+        );
       },
     };
   };
@@ -80,4 +85,3 @@ export default {
   getOutputPort,
   make,
 };
-

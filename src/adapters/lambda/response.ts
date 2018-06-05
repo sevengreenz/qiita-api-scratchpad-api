@@ -1,4 +1,3 @@
-
 export interface IResponse {
   statusCode: number;
   headers: { [key: string]: string };
@@ -8,7 +7,7 @@ export interface IResponse {
 const create = (
   statusCode: number,
   headers: { [key: string]: string },
-  body: any,
+  body: any
 ): IResponse => {
   const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
@@ -20,6 +19,7 @@ const create = (
     body: JSON.stringify(body),
   };
 
+  console.log(response);
   return response;
 };
 

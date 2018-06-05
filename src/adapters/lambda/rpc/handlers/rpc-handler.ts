@@ -2,11 +2,14 @@ import * as lambda from 'aws-lambda';
 import jsonRpc, { IRpcRequest } from '../json-rpc';
 import jsonRpcErrorFunc, { JsonRpcError } from '../json-rpc-error';
 import responseFactory from '../../response';
+import * as sourceMapSupport from 'source-map-support';
+
+sourceMapSupport.install();
 
 export const rpc: lambda.ProxyHandler = async (
   event: lambda.APIGatewayEvent,
   context: lambda.Context,
-  callback: lambda.Callback,
+  callback: lambda.Callback
 ): Promise<void> => {
   let rpcRequest: IRpcRequest | undefined;
 
@@ -15,27 +18,30 @@ export const rpc: lambda.ProxyHandler = async (
     console.log(rpcRequest);
 
     const token = () => {
-      const matched = (event.headers.Authorization || '').match(/^Bearer[ ]+(.+)/i);
-      return matched === null
-        ? ''
-        : matched[1];
+      const matched = (event.headers.Authorization || '').match(
+        /^Bearer[ ]+(.+)/i
+      );
+      return matched === null ? '' : matched[1];
     };
 
-    jsonRpc.make(rpcRequest)
-      .call(token(), callback);
+    await jsonRpc.make(rpcRequest).call(token(), callback);
   } catch (e) {
+    console.log('catch error');
     console.log(e);
 
-    callback(undefined, responseFactory.create(
-      200,
-      {},
-      {
-        id: rpcRequest === undefined ? '' : rpcRequest.id,
-        errors: {
-          code: jsonRpcErrorFunc.errorCodeMapper[JsonRpcError.InternalError],
-          message: JsonRpcError.InternalError,
-        },
-      },
-    ));
+    callback(
+      undefined,
+      responseFactory.create(
+        200,
+        {},
+        {
+          id: rpcRequest === undefined ? '' : rpcRequest.id,
+          errors: {
+            code: jsonRpcErrorFunc.errorCodeMapper[JsonRpcError.InternalError],
+            message: JsonRpcError.InternalError,
+          },
+        }
+      )
+    );
   }
 };

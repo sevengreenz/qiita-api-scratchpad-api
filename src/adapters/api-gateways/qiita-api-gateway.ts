@@ -20,7 +20,7 @@ const qiitqApi = (httpClient: AxiosInstance) => {
   };
 
   return {
-    request: (config: AxiosRequestConfig): Promise<IQiitaApiResponse> => {
+    request: async (config: AxiosRequestConfig): Promise<IQiitaApiResponse> => {
       return httpClient
         .request(config)
         .then((response: AxiosResponse) => {
