@@ -73,10 +73,11 @@ const qiitaApiGateway = (): IQiitaApiGateway => {
         // TODO: throw Error
       }
 
-      if (token !== '')
+      if (token !== '') {
         requestConfig.headers = Object.assign(requestConfig.headers, {
           Authorization: `Bearer ${token}`,
         });
+      }
 
       return qiitaApi.request(requestConfig);
     },

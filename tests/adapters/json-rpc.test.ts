@@ -1,5 +1,5 @@
 import 'jest';
-import jsonRpc, { IRpcSetting, IRpcRequest } from '../../src/adapters/lambda/rpc/json-rpc';
+import jsonRpc, { IRpcSetting } from '../../src/adapters/lambda/rpc/json-rpc';
 import IOutputPort from '../../src/usecases/contracts/output-port-interface';
 import util from '../../lib/util';
 

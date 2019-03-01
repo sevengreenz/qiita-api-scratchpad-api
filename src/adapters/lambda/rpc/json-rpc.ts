@@ -1,7 +1,7 @@
 import IInputPort from '../../../usecases/contracts/input-port-interface';
 import IOutputPort from '../../../usecases/contracts/output-port-interface';
 import { JsonRpcError } from './json-rpc-error';
-import * as lambda from 'aws-lambda';
+import { Callback, APIGatewayProxyResult } from 'aws-lambda';
 
 export interface IRpcRequest {
   jsonrpc: string;
@@ -17,7 +17,7 @@ export interface IRpcSetting {
 }
 
 export interface IProcedure {
-  call: (token: string, callBack: lambda.Callback) => Promise<void>;
+  call: (token: string, callBack: Callback) => Promise<APIGatewayProxyResult>;
 }
 
 const rpcSettings: { [method: string]: IRpcSetting } = {
@@ -63,13 +63,13 @@ const make = (rpcRequest: IRpcRequest): IProcedure => {
 
   const rpc = (rpcSetting: IRpcSetting, id: string) => {
     return {
-      call: async (token: string, callback: lambda.Callback) => {
+      call: async (token: string, callback: Callback) => {
         const interactor = await getInteractor(rpcSetting);
         const outputPort = await getOutputPort(rpcSetting);
 
         const usecase = interactor(outputPort(callback, id));
 
-        await usecase[rpcSetting.interactorMethod](
+        return await usecase[rpcSetting.interactorMethod](
           Object.assign(rpcRequest.params, { token })
         );
       },

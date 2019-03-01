@@ -18,7 +18,7 @@ const makeAuthorizationUrl = (): string => {
     state: 'scratchpad',
   };
 
-  return 'http://qiita.com/api/v2/oauth/authorize?' + queryString.stringify(params);
+  return `http://qiita.com/api/v2/oauth/authorize?'${queryString.stringify(params)}`;
 };
 
 export default {

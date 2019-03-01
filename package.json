@@ -1,13 +1,11 @@
 {
-  "name": "qiita-api-scratchpad-server",
+  "name": "qiita-api-scratchpad-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "style:check":
-      "tslint -e './node_modules/**/*.ts' --project tsconfig.json './**/*.ts'",
-    "style:fix":
-      "tslint -e './node_modules/**/*.ts' --fix --project tsconfig.json './**/*.ts'",
+    "style:check": "tslint -e './node_modules/**/*.ts' --project tsconfig.json './**/*.ts'",
+    "style:fix": "tslint -e './node_modules/**/*.ts' --fix --project tsconfig.json './**/*.ts'",
     "build": "tsc",
     "dev": "tsc && sls offline",
     "test": "jest",
@@ -16,38 +14,45 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^8.0.47",
-    "@types/query-string": "^5.0.1",
+    "@types/node": "^11.9.6",
+    "@types/query-string": "^6.2.0",
     "aws-lambda": "^0.1.2",
     "axios": "^0.18.0",
     "core-js": "^2.5.1",
-    "query-string": "^5.0.1",
+    "query-string": "^6.2.0",
     "source-map-support": "^0.5.6"
   },
   "devDependencies": {
-    "@types/aws-lambda": "0.0.16",
-    "@types/jest": "^22.1.0",
+    "@types/aws-lambda": "8.10.20",
+    "@types/jest": "^24.0.9",
     "@types/source-map-support": "^0.4.1",
     "dotenv-webpack": "^1.5.4",
-    "espower-typescript": "^8.1.1",
-    "jest": "^22.1.4",
+    "espower-typescript": "^9.0.1",
+    "jest": "^24.1.0",
     "serverless": "^1.27.3",
     "serverless-domain-manager": "^2.3.6",
-    "serverless-offline": "^3.25.4",
+    "serverless-offline": "^4.7.1",
     "serverless-prune-plugin": "^1.3.0",
-    "serverless-s3-deploy": "^0.5.0",
-    "ts-jest": "^22.0.1",
-    "ts-loader": "^2.3.7",
+    "serverless-s3-deploy": "^0.8.0",
+    "ts-jest": "^24.0.0",
+    "ts-loader": "^5.3.3",
     "tslint": "^5.8.0",
     "tslint-config-airbnb": "^5.3.0",
     "tslint-config-prettier": "^1.13.0",
-    "typescript": "^2.7.2"
+    "typescript": "^3.3.3333"
   },
   "jest": {
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"]
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
   }
 }
