@@ -50,10 +50,3 @@ functions:
           path: rpc
           method: post
           cors: true
-  authorize:
-    handler: dist/adapters/lambda/rest/handlers/qiita-handler.authorize
-    events:
-      - http:
-          path: authorize
-          method: get
-

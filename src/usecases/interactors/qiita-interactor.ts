@@ -1,16 +1,9 @@
 import IInputPort from '../contracts/input-port-interface';
-import qiitaDomain from '../../domain/qiita-domain';
 import IQiitaInteractor from '../contracts/qiita-interactor-interface';
 import qiitaApiGateway from '../../adapters/api-gateways/qiita-api-gateway';
 
 const qiitaInteractor: IInputPort<IQiitaInteractor> = outputPort => {
   return {
-    authorize: async () => {
-      const url = qiitaDomain.makeAuthorizationUrl();
-
-      outputPort.outputSuccess(url);
-    },
-
     executeApi: async ({ method, url, params, token }) => {
       await qiitaApiGateway()
         .execute(method, url, params, token)

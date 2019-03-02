@@ -10,7 +10,6 @@ type TIssueTokenParams = {
 };
 
 export default interface IQiitaInteractor {
-  authorize: () => Promise<void>;
   executeApi: (params: TExecuteApiParams) => Promise<void>;
   issueToken: (params: TIssueTokenParams) => Promise<void>;
 }
