@@ -1,5 +1,5 @@
 import { IOutputFunc } from './output-port-interface';
 
-export default interface IInputPort<T> {
-  (outputPort: IOutputFunc): T;
+export interface IInputPort<T, U> {
+  (outputPort: IOutputFunc<T>): U;
 }

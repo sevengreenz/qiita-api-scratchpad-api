@@ -1,10 +1,8 @@
-import * as lambda from 'aws-lambda';
-
-export interface IOutputFunc {
-  outputSuccess(result: any): void;
-  outputFailure(result: any): void;
+export interface IOutputFunc<T> {
+  outputSuccess(result: any): T;
+  outputFailure(result: any): T;
 }
 
-export default interface IOutputPort {
-  (callback: lambda.Callback, id?: string): IOutputFunc;
+export interface IOutputPort<T> {
+  (): IOutputFunc<T>;
 }

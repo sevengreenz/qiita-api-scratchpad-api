@@ -24,8 +24,30 @@
     "strictNullChecks": true,
     // sourceMap ファイルを生成"
     "sourceMap": true,
-    "lib": ["esnext", "dom"]
+    // 名前解決ログを出力、デバッグ用
+    // "traceResolution": true,
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    "baseUrl": "./",
+    "paths": {
+      "jsonrpc": [
+        "src/types/jsonrpc"
+      ],
+      "contract": [
+        "src/types/contracts"
+      ]
+    },
+    "typeRoots": [
+      "src/types"
+    ]
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["tests", "node_modules"]
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "tests",
+    "node_modules"
+  ]
 }

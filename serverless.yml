@@ -44,7 +44,7 @@ package:
 
 functions:
   rpc:
-    handler: dist/adapters/lambda/rpc/handlers/rpc-handler.rpc
+    handler: dist/infrastructures/lambda.handler
     events:
       - http:
           path: rpc

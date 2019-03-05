@@ -6,7 +6,7 @@
   "scripts": {
     "style:check": "tslint -e './node_modules/**/*.ts' --project tsconfig.json './**/*.ts'",
     "style:fix": "tslint -e './node_modules/**/*.ts' --fix --project tsconfig.json './**/*.ts'",
-    "build": "tsc",
+    "build": "tsc -p",
     "dev": "tsc && sls offline",
     "test": "jest",
     "deploy": "npm run build && SLS_DEBUG=* serverless deploy --stage prod -v"
@@ -18,6 +18,7 @@
     "axios": "^0.18.0",
     "core-js": "^2.5.1",
     "query-string": "^6.2.0",
+    "ramda": "^0.26.1",
     "source-map-support": "^0.5.6"
   },
   "devDependencies": {
@@ -25,6 +26,7 @@
     "@types/jest": "^24.0.9",
     "@types/node": "^11.9.6",
     "@types/query-string": "^6.2.0",
+    "@types/ramda": "types/npm-ramda#dist",
     "@types/source-map-support": "^0.4.1",
     "dotenv-webpack": "^1.5.4",
     "jest": "^24.1.0",

@@ -1,8 +1,8 @@
-import IOutputPort from '../../../../usecases/contracts/output-port-interface';
-import jsonRpcErrorFunc, { JsonRpcError } from '../json-rpc-error';
-import response from '../../response';
+import { IOutputPort } from '../../../../usecases/contracts/output-port-interface';
+import Mapper, { JsonRpcError } from '../json-rpc-error';
+import { ControllerOutput } from 'src/types/contracts';
 
-const apiOutput: IOutputPort = (callback, id) => {
+const apiOutput: IOutputPort<ControllerOutput> = () => {
   return {
     outputSuccess: (result) => {
       console.log({
@@ -10,28 +10,18 @@ const apiOutput: IOutputPort = (callback, id) => {
         process: 'outputSuccess',
       });
 
-      callback(undefined, response.create(
-        200,
-        {},
-        { id, result, jsonrpc: '2.0' },
-      ));
+      return { result };
     },
 
     outputFailure: (error: JsonRpcError) => {
       console.log(error);
 
-      callback(undefined, response.create(
-        200,
-        {},
-        {
-          id,
-          jsonrpc: '2.0',
-          errors: {
-            code: jsonRpcErrorFunc.errorCodeMapper[error],
-            message: error,
-          },
-        }),
-      );
+      return {
+        error: {
+          code: Mapper.errorCodeMapper[error],
+          message: error
+        }
+      };
     },
 
   };

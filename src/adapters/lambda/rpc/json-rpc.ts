@@ -1,7 +1,7 @@
-import IInputPort from '../../../usecases/contracts/input-port-interface';
-import IOutputPort from '../../../usecases/contracts/output-port-interface';
+import { IInputPort } from '../../../usecases/contracts/input-port-interface';
+import { IOutputPort } from '../../../usecases/contracts/output-port-interface';
 import { JsonRpcError } from './json-rpc-error';
-import { Callback, APIGatewayProxyResult } from 'aws-lambda';
+import { ControllerOutput } from 'src/types/contracts';
 
 export interface IRpcRequest {
   jsonrpc: string;
@@ -17,7 +17,7 @@ export interface IRpcSetting {
 }
 
 export interface IProcedure {
-  call: (token: string, callBack: Callback) => Promise<APIGatewayProxyResult>;
+  call: (token: string) => Promise<ControllerOutput>;
 }
 
 const rpcSettings: { [method: string]: IRpcSetting } = {
@@ -35,7 +35,7 @@ const rpcSettings: { [method: string]: IRpcSetting } = {
 
 const getInteractor = async (
   setting: IRpcSetting
-): Promise<IInputPort<any>> => {
+): Promise<IInputPort<any, any>> => {
   return await import(`../../../usecases/interactors/${setting.interactor}`)
     .then(interactor => {
       return Promise.resolve(interactor.default);
@@ -47,7 +47,7 @@ const getInteractor = async (
 
 // type TOutput = (callback: any) => IOutputPort;
 
-const getOutputPort = async (setting: IRpcSetting): Promise<IOutputPort> => {
+const getOutputPort = async (setting: IRpcSetting): Promise<IOutputPort<ControllerOutput>> => {
   return await import(`./outputs/${setting.output}`)
     .then(outputPort => {
       return Promise.resolve(outputPort.default);
@@ -61,22 +61,22 @@ const make = (rpcRequest: IRpcRequest): IProcedure => {
   const procedure = rpcSettings[rpcRequest.method];
   if (procedure === undefined) throw new Error(JsonRpcError.methodNotFound);
 
-  const rpc = (rpcSetting: IRpcSetting, id: string) => {
+  const rpc = (rpcSetting: IRpcSetting) => {
     return {
-      call: async (token: string, callback: Callback) => {
+      call: async (token: string) => {
         const interactor = await getInteractor(rpcSetting);
         const outputPort = await getOutputPort(rpcSetting);
 
-        const usecase = interactor(outputPort(callback, id));
+        const usecase = interactor(outputPort());
 
-        return await usecase[rpcSetting.interactorMethod](
+        return (await usecase[rpcSetting.interactorMethod](
           Object.assign(rpcRequest.params, { token })
-        );
+        )) as ControllerOutput;
       },
     };
   };
 
-  return rpc(procedure, rpcRequest.id);
+  return rpc(procedure);
 };
 
 export default {
