@@ -1,4 +1,4 @@
-import { IOutputPort } from '../../../../usecases/contracts/output-port-interface';
+import { IOutputPort } from '../../../usecases/contracts/output-port-interface';
 import Mapper, { JsonRpcError } from '../json-rpc-error';
 import { ControllerOutput } from 'src/types/contracts';
 

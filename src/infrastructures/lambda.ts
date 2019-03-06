@@ -1,6 +1,6 @@
 import { APIGatewayProxyHandler, APIGatewayProxyResult } from 'aws-lambda';
 import { Response } from 'jsonrpc';
-import RpcHandler from '../adapters/lambda/rpc/handlers/rpc-handler';
+import RpcHandler from '../adapters/rpc/handlers/rpc-handler';
 import * as sourceMapSupport from 'source-map-support';
 
 sourceMapSupport.install();

@@ -1,4 +1,4 @@
-import QiitaInteractor from '../../../usecases/interactors/qiita-interactor';
+import QiitaInteractor from '../../usecases/interactors/qiita-interactor';
 import ExecuteApiOutput from './outputs/api-output';
 
 const executeApiOutput = ExecuteApiOutput();
