@@ -1,8 +1,9 @@
-import { IInputPort } from '../contracts/input-port-interface';
+// import { IInputPort } from '../contracts/input-port-interface';
 import IQiitaInteractor from '../contracts/qiita-interactor-interface';
 import qiitaApiGateway from '../../adapters/api-gateways/qiita-api-gateway';
+import { InputPort } from 'contract';
 
-const qiitaInteractor: IInputPort<any, IQiitaInteractor> = outputPort => {
+const qiitaInteractor: InputPort<IQiitaInteractor> = outputPort => {
   return {
     executeApi: async ({ method, url, params, token }) => {
       return await qiitaApiGateway()

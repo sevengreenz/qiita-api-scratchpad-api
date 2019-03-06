@@ -9,7 +9,7 @@ type TIssueTokenParams = {
   code: string,
 };
 
-export default interface IQiitaInteractor {
-  executeApi: (params: TExecuteApiParams) => Promise<void>;
-  issueToken: (params: TIssueTokenParams) => Promise<void>;
+export default interface IQiitaInteractor<T = any> {
+  executeApi: (params: TExecuteApiParams) => Promise<T>;
+  issueToken: (params: TIssueTokenParams) => Promise<T>;
 }
