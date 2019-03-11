@@ -1,6 +1,6 @@
 import JsonRpcController from '../../src/adapters/rpc/handlers/JsonRpcController';
 
-describe('JSON RPC  test', () => {
+describe('JSON RPC test', () => {
   it('should be parse error', () => {
     const response = JsonRpcController({
       headers: {},
