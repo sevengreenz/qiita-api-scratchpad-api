@@ -1,4 +1,4 @@
-import { IQiitaApiResponse, IIssueTokenResponse } from '../../domain/qiita-domain';
+import { IQiitaApiResponse, IIssueTokenResponse } from '../../domain/QiitaDomain';
 
 /** Qiita API Gateway インターフェース */
 export default interface IQiitaApiGateway {

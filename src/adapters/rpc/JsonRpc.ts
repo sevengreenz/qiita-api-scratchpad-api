@@ -1,4 +1,4 @@
-import jsonRpcErrorFunc, { JsonRpcError } from './json-rpc-error';
+import jsonRpcErrorFunc, { JsonRpcError } from './JsonRpcError';
 import { DecodedRequestBody, Response, ErrorResponse } from 'jsonrpc';
 import { JsonRpcInteractor } from 'src/types/contracts';
 import JsonRpcSetting from './JsonRpcSetting';

@@ -5,9 +5,9 @@ import {
   AxiosInstance,
 } from 'axios';
 import IQiitaApiGateway from '../../usecases/contracts/qiita-api-gateway-interface';
-import { IQiitaApiResponse } from '../../domain/qiita-domain';
-import httpClientFactory from './http-client-factory';
-import { JsonRpcError } from '../rpc/json-rpc-error';
+import { IQiitaApiResponse } from '../../domain/QiitaDomain';
+import httpClientFactory from './HttpClientFactory';
+import { JsonRpcError } from '../rpc/JsonRpcError';
 
 // 別ファイルに分離
 const qiitqApi = (httpClient: AxiosInstance) => {

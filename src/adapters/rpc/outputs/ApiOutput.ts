@@ -1,5 +1,5 @@
 // import { IOutputPort } from '../../../usecases/contracts/output-port-interface';
-import Mapper, { JsonRpcError } from '../json-rpc-error';
+import Mapper, { JsonRpcError } from '../JsonRpcError';
 import { ControllerOutput, OutputPort } from 'src/types/contracts';
 
 const apiOutput: OutputPort<ControllerOutput> = {
