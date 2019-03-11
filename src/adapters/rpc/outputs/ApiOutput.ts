@@ -1,5 +1,5 @@
 // import { IOutputPort } from '../../../usecases/contracts/output-port-interface';
-import Mapper, { JsonRpcError } from '../JsonRpcError';
+import JsonRpcErrorFn, { JsonRpcError } from '../JsonRpcError';
 import { ControllerOutput, OutputPort } from 'src/types/contracts';
 
 const apiOutput: OutputPort<ControllerOutput> = {
@@ -16,10 +16,7 @@ const apiOutput: OutputPort<ControllerOutput> = {
     console.log(error);
 
     return {
-      error: {
-        code: Mapper.errorCodeMapper[error],
-        message: error
-      }
+      error: JsonRpcErrorFn.createError(error)
     };
   },
 

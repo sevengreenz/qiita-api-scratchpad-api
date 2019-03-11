@@ -1,4 +1,4 @@
-import jsonRpcErrorFunc, { JsonRpcError } from './JsonRpcError';
+import jsonRpcErrorFn, { JsonRpcError } from './JsonRpcError';
 import { DecodedRequestBody, Response, ErrorResponse } from 'jsonrpc';
 import { JsonRpcInteractor } from 'src/types/contracts';
 import JsonRpcSetting from './JsonRpcSetting';
@@ -6,14 +6,15 @@ import { path } from 'ramda';
 
 const JSONRPC_SPEC = '2.0';
 
-const parseErrorResponse = (): ErrorResponse => ({
+const errorResponse = (id: Response['id'] | null, err: JsonRpcError) => ({
+  id,
   jsonrpc: JSONRPC_SPEC,
-  id: null,
-  error: {
-    code: jsonRpcErrorFunc.errorCodeMapper[JsonRpcError.parseError],
-    message: JsonRpcError.parseError,
-  },
-});
+  error: jsonRpcErrorFn.createError(err)
+})
+
+const parseErrorResponse = (): ErrorResponse => {
+  return errorResponse(null, JsonRpcError.parseError);
+};
 
 export interface IProcedure {
   call: (token: string) => Promise<Response>;
@@ -23,14 +24,7 @@ const make = (rpcRequest: DecodedRequestBody): IProcedure | ErrorResponse => {
   const procedure = path<JsonRpcInteractor>([rpcRequest.method], JsonRpcSetting);
 
   if (procedure === undefined) {
-    return {
-      jsonrpc: JSONRPC_SPEC,
-      id: rpcRequest.id,
-      error: {
-        code: jsonRpcErrorFunc.errorCodeMapper[JsonRpcError.methodNotFound],
-        message: JsonRpcError.methodNotFound,
-      },
-    }
+    return errorResponse(rpcRequest.id, JsonRpcError.methodNotFound);
   };
 
   const rpc = (procedure: JsonRpcInteractor) => {
@@ -41,14 +35,7 @@ const make = (rpcRequest: DecodedRequestBody): IProcedure | ErrorResponse => {
           .then(result => {
             return Promise.resolve(Object.assign({}, result, { jsonrpc: JSONRPC_SPEC, id: rpcRequest.id }));
           }).catch(error => {
-            return {
-              jsonrpc: JSONRPC_SPEC,
-              id: rpcRequest.id,
-              error: {
-                code: jsonRpcErrorFunc.errorCodeMapper[JsonRpcError.InternalError],
-                message: JsonRpcError.InternalError,
-              },
-            }
+            return errorResponse(rpcRequest.id, JsonRpcError.InternalError);
           });
       },
     };
@@ -58,6 +45,7 @@ const make = (rpcRequest: DecodedRequestBody): IProcedure | ErrorResponse => {
 };
 
 export default {
+  errorResponse,
   parseErrorResponse,
   make,
 };

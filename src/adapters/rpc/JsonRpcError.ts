@@ -16,6 +16,11 @@ const errorCodeMapper = {
   [JsonRpcError.Unauthorized]: -32604,
 };
 
+const createError = (err: JsonRpcError) => ({
+  code: errorCodeMapper[err],
+  message: err
+});
+
 export default {
-  errorCodeMapper,
+  createError,
 };
