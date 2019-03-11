@@ -8,7 +8,7 @@
     "style:fix": "tslint -e './node_modules/**/*.ts' --fix --project tsconfig.json './**/*.ts'",
     "build": "tsc -p",
     "dev": "tsc && sls offline",
-    "test": "jest",
+    "test": "jest --config=jest.config.json",
     "deploy": "npm run build && SLS_DEBUG=* serverless deploy --stage prod -v"
   },
   "author": "",
@@ -40,19 +40,5 @@
     "tslint-config-airbnb": "^5.3.0",
     "tslint-config-prettier": "^1.13.0",
     "typescript": "^3.3.3333"
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ]
   }
 }

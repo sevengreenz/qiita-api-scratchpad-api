@@ -1,9 +1,9 @@
 export enum JsonRpcError {
-  parseError = 'Parse Error',
+  parseError = 'Parse error',
   InvalidRequest = 'Invalid Request',
-  methodNotFound = 'Method Not Found',
-  InvalidParams = 'Invalid Params',
-  InternalError = 'Internal Error',
+  methodNotFound = 'Method not found',
+  InvalidParams = 'Invalid params',
+  InternalError = 'Internal error',
   Unauthorized = 'Unauthorized',
 }
 

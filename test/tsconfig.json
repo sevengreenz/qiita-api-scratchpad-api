@@ -1,0 +1,25 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "types": [
+      "node",
+      "jest",
+    ],
+    "baseUrl": "../src",
+    "paths": {
+      "src/*": [
+        "../src/*"
+      ],
+      "jsonrpc": [
+        "../src/types/jsonrpc"
+      ],
+      "contract": [
+        "../src/types/contracts"
+      ]
+    }
+  },
+  "include": [
+    "./**/*.ts",
+    "../src/**/*.ts"
+  ]
+}
