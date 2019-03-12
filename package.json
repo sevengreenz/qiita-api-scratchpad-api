@@ -6,7 +6,7 @@
   "scripts": {
     "style:check": "tslint -e './node_modules/**/*.ts' --project tsconfig.json './**/*.ts'",
     "style:fix": "tslint -e './node_modules/**/*.ts' --fix --project tsconfig.json './**/*.ts'",
-    "build": "tsc -p",
+    "build": "tsc -p tsconfig.json",
     "dev": "tsc && sls offline",
     "test": "jest --config=jest.config.json",
     "deploy": "npm run build && SLS_DEBUG=* serverless deploy --stage prod -v"
