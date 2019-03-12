@@ -1,4 +1,3 @@
-// import { IInputPort } from '../contracts/input-port-interface';
 import IQiitaInteractor from '../contracts/qiita-interactor-interface';
 import qiitaApiGateway from '../../adapters/api-gateways/QiitaApiGateway';
 import { InputPort } from 'contract';

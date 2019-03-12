@@ -17,15 +17,26 @@ const createAPIGatewayResult = (params: Response): APIGatewayProxyResult => {
   };
 }
 
-export const handler: APIGatewayProxyHandler = async (
+export const handler: APIGatewayProxyHandler = (
   event,
   context,
   callback
 ) => {
-  const response = await RpcHandler({ headers: event.headers, body: event.body || '' });
-  const result = createAPIGatewayResult(response);
+  RpcHandler({ headers: event.headers, body: event.body || '' })
+    .then(response => {
+      console.log({
+        response,
+        request: {
+          headers: event.headers,
+          body: event.body
+        }
+      });
+      const result = createAPIGatewayResult(response);
 
-  callback(undefined, result);
-  return result;
-
+      callback(undefined, result);
+    })
+    .catch(err => {
+      console.log(err);
+      callback(err);
+    });
 };
