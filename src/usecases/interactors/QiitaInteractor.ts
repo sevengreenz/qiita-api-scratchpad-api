@@ -15,7 +15,7 @@ const qiitaInteractor: InputPort<IQiitaInteractor> = outputPort => {
       return await qiitaApiGateway()
         .issueToken(code)
         .then(outputPort.outputSuccess)
-        .then(outputPort.outputFailure);
+        .catch(outputPort.outputFailure);
     },
   };
 };
