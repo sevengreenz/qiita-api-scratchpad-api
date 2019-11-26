@@ -1,5 +1,5 @@
 type TExecuteApiParams = {
-  method: string,
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE',
   url: string,
   params: {},
   token: string,
